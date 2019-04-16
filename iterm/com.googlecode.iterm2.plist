@@ -270,12 +270,17 @@
 	</data>
 	<key>NSTableView Supports v2 KeyBingingTable</key>
 	<true/>
+	<key>NSToolbar Configuration com.apple.NSColorPanel</key>
+	<dict>
+		<key>TB Is Shown</key>
+		<integer>1</integer>
+	</dict>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>679 940 445 77 0 0 3840 2137 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>293 1396 796 486 0 0 3840 2137 </string>
+	<string>97 1329 796 486 0 0 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>299 1150 865 987 0 0 3840 2137 </string>
+	<string>163 958 865 987 0 0 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>337 853 865 987 0 0 3840 2137 </string>
 	<key>New Bookmarks</key>
@@ -478,6 +483,8 @@
 			<integer>120</integer>
 			<key>Command</key>
 			<string></string>
+			<key>Cursor Boost</key>
+			<real>0.0</real>
 			<key>Cursor Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -839,6 +846,8 @@
 				<key>Red Component</key>
 				<real>0.0</real>
 			</dict>
+			<key>Minimum Contrast</key>
+			<real>0.0</real>
 			<key>Mouse Reporting</key>
 			<true/>
 			<key>Name</key>
@@ -872,16 +881,12 @@
 			</dict>
 			<key>Selection Color</key>
 			<dict>
-				<key>Alpha Component</key>
-				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.621246337890625</real>
-				<key>Color Space</key>
-				<string>sRGB</string>
+				<real>0.13528014719486237</real>
 				<key>Green Component</key>
-				<real>0.41352594116081814</real>
+				<real>0.12312769144773483</real>
 				<key>Red Component</key>
-				<real>0.30966574279591441</real>
+				<real>0.11772145330905914</real>
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
@@ -902,7 +907,7 @@
 			<key>Use Bold Font</key>
 			<true/>
 			<key>Use Bright Bold</key>
-			<true/>
+			<false/>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>

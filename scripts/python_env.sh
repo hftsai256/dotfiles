@@ -1,6 +1,6 @@
-#!/bin/bash
+# Must be sourced from shell for obvious reason
 
-export PYVENV_PATH=${${PYVENV_PATH}:-${HOME}/.config/pyvenv}
+export PYVENV_PATH=${PYVENV_PATH:-$HOME/.config/pyvenv}
 
 pyenv() {
     if [[ $# -eq 0 ]]; then
@@ -8,7 +8,7 @@ pyenv() {
         return -1
     fi
 
-    while getopts ha:c:dl opt; do
+    while getopts :ha:c:dl opt; do
         case $1 in
             -h)
                 pyenv_help
@@ -37,7 +37,7 @@ pyenv() {
                 break
                 ;;
             -*) # Unsupported arguments
-                printf "Error: Unsupported argument: $1" >&2
+                printf "Error: Unsupported argument: $1\n" >&2
                 pyenv_help
                 ;;
         esac
@@ -54,7 +54,6 @@ pyenv_help() {
     printf "  -d  Deactivate environment, shorthand of \"deactivate\"\n"
     printf "  -l  List installed virtual environment under PYVENV_PATH\n"
     printf "  -h  Print this help\n"
-    printf "                                 -- Yes I am THIS lazy! --\n"
 }
 
 pyenv_activate() {
@@ -73,5 +72,3 @@ pyenv_create() {
 pyenv_list() {
     find ${PYVENV_PATH} -name "activate" -exec dirname {} \;
 }
-
-pyenv $@
