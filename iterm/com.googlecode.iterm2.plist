@@ -278,9 +278,9 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>679 940 445 77 0 0 3840 2137 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>97 1329 796 486 0 0 3840 2137 </string>
+	<string>97 1421 796 486 0 0 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>163 958 865 987 0 0 3840 2137 </string>
+	<string>133 801 850 987 0 0 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>337 853 865 987 0 0 3840 2137 </string>
 	<key>New Bookmarks</key>
@@ -872,21 +872,29 @@
 			<integer>1000</integer>
 			<key>Selected Text Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.72798359394073486</real>
+				<real>0.13287414560981137</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.73781722784042358</real>
+				<real>0.13421630859375</real>
 				<key>Red Component</key>
-				<real>0.71933764219284058</real>
+				<real>0.13153200302565674</real>
 			</dict>
 			<key>Selection Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.13528014719486237</real>
+				<real>0.7557830810546875</real>
+				<key>Color Space</key>
+				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.12312769144773483</real>
+				<real>0.69006292714117456</real>
 				<key>Red Component</key>
-				<real>0.11772145330905914</real>
+				<real>0.65720278775349961</real>
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
