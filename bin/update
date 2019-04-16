@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+function _update() {
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
+Usage: update
+
+Update Ruby, Python and Debian packages under current environment
+HELP
+return; fi
+
+# Prompt for sudo password.
+read -s -p "Enter password for sudo: " SUDOPW
+
+e_header "Upgrading Ruby Packages"
+echo $SUDOPW | sudo -S gem update
+e_header "Upgrading Debian Packages"
+echo $SUDOPW | sudo -S apt update
+echo $SUDOPW | sudo -S apt upgrade -y
+
+if [[ -z ${VIRTUAL_ENV+x} ]]; then
+  e_header "No Python virtual environment detected."
+  read -p "Upgrade system packages? "
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    echo $SUDOPW | sudo -SH pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U -q
+  else
+    echo "Operation cancelled."
+  return; fi
+else
+  echo "Upgrading Python Packages under: $VIRTUAL_ENV"
+  pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs pip install -U -q
+fi
+}
+
+
+# By putting the above code inside a function, if this file is sourced (which
+# is required for external aliases/functions to be used as commands), vars
+# can be local and return can be used to exit.
+
+_update "$@"

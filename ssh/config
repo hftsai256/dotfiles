@@ -1,0 +1,12 @@
+Host *
+  UseKeychain yes
+
+Host bitbucket.org
+  UseKeychain yes
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/idex_rsa
+
+Host github.com
+  UseKeychain yes
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/hftsai_github_rsa
