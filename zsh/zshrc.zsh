@@ -8,7 +8,7 @@ plugins=(git)
 source ${ZSH}/oh-my-zsh.sh
 
 # ZSH Theme Configuration
-POWERLEVEL9K_MODE='nerdfont-complete'
+# POWERLEVEL9K_MODE='nerdfont-complete'
 source /usr/local/opt/powerlevel9k/powerlevel9k.zsh-theme
 source ${DOTFILES}/zsh/powerlevel9k.sh
 

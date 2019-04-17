@@ -276,13 +276,13 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>679 940 445 77 0 0 3840 2137 </string>
+	<string>679 806 445 77 0 0 3840 2137 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>97 1421 796 486 0 0 3840 2137 </string>
+	<string>97 1513 796 486 0 0 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>133 801 850 987 0 0 3840 2137 </string>
+	<string>101 639 865 987 0 0 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>337 853 865 987 0 0 3840 2137 </string>
+	<string>2552 582 865 987 0 0 3840 2137 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -857,7 +857,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>FuraCodeNerdFontComplete-Retina 12</string>
+			<string>FiraCode-Retina 12</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
