@@ -20,6 +20,6 @@ if [[ $(util_getos) =~ osx ]]; then
     p_success "Done"
 
 else
-    p_error "iTerm not available on this platform"
+    p_error "iTerm is not available on this platform"
 
 fi
