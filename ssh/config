@@ -9,4 +9,4 @@ Host bitbucket.org
 Host github.com
   UseKeychain yes
   AddKeysToAgent yes
-  IdentityFile ~/.ssh/hftsai_github_rsa
+  IdentityFile ~/.ssh/home_rsa

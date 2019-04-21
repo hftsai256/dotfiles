@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 source ${DOTFILES}/bootstrap/utility.sh
+
 p_header "Install FiraCode"
 
 # Install for OSX
