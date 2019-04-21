@@ -1,6 +1,11 @@
 .DS_Store
 pyvenv
-themes
+
+# Sublime text cache
+sublime/*.cache
+sublime/*.last-run
+sublime/*.*-ca-bundle
+sublime/*.crt
 
 # Intellectual propitiatory stuff
 *fuze*

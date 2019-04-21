@@ -1,0 +1,14 @@
+{
+	"color_scheme": "Packages/User/hybrid (dark).tmTheme",
+	"font_face": "Fira Code Retina",
+	"font_options":
+	[
+		"dlig"
+	],
+	"font_size": 12,
+	"ignored_packages":
+	[
+	],
+	"spell_check": true,
+	"translate_tabs_to_spaces": true
+}

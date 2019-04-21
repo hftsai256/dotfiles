@@ -49,9 +49,7 @@ function p_success()  { echo -e " \033[1;32m✔\033[0m  $@"; }
 function p_error()    { echo -e " \033[1;31m✖\033[0m  $@"; }
 function p_arrow()    { echo -e " \033[1;34m➜\033[0m  $@"; }
 
-OS=$(util_getos)
-
-if [[ ${OS} =~ osx ]]; then
+if [[ $(util_getos) =~ osx ]]; then
     # Install package manager for OS X
     if [[ ! $(command -v brew) ]]; then
         echo "\n\033[1mInstall Homebrew\033[0m"
@@ -61,7 +59,7 @@ if [[ ${OS} =~ osx ]]; then
     PMANAGER="brew"
 fi
 
-if [[ ${OS} =~ ubuntu ]]; then
+if [[ $(util_getos) =~ ubuntu ]]; then
     PMANAGER="sudo apt"
 fi
 
@@ -87,7 +85,7 @@ if [[ ! -d ${REPOS}/zsh/themes/powerlevel9k ]]; then
 fi 
 
 # Setting up shells
-if [[ ${OS} =~ osx ]]; then
+if [[ $(util_getos) =~ osx ]]; then
     # add customized zsh (if any) to safe harbor (OSX thing)
     p_header "Configuring zsh"
     if [[ ! $(grep $(which zsh) /etc/shells) ]]; then
