@@ -33,7 +33,7 @@ if [[ ! -L ${SUBL_PKG_PATH}/Packages/User ]]; then
 fi
 
 if [[ ! -L ${SUBL_PKG_PATH}/Installed\ Packages ]]; then
-    p_arrow "Link Sublime Text 3 user settings folder"
+    p_arrow "Link Sublime Text 3 installed packages folder"
     ln -s ${DOTFILES}/sublime/packages "${SUBL_PKG_PATH}/Installed Packages"
 fi
 
