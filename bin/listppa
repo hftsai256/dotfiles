@@ -1,26 +1,28 @@
 #!/usr/bin/env bash
-
-function _listppa() {
-
-if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
-Usage: list_ppa
-
-Lookup user-added ppa repositories - useful to remove un-used applications or restore back to official releases.
-HELP
-return; fi
-
-for APT in `find /etc/apt/ -name \*.list`; do
-  grep -o "^deb http://ppa.launchpad.net/[a-z0-9\-]\+/[a-z0-9\-]\+" $APT | while read ENTRY ; do
-    USER=`echo $ENTRY | cut -d/ -f4`
-    PPA=`echo $ENTRY | cut -d/ -f5`
-    echo ppa:$USER/$PPA
-  done
-done
-
+function listppa_help() {
+    printf "Usage: listppa\n"
+    printf "\n"
+    printf "\033[1m(Ubuntu/Debian) only\033[0m\n"
+    printf "Lookup user-added PPA repositories.\n"
+    printf "Useful to remove un-used applications or restore back to official releases.\n"
 }
 
-# By putting the above code inside a function, if this file is sourced (which
-# is required for external aliases/functions to be used as commands), vars
-# can be local and return can be used to exit.
+function listppa() {
+    if [[ "$1" == "-h" || "$1" == "--help" ]]; then
+        listppa_help
+    fi
 
-_listppa "$@"
+    if [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]]; then
+        for APT in `find /etc/apt/ -name \*.list`; do
+            grep -o "^deb http://ppa.launchpad.net/[a-z0-9\-]\+/[a-z0-9\-]\+" $APT | while read ENTRY ; do
+                USER=`echo $ENTRY | cut -d/ -f4`
+                PPA=`echo $ENTRY | cut -d/ -f5`
+                echo ppa:$USER/$PPA
+            done
+        done
+    else
+        listppa_help
+    fi
+}
+
+listppa $@

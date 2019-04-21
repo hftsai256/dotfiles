@@ -2,10 +2,10 @@
 pyvenv
 
 # Sublime text cache
-sublime/*.cache
-sublime/*.last-run
-sublime/*.*-ca-bundle
-sublime/*.crt
+sublime/user/*.cache
+sublime/user/*.last-run
+sublime/user/*.*-ca-bundle
+sublime/user/*.crt
 
 # Intellectual propitiatory stuff
 *fuze*

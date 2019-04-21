@@ -15,7 +15,7 @@ if [[ $(util_getos) =~ osx ]]; then
     # Link useful CLI launcher for user
     if [[ ! -L /usr/local/bin/subl ]]; then
         p_arrow "Link subl CLI launcher"
-        ln -s ${SUBL_PKG_PATH}/Contents/SharedSupport/bin/subl /usr/local/bin/subl
+        ln -s /Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl /usr/local/bin/subl
     fi
 fi
 
@@ -25,8 +25,13 @@ if [[ $(util_getos) =~ ubuntu ]]; then
 fi
 
 if [[ ! -L ${SUBL_PKG_PATH}/Packages/User ]]; then
-    p_arrow "Link Sublime Text 3 user package folder"
-    ln -s ${DOTFILES}/sublime ${SUBL_PKG_PATH}/Packages/User
+    p_arrow "Link Sublime Text 3 user settings folder"
+    ln -s ${DOTFILES}/sublime/user ${SUBL_PKG_PATH}/Packages/User
+fi
+
+if [[ ! -L ${SUBL_PKG_PATH}/Installed\ Packages ]]; then
+    p_arrow "Link Sublime Text 3 user settings folder"
+    ln -s ${DOTFILES}/sublime/packages ${SUBL_PKG_PATH}/Installed\ Packages
 fi
 
 p_success "Done"
