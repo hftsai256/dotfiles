@@ -106,5 +106,3 @@ pyenv_getAllEnv() {
         fi
     done
 }
-
-pyenv_getAllEnv

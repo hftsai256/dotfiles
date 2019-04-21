@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-source ${DOTFILES}/scripts/utility.sh
+source ${DOTFILES}/bootstrap/utility.sh
 p_header "Install FiraCode"
 
 # Install for OSX
-if [[ $(is_osx) -eq 0 ]] ; then
+if [[ $(util_getos) =~ osx ]] ; then
     # User Prompt
     p_arrow "Mac OS X Detected"
     # Create temporary folder
@@ -33,7 +33,7 @@ if [[ $(is_osx) -eq 0 ]] ; then
 fi
 
 # Install for Ubuntu
-if [[ $(is_ubuntu) -eq 0 ]]; then
+if [[ $(util_getos) =~ ubuntu ]]; then
     p_arrow "Ubuntu detected"
     p_arrow "Install with apt-get (package fonts-firacode)"
     sudo apt install fonts-firacode

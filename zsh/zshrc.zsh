@@ -1,15 +1,15 @@
 # If you come from bash you might have to change your $PATH.
-export DOTFILES=${HOME}/.dotfiles
+export DOTFILES="${HOME}/.dotfiles"
+export REPOS="${HOME}/.third-party-repos"
 export PATH="${HOME}/bin:${DOTFILES}/bin:/usr/local/bin:${PATH}"
 
 # Oh-my-zsh Path
-export ZSH="${HOME}/.oh-my-zsh"
+export ZSH="${REPOS}/zsh/oh-my-zsh"
 plugins=(git)
 source ${ZSH}/oh-my-zsh.sh
 
 # ZSH Theme Configuration
-# POWERLEVEL9K_MODE='nerdfont-complete'
-source /usr/local/opt/powerlevel9k/powerlevel9k.zsh-theme
+source ${REPOS}/zsh/themes/powerlevel9k/powerlevel9k.zsh-theme
 source ${DOTFILES}/zsh/powerlevel9k.sh
 
 # Preferred editor for local and remote sessions
