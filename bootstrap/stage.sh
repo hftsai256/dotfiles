@@ -91,7 +91,7 @@ if [[ ${OS} =~ osx ]]; then
     # add customized zsh (if any) to safe harbor (OSX thing)
     p_header "Configuring zsh"
     if [[ ! $(grep $(which zsh) /etc/shells) ]]; then
-        sudo printf "\n$(which zsh)\n" >> /etc/shells
+        printf "$(which zsh)\n" | sudo tee -a /etc/shells
     fi
 fi
 
