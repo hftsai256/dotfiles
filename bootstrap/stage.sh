@@ -69,7 +69,7 @@ if [[ ! -z ${pkg_list} ]]; then
     p_arrow "Install ${pkg_list}"
     ${PMANAGER} install ${pkg_list}
 fi
-git clone git@github.com:hftsai256/dotfiles.git ${DOTFILES}
+git clone https://github.com/hftsai256/dotfiles.git ${DOTFILES}
 
 # Clone Powerlevel9k theme for zsh
 if [[ ! -d ${REPOS}/zsh/oh-my-zsh ]]; then
