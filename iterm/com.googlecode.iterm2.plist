@@ -225,6 +225,8 @@
 	</dict>
 	<key>Default Bookmark Guid</key>
 	<string>75A789D3-3385-40CD-8CCF-DDFAFB813EA4</string>
+	<key>HideScrollbar</key>
+	<true/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
 	<key>LoadPrefsFromCustomFolder</key>
@@ -277,12 +279,14 @@
 	</dict>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>679 806 445 77 0 0 3840 2137 </string>
+	<key>NSWindow Frame SUUpdateAlert</key>
+	<string>1610 1318 620 392 0 0 3840 2137 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>97 1513 796 486 0 0 3840 2137 </string>
+	<string>727 1333 770 429 0 0 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>101 639 865 987 0 0 3840 2137 </string>
+	<string>480 608 844 987 0 0 3840 2137 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>2552 582 865 987 0 0 3840 2137 </string>
+	<string>700 39 850 987 0 0 1680 1027 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -982,13 +986,17 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-04-16T16:48:28Z</date>
+	<date>2019-04-23T14:38:20Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
+	<key>TabStyleWithAutomaticOption</key>
+	<integer>4</integer>
+	<key>TabViewType</key>
+	<integer>0</integer>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>3.2.8</string>
+	<string>3.2.9</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>1</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
