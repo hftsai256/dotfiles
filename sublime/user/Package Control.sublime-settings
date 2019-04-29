@@ -6,6 +6,7 @@
 	"installed_packages":
 	[
 		"Anaconda",
+		"Compare Side-By-Side",
 		"Cscope",
 		"Package Control"
 	]
