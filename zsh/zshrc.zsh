@@ -1,7 +1,10 @@
 # If you come from bash you might have to change your $PATH.
 export DOTFILES="${HOME}/.dotfiles"
 export REPOS="${HOME}/.third-party-repos"
-export PATH="${HOME}/bin:${DOTFILES}/bin:/usr/local/bin:${PATH}"
+export PATH="${HOME}/bin:${DOTFILES}/bin:/usr/local/bin:/usr/local/opt/binutils/bin:${PATH}"
+
+# SEGGER
+export PATH="Applications/SEGGER/JLink:${PATH}"
 
 # Oh-my-zsh Path
 export ZSH="${REPOS}/zsh/oh-my-zsh"
