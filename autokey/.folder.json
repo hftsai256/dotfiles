@@ -9,7 +9,7 @@
         "triggerInside": false
     }, 
     "modes": [], 
-    "title": "Autokey", 
+    "title": "autokey", 
     "hotkey": {
         "hotKey": null, 
         "modifiers": []

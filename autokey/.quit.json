@@ -2,7 +2,7 @@
     "usageCount": 0, 
     "omitTrigger": false, 
     "prompt": false, 
-    "description": "Ctrl+S", 
+    "description": "quit", 
     "abbreviation": {
         "wordChars": "[\\w]", 
         "abbreviations": [], 
@@ -12,7 +12,7 @@
         "triggerInside": false
     }, 
     "hotkey": {
-        "hotKey": "s", 
+        "hotKey": "q", 
         "modifiers": [
             "<alt>"
         ]

@@ -1,8 +1,8 @@
 {
-    "usageCount": 1, 
+    "usageCount": 0, 
     "omitTrigger": false, 
     "prompt": false, 
-    "description": "Ctrl+X", 
+    "description": "select all", 
     "abbreviation": {
         "wordChars": "[\\w]", 
         "abbreviations": [], 
@@ -12,7 +12,7 @@
         "triggerInside": false
     }, 
     "hotkey": {
-        "hotKey": "x", 
+        "hotKey": "a", 
         "modifiers": [
             "<alt>"
         ]
