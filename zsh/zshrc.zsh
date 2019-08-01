@@ -1,10 +1,13 @@
 # If you come from bash you might have to change your $PATH.
 export DOTFILES="${HOME}/.dotfiles"
 export REPOS="${HOME}/.third-party-repos"
-export PATH="${HOME}/bin:${DOTFILES}/bin:/usr/local/bin:/usr/local/opt/binutils/bin:${PATH}"
+export PATH="${PATH}:${HOME}/bin:${DOTFILES}/bin:/usr/local/bin:/usr/local/opt/binutils/bin"
 
 # SEGGER
 export PATH="Applications/SEGGER/JLink:${PATH}"
+
+# Prioritize XCode Tools
+# export PATH="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:${PATH}"
 
 # Oh-my-zsh Path
 export ZSH="${REPOS}/zsh/oh-my-zsh"
