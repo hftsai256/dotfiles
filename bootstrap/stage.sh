@@ -57,14 +57,16 @@ if [[ $(util_getos) =~ osx ]]; then
         ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
     PMANAGER="brew"
+    pkg_list=(git wget)
 fi
 
 if [[ $(util_getos) =~ ubuntu ]]; then
     PMANAGER="sudo apt"
+    pkg_list=(git wget zsh)
 fi
 
 # Install essential tools
-pkg_list=(git wget zsh); pkg_list=$(package_buildString ${pkg_list[@]})
+pkg_list=$(package_buildString ${pkg_list[@]})
 if [[ ! -z ${pkg_list} ]]; then
     p_arrow "Install ${pkg_list}"
     ${PMANAGER} install ${pkg_list}
