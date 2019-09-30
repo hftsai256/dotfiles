@@ -23,7 +23,6 @@ set mouse=a                  " enable mouse scroll/click
 set listchars=tab:▸\ ,eol:¬  " display hidden characters
 set list                     " highlight unwanted spaces
 let mapleader=","            " leader is comma
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 " --- Split Configuration -------------------------------------
 
