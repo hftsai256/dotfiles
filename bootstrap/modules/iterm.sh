@@ -3,7 +3,7 @@ source ${DOTFILES}/bootstrap/utility.sh
 p_header "Configure iTerm"
 
 if [[ $(util_getos) =~ osx ]]; then
-    p_arrow "Looking for installed sublime text under /Application/iTerm"
+    p_arrow "Looking for installed iTerm under /Application/iTerm"
 
     # Check if iterm has been installed
     if [[ ! -d /Applications/iTerm.app ]]; then
