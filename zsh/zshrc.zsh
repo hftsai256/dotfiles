@@ -29,6 +29,7 @@ export EDITOR='subl'
 export SSH_KEY_PATH='~/.ssh'
 
 # Personal Aliases
+alias vim='nvim'
 alias py='python3'
 alias py2='python2'
 alias py3='python3'

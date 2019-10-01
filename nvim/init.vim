@@ -103,27 +103,23 @@ function! DoRemote(arg)
 endfunction
 
 call plug#begin('~/.config/nvim/plugins')
-  Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-  Plug 'zchee/deoplete-jedi'
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'Shougo/deoplete-clangx'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
-  Plug 'zchee/deoplete-clang'
   Plug 'ctrlpvim/ctrlp.vim'
+  Plug 'tpope/vim-sleuth'
 call plug#end()
+
+" --- Deoplete Auto-completion Engine Configuration -----------
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
 
 " --- Ctrl-P Configuration ------------------------------------
 
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
-
-" --- Deoplete Configuration ----------------------------------
-
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#enable_smart_case = 1
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-3.8/lib/libclang.so.1'
-let g:deoplete#sources#clang#clang_header = '/usr/lib/llvm-3.8/lib/clang'
-let g:deoplete#sources#jedi#show_docstring = 1
 
 " Turn off preview window after auto-completion is done
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
