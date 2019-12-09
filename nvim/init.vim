@@ -108,7 +108,7 @@ call plug#begin('~/.config/nvim/plugins')
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
   Plug 'ctrlpvim/ctrlp.vim'
-  Plug 'tpope/vim-sleuth'
+  Plug 'sirtaj/vim-openscad'
 call plug#end()
 
 " --- Deoplete Auto-completion Engine Configuration -----------
