@@ -20,7 +20,7 @@ source ${REPOS}/zsh/themes/powerlevel9k/powerlevel9k.zsh-theme
 source ${DOTFILES}/zsh/powerlevel9k.sh
 
 # Preferred editor for local and remote sessions
-export EDITOR='subl'
+export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS='-arch x86_64'

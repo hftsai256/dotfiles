@@ -12,7 +12,6 @@ set noswapfile               " just don't
 set bs=indent,eol,start      " delete/backspace key fix
 set cursorline               " highlight cursor line
 set ci pi ts=4 sw=4 sts=4
-set expandtab
 set number
 set showcmd
 set autoindent
