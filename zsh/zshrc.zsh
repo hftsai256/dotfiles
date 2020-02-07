@@ -2,6 +2,8 @@
 export DOTFILES="${HOME}/.dotfiles"
 export REPOS="${HOME}/.third-party-repos"
 export PATH="${PATH}:${HOME}/bin:${DOTFILES}/bin:/usr/local/bin:/usr/local/opt/binutils/bin"
+export PATH="${PATH}:/opt/gcc-arm-none-eabi/gcc-arm-none-eabi/bin"
+export PATH="${PATH}:${HOME}/.hacky/bin"
 
 # SEGGER
 export PATH="Applications/SEGGER/JLink:${PATH}"
@@ -19,7 +21,7 @@ source ${REPOS}/zsh/themes/powerlevel9k/powerlevel9k.zsh-theme
 source ${DOTFILES}/zsh/powerlevel9k.sh
 
 # Preferred editor for local and remote sessions
-export EDITOR='subl'
+export EDITOR='nvim'
 
 # Compilation flags
 # export ARCHFLAGS='-arch x86_64'
