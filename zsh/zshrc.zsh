@@ -2,7 +2,6 @@
 export DOTFILES="${HOME}/.dotfiles"
 export REPOS="${HOME}/.third-party-repos"
 export PATH="${PATH}:${HOME}/bin:${DOTFILES}/bin:/usr/local/bin:/usr/local/opt/binutils/bin"
-export PATH="${PATH}:${HOME}/.hacky/bin"
 
 # SEGGER
 export PATH="Applications/SEGGER/JLink:${PATH}"
