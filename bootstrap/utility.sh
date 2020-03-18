@@ -1,16 +1,4 @@
 # Utility functions
-# Detect OS
-function _util_isubuntu() {
-  [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]] || return 1
-}
-function _util_isosx() {
-  [[ "$OSTYPE" =~ ^darwin ]] || return 1
-}
-function util_getos() {
-  for os in osx ubuntu; do
-    _util_is${os}; [[ $? == ${1:-0} ]] && echo $os
-  done
-}
 
 # Detect OS
 function _util_isubuntu() {
