@@ -32,7 +32,6 @@ export CSCOPE_EDITOR='nvim'
 export SSH_KEY_PATH='~/.ssh'
 
 # Personal Aliases
-alias ls='ls --color=auto'
 alias vim='nvim'
 alias py='python3'
 alias py2='python2'

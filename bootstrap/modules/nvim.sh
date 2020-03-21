@@ -10,7 +10,6 @@ if [[ $(util_getos) =~ osx ]]; then
     if [[ ! -f /usr/local/bin/nvim ]]; then
         p_arrow "Install neovim with Homebrew"
         brew install neovim
-        brew cask install vimr
     fi
 
     if [[ ! -d /Applications/VimR.app ]]; then
@@ -18,11 +17,21 @@ if [[ $(util_getos) =~ osx ]]; then
         brew cask install vimr
     fi
 
-    # Install python 3 libraries
+    # Install python 3 neovim support package
     if $(command -v pip3 >/dev/null 2>&1 ); then
         p_arrow "Install neovim python packages"
-        pip3 install -qqq neovim
+        sudo pip3 install -qqq neovim
     fi
+
+    # Install Node.js and neovim support package
+    if $(command -v node >/dev/null 2>&1 ); then
+    	p_arrow "Install node.js"
+    	brew install node
+		npm install -g neovim
+    fi
+
+    # Install Ruby neovim support package
+    sudo gem install neovim
 
     # Simlink neovim configuration folder
     if [[ ! -L ${NVIM_CFG_PATH} ]]; then
