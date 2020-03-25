@@ -13,6 +13,7 @@ if [[ $(util_getos) =~ osx ]]; then
 
     p_arrow "Setting up customization plist"
     # Specify the preferences directory
+	killall cfprefsd
     defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "${DOTFILES}/iterm"
     # Tell iTerm2 to use the custom preferences in the directory
     defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
