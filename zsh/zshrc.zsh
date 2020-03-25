@@ -2,6 +2,7 @@
 export DOTFILES="${HOME}/.dotfiles"
 export REPOS="${HOME}/.third-party-repos"
 export PATH="${PATH}:${HOME}/bin:${DOTFILES}/bin:/usr/local/bin:/usr/local/opt/binutils/bin"
+export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
 export PATH="${PATH}:/opt/gcc-arm-none-eabi/gcc-arm-none-eabi/bin"
 export PATH="${PATH}:${HOME}/.hacky/bin"
 

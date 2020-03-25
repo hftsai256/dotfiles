@@ -13,5 +13,8 @@ sublime/user/*.crt
 # Vim Plugins (Shall be pulled independently)
 nvim/plugins
 
+# Other repository
+rime-liur-lua/
+
 # Intellectual propitiatory stuff
 *fuze*
