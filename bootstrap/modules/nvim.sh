@@ -36,6 +36,7 @@ if [[ $(util_getos) =~ osx ]]; then
     # Simlink neovim configuration folder
     if [[ ! -L ${NVIM_CFG_PATH} ]]; then
         p_arrow "Link neovim config folder"
+        mkdir -p ${HOME}/.dotfiles
         ln -s ${HOME}/.dotfiles/nvim ${NVIM_CFG_PATH}
     fi
 fi
