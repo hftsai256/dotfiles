@@ -33,11 +33,11 @@ export SSH_KEY_PATH='~/.ssh'
 
 # Personal Aliases
 alias vim='nvim'
-alias py='python3'
-alias py2='python2'
-alias py3='python3'
 alias jnb='jupyter notebook'
 alias ipy='ipython'
+
+# Enable pyenv shell integration
+eval "$(pyenv init -)"
 
 # Language Definitions
 export LC_ALL=en_US.UTF-8

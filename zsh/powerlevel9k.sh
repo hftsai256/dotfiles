@@ -1,5 +1,5 @@
 POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator dir)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs virtualenv rbenv rvm vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status background_jobs pyenv rbenv rvm vcs)
 
 POWERLEVEL9K_DIR_PATH_SEPARATOR=" %F{251}$(print_icon 'LEFT_SUBSEGMENT_SEPARATOR')%F{251} "
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=3

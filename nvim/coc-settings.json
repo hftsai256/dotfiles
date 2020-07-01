@@ -56,5 +56,6 @@
         "dockerfile"
       ]
     } 
-  }
+  },
+  "python.pythonPath": "/Users/hftsai/.dotfiles/pyvenv/lab/bin/python3"
 }
