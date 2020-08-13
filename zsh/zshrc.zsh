@@ -18,7 +18,7 @@ plugins=(git)
 source ${ZSH}/oh-my-zsh.sh
 
 # ZSH Theme Configuration
-source ${REPOS}/zsh/themes/powerlevel9k/powerlevel9k.zsh-theme
+source ${REPOS}/zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
 source ${DOTFILES}/zsh/powerlevel9k.sh
 
 # Preferred editor for local and remote sessions
@@ -32,9 +32,11 @@ export CSCOPE_EDITOR='nvim'
 export SSH_KEY_PATH='~/.ssh'
 
 # Personal Aliases
+alias py='python'
 alias vim='nvim'
 alias jnb='jupyter notebook'
 alias ipy='ipython'
+#alias vimr='vimr --cur-env'
 
 # Enable pyenv shell integration
 eval "$(pyenv init -)"
