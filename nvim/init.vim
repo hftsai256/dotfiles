@@ -110,6 +110,7 @@ call plug#begin('~/.config/nvim/plugins')
   Plug 'vim-airline/vim-airline-themes'
   Plug 'ctrlpvim/ctrlp.vim'
   Plug 'sirtaj/vim-openscad'
+  Plug 'powerman/vim-plugin-AnsiEsc'
 call plug#end()
 
 " --- COC configuration -----------
