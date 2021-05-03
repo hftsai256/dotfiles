@@ -2,12 +2,14 @@
 export DOTFILES="${HOME}/.dotfiles"
 export REPOS="${HOME}/.third-party-repos"
 export PATH="${PATH}:${HOME}/bin:${DOTFILES}/bin:/usr/local/bin:/usr/local/opt/binutils/bin"
-export PATH="/usr/local/opt/coreutils/libexec/gnubin:${PATH}"
-export PATH="${PATH}:/opt/gcc-arm-none-eabi/gcc-arm-none-eabi/bin"
 export PATH="${PATH}:${HOME}/.hacky/bin"
 
+# GNU Binaries
+GNUPATH="/usr/local/opt/gnu-sed/libexec/gnubin:/usr/local/opt/coreutils/libexec/gnubin"
+export PATH="${GNUPATH}:${PATH}"
+
 # SEGGER
-export PATH="Applications/SEGGER/JLink:${PATH}"
+#export PATH="Applications/SEGGER/JLink:${PATH}"
 
 # Prioritize XCode Tools
 # export PATH="/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin:${PATH}"
@@ -28,15 +30,12 @@ export CSCOPE_EDITOR='nvim'
 # Compilation flags
 # export ARCHFLAGS='-arch x86_64'
 
-# ssh
-export SSH_KEY_PATH='~/.ssh'
-
 # Personal Aliases
 alias py='python'
 alias vim='nvim'
 alias jnb='jupyter notebook'
 alias ipy='ipython'
-#alias vimr='vimr --cur-env'
+alias ls='ls --color=auto'
 
 # Enable pyenv shell integration
 eval "$(pyenv init -)"
