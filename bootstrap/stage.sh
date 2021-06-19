@@ -5,7 +5,7 @@ PATH="/usr/local/bin:${PATH}"
 
 # Detect OS
 function _util_isubuntu() {
-  [[ "$(cat /etc/issue 2> /dev/null)" =~ Ubuntu ]] || return 1
+  which apt-get 2>&1 >/dev/null || return 1
 }
 function _util_isosx() {
   [[ "$OSTYPE" =~ ^darwin ]] || return 1
@@ -80,10 +80,10 @@ if [[ ! -d ${REPOS}/zsh/oh-my-zsh ]]; then
     git clone https://github.com/robbyrussell/oh-my-zsh.git ${REPOS}/zsh/oh-my-zsh
 fi
 
-if [[ ! -d ${REPOS}/zsh/themes/powerlevel9k ]]; then
-    p_arrow "Install Powerlevel9k for zsh"
+if [[ ! -d ${REPOS}/zsh/themes/powerlevel10k ]]; then
+    p_arrow "Install Powerlevel10k for zsh"
     mkdir -p ${REPOS}/zsh/themes
-    git clone https://github.com/bhilburn/powerlevel9k.git ${REPOS}/zsh/themes/powerlevel9k
+    git clone https://github.com/romkatv/powerlevel10k.git ${REPOS}/zsh/themes/powerlevel10k
 fi 
 
 # Setting up shells
