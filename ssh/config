@@ -1,7 +1,0 @@
-Host *
-  UseKeychain yes
-
-Host github.com
-  UseKeychain yes
-  AddKeysToAgent yes
-  IdentityFile ~/.ssh/home_rsa

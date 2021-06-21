@@ -17,5 +17,7 @@ nvim/plugins
 rime-liur-lua/
 
 # Intellectual propitiatory stuff
-*fuze*
-scripts/portal_env.sh
+init/secret
+
+# Identity sensitive files
+ssh/config
