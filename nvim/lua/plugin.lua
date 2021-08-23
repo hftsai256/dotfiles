@@ -55,5 +55,9 @@ packer.startup(function()
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
   }
+
+  -- Completion
+  use 'nvim-lua/completion-nvim'
+
   end
 )

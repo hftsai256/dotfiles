@@ -1,23 +1,31 @@
 local nvim_lsp = require('lspconfig')
-
--- nvim_lsp.jedi_language_server.setup{}
-nvim_lsp.pyright.setup{}
-nvim_lsp.bashls.setup{}
-nvim_lsp.cmake.setup{}
+local compl = require('completion')
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  local function has_shift(str) string.find(str, 'S-') end
+  local function t(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+  end
+
+  function _G.smart_tab()
+    return vim.fn.pumvisible() == 1 and t('<C-n>') or t('<Tab>')
+  end
+
+  function _G.smart_stab()
+    return vim.fn.pumvisible() == 1 and t('<C-p>') or t('<S-Tab>')
+  end
 
   -- Enable completion triggered by <c-x><c-o>
+  compl.on_attach()
   buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
-  local opts = { noremap=true, silent=true }
-
   -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local opts = { noremap=true, silent=true }
   buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   buf_set_keymap('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
@@ -30,6 +38,10 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
   buf_set_keymap('n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
 
+  -- Autocompletion
+  buf_set_keymap('i', '<Tab>', [[v:lua.smart_tab()]], {expr = true, noremap = true})
+  buf_set_keymap('i', '<S-Tab>', [[v:lua.smart_stab()]], {expr = true, noremap = true})
+ 
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and

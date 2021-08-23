@@ -69,6 +69,10 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["completion-nvim"] = {
+    loaded = true,
+    path = "/Users/hftsai/.local/share/nvim/site/pack/packer/start/completion-nvim"
+  },
   ["nvim-lspconfig"] = {
     loaded = true,
     path = "/Users/hftsai/.local/share/nvim/site/pack/packer/start/nvim-lspconfig"

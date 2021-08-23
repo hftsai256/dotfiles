@@ -5,7 +5,7 @@ export PATH="${PATH}:${DOTFILES}/bin:${HOME}/.local/bin"
 
 # Oh-my-zsh Path
 export ZSH="${REPOS}/zsh/oh-my-zsh"
-plugins=(git)
+plugins=(git zsh-autosuggestions)
 source ${ZSH}/oh-my-zsh.sh
 
 # ZSH Theme Configuration

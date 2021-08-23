@@ -8,7 +8,6 @@ g.mapleader = ','
 -- Settings
 o.syntax = 'on'
 o.showmode = true
-o.autochdir = true
 o.swapfile = false
 o.backup = false
 o.undodir = vim.fn.stdpath('config') .. '/undodir'
@@ -45,4 +44,16 @@ require('plugin')
 require('lsp')
 require('fuzzysearch')
 require('keybindings')
+
+
+function _G.put(...)
+  local objects = {}
+  for i = 1, select('#', ...) do
+    local v = select(i, ...)
+    table.insert(objects, vim.inspect(v))
+  end
+
+  print(table.concat(objects, '\n'))
+  return ...
+end
 
