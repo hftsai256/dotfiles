@@ -1,5 +1,5 @@
 local nvim_lsp = require('lspconfig')
-local compl = require('completion')
+local autocomplete = require('completion')
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -19,9 +19,7 @@ local on_attach = function(client, bufnr)
     return vim.fn.pumvisible() == 1 and t('<C-p>') or t('<S-Tab>')
   end
 
-  -- Enable completion triggered by <c-x><c-o>
-  compl.on_attach()
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  autocomplete.on_attach()
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -46,7 +44,7 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'pyright', 'bashls', 'cmake' }
+local servers = { 'ccls', 'pyright', 'bashls', 'cmake' }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
     on_attach = on_attach,
