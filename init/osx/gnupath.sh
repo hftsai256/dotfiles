@@ -5,3 +5,5 @@ GNUPATH+=":/usr/local/opt/binutils/bin"
 
 export PATH="${GNUPATH}:${PATH}"
 
+ls --color=auto > /dev/null 2>&1 && alias ls='ls --color=auto'
+

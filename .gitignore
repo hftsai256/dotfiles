@@ -11,7 +11,7 @@ sublime/user/*.*-ca-bundle
 sublime/user/*.crt
 
 # Vim Plugins (Shall be pulled independently)
-nvim/plugins
+nvim/plugin
 nvim/undodir
 
 # Other repository

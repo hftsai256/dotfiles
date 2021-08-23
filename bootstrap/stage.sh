@@ -61,8 +61,8 @@ if [[ $(util_getos) =~ osx ]]; then
 fi
 
 if [[ $(util_getos) =~ ubuntu ]]; then
-    PMANAGER="sudo apt"
-    pkg_list=(git wget zsh)
+    PMANAGER="sudo apt -y"
+    pkg_list=(git wget curl zsh software-properties-common)
 fi
 
 # Install essential tools
@@ -84,7 +84,15 @@ if [[ ! -d ${REPOS}/zsh/themes/powerlevel10k ]]; then
     p_arrow "Install Powerlevel10k for zsh"
     mkdir -p ${REPOS}/zsh/themes
     git clone https://github.com/romkatv/powerlevel10k.git ${REPOS}/zsh/themes/powerlevel10k
-fi 
+fi
+
+if [[ ! -d ${ZSH_CUSTOM}/plugins/zsh-autosuggestions ]]; then
+    p_arrow "Install zsh-autosuggestions"
+    mkdir -p ${ZSH_CUSTOM}/plugins
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
+fi
+
+which pyenv > /dev/null 2>&1 || curl https://pyenv.run | bash
 
 # Setting up shells
 if [[ $(util_getos) =~ osx ]]; then

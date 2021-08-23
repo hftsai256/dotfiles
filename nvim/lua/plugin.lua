@@ -46,8 +46,7 @@ packer.startup(function()
         'nvim-lua/plenary.nvim',
       },
     },
-    'nvim-telescope/telescope-fzy-native.nvim',
-    'jremmen/vim-ripgrep'
+    'nvim-telescope/telescope-fzy-native.nvim'
   }
 
   -- Highlights

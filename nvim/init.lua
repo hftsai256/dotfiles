@@ -31,7 +31,7 @@ wo.wrap = false
 -- Colorscheme
 o.termguicolors = true
 o.background = 'dark'
-g.colors_name = 'hybrid'
+vim.cmd('colorscheme hybrid')
 
 -- Airline
 g.airline_theme = 'hybridline'

@@ -28,3 +28,4 @@ export LANG=en_US.UTF-8
 
 # Load All Customized Scripts
 source ${DOTFILES}/init/init.sh
+
