@@ -4,7 +4,7 @@ for f in ${DOTFILES}/init/common/*.sh; do
 done
 
 # Load Identity Sensitive Scripts
-if [ -f ${DOTFILES}/init/secret/*.sh ]; then
+if compgen -G "${DOTFILES}/init/secret/*.sh" > /dev/null; then
 	for f in ${DOTFILES}/init/secret/*.sh; do
     	source $f;
 	done

@@ -1,7 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 export DOTFILES="${HOME}/.dotfiles"
 export REPOS="${HOME}/.third-party-repos"
-export PATH="${PATH}:${DOTFILES}/bin"
+export PATH="${PATH}:${DOTFILES}/bin:${HOME}/.local/bin"
 
 # Oh-my-zsh Path
 export ZSH="${REPOS}/zsh/oh-my-zsh"
@@ -16,15 +16,11 @@ source ${DOTFILES}/zsh/powerlevel9k.sh
 export EDITOR='nvim'
 export CSCOPE_EDITOR='nvim'
 
-# Compilation flags
-# export ARCHFLAGS='-arch x86_64'
-
 # Personal Aliases
 alias py='python'
 alias vim='nvim'
 alias jnb='jupyter notebook'
 alias ipy='ipython'
-alias ls='ls --color=auto'
 
 # Language Definitions
 export LC_ALL=en_US.UTF-8

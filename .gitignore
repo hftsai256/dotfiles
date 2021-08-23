@@ -12,6 +12,7 @@ sublime/user/*.crt
 
 # Vim Plugins (Shall be pulled independently)
 nvim/plugins
+nvim/undodir
 
 # Other repository
 rime-liur-lua/
