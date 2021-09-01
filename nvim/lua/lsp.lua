@@ -44,9 +44,22 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { 'ccls', 'pyright', 'bashls', 'cmake' }
-for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup {
+local servers = {
+  {name = 'clangd',
+   -- opts = {compilationDatabaseDirectory = 'build',
+   --         cache = {directory='/tmp/ccls-cache'}}
+   opts = {filetypes = { "c", "cc", "cpp", "objc", "objcpp" }}},
+  {name = 'pyright',
+   opts = {}},
+  {name = 'bashls',
+   opts = {}},
+  {name = 'cmake',
+   opts = {}}
+}
+
+for i, lsp in ipairs(servers) do
+  nvim_lsp[lsp.name].setup {
+    init_options = lsp.opts,
     on_attach = on_attach,
     flags = {
       debounce_text_changes = 150,
