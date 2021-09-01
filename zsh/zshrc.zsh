@@ -11,6 +11,7 @@ source ${ZSH}/oh-my-zsh.sh
 # ZSH Theme Configuration
 source ${REPOS}/zsh/themes/powerlevel10k/powerlevel10k.zsh-theme
 source ${DOTFILES}/zsh/powerlevel9k.sh
+source ${DOTFILES}/zsh/zsh_autosuggest.sh
 
 # Preferred editor for local and remote sessions
 export EDITOR='nvim'
