@@ -58,5 +58,8 @@ packer.startup(function()
   -- Completion
   use 'nvim-lua/completion-nvim'
 
+  -- Git Diff
+  use 'sindrets/diffview.nvim'
+
   end
 )

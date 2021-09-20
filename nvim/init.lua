@@ -44,7 +44,7 @@ require('plugin')
 require('lsp')
 require('fuzzysearch')
 require('keybindings')
-
+require('diff')
 
 function _G.put(...)
   local objects = {}
