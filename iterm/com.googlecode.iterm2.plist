@@ -1034,26 +1034,26 @@
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.7764706015586853</real>
+				<real>0.0</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.78431373834609985</real>
+				<real>0.0</real>
 				<key>Red Component</key>
-				<real>0.7686275839805603</real>
+				<real>0.0</real>
 			</dict>
 			<key>Selection Color</key>
 			<dict>
 				<key>Alpha Component</key>
 				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.18039211630821228</real>
+				<real>1</real>
 				<key>Color Space</key>
 				<string>sRGB</string>
 				<key>Green Component</key>
-				<real>0.16470587253570557</real>
+				<real>0.84313726425170898</real>
 				<key>Red Component</key>
-				<real>0.15686273574829102</real>
+				<real>0.70196080207824707</real>
 			</dict>
 			<key>Send Code When Idle</key>
 			<false/>
@@ -1062,6 +1062,8 @@
 			<key>Show Status Bar</key>
 			<true/>
 			<key>Silence Bell</key>
+			<false/>
+			<key>Smart Cursor Color</key>
 			<false/>
 			<key>Status Bar Layout</key>
 			<dict>
@@ -1205,6 +1207,8 @@
 			<true/>
 			<key>Use Bright Bold</key>
 			<false/>
+			<key>Use Cursor Guide</key>
+			<false/>
 			<key>Use Italic Font</key>
 			<true/>
 			<key>Use Non-ASCII Font</key>
@@ -1276,5 +1280,7 @@
 	<integer>1</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
 	<false/>
+	<key>kCPKUseSystemColorPicker</key>
+	<true/>
 </dict>
 </plist>
