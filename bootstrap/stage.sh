@@ -86,10 +86,10 @@ if [[ ! -d ${REPOS}/zsh/themes/powerlevel10k ]]; then
     git clone https://github.com/romkatv/powerlevel10k.git ${REPOS}/zsh/themes/powerlevel10k
 fi
 
-if [[ ! -d ${ZSH_CUSTOM}/plugins/zsh-autosuggestions ]]; then
+if [[ ! -d ${REPOS}/zsh/oh-my-zsh/custom/plugins/zsh-autosuggestions ]]; then
     p_arrow "Install zsh-autosuggestions"
-    mkdir -p ${ZSH_CUSTOM}/plugins
-    git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
+    mkdir -p ${REPOS}/zsh/oh-my-zsh/custom/plugins
+    git clone https://github.com/zsh-users/zsh-autosuggestions ${REPOS}/zsh/oh-my-zsh/custom/plugins/zsh-autosuggestions
 fi
 
 which pyenv > /dev/null 2>&1 || curl https://pyenv.run | bash
