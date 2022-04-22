@@ -28,6 +28,9 @@ packer.startup(function()
   -- Pretty symbols
   use 'kyazdani42/nvim-web-devicons'
 
+  -- File Manager
+  use 'lambdalisue/fern.vim'
+
   -- Color scheme
   use 'w0ng/vim-hybrid'
 
