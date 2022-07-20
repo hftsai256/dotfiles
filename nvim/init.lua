@@ -28,23 +28,14 @@ wo.signcolumn = 'yes'
 wo.cursorline = true
 wo.wrap = false
 
--- Colorscheme
-o.termguicolors = true
-o.background = 'dark'
-vim.cmd('colorscheme hybrid')
-
--- Airline
-g.airline_theme = 'hybridline'
-g.airline_powerline_fonts = 1
-g['airline#extensions#tabline#enabled'] = 1
-g['airline#extensions#tabline#formatter'] = 'unique_tail_improved'
+-- GUI Font
+vim.opt.guifont = { "FiraCode Nerd Font", ":h10" }
 
 -- Load Modules
 require('plugin')
 require('lsp')
 require('fuzzysearch')
 require('keybindings')
-require('diff')
 
 function _G.put(...)
   local objects = {}
@@ -56,4 +47,10 @@ function _G.put(...)
   print(table.concat(objects, '\n'))
   return ...
 end
+
+-- Airline Theme
+g.airline_theme = 'hybridline'
+g.airline_powerline_fonts = 1
+g['airline#extensions#tabline#enabled'] = 1
+g['airline#extensions#tabline#formatter'] = 'unique_tail_improved'
 

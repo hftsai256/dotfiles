@@ -25,6 +25,12 @@ packer.startup(function()
   -- Packer
   use 'wbthomason/packer.nvim'
 
+  -- Color Scheme
+  use 'PHSix/nvim-hyvrid'
+  config = function()
+    require('hybrid').setup()
+  end
+
   -- Pretty symbols
   use 'kyazdani42/nvim-web-devicons'
 

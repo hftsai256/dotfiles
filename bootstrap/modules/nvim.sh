@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+NVIM_CFG_PATH="${HOME}/.config/nvim"
 silence='>/dev/null 2>&1'
 
 function npminstall() {
@@ -15,7 +16,6 @@ p_header "Configure Neovim"
 
 
 if [[ $(util_getos) =~ osx ]]; then
-    NVIM_CFG_PATH="${HOME}/.config/nvim"
     p_arrow "Looking for installed neovim"
 
     # Check if neovim has been installed under /usr/local/bin
@@ -54,7 +54,6 @@ if [[ $(util_getos) =~ osx ]]; then
 fi
 
 if [[ $(util_getos) =~ ubuntu ]]; then
-    NVIM_CFG_PATH="${HOME}/.config/nvim"
     p_arrow "Looking for installed neovim"
 
     # Check if neovim has been installed
