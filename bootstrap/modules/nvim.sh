@@ -94,5 +94,8 @@ if [[ ! -L ${NVIM_CFG_PATH} ]]; then
     ln -s ${HOME}/.dotfiles/nvim ${NVIM_CFG_PATH}
 fi
 
+p_arrow "Install plugins through Packer"
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+
 p_success "Done"
 
