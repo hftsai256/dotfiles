@@ -29,7 +29,7 @@ wo.cursorline = true
 wo.wrap = false
 
 -- GUI Font
-vim.opt.guifont = { "FiraCode Nerd Font", ":h10" }
+vim.opt.guifont = { "FiraCode Nerd Font:h12" }
 
 -- Load Modules
 require('plugin')
@@ -47,6 +47,10 @@ function _G.put(...)
   print(table.concat(objects, '\n'))
   return ...
 end
+
+-- Color Scheme
+-- require('hybrid').setup()
+vim.cmd [[colorscheme nvim-hybrid]]
 
 -- Airline Theme
 g.airline_theme = 'hybridline'

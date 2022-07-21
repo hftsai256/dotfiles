@@ -26,19 +26,13 @@ packer.startup(function()
   use 'wbthomason/packer.nvim'
 
   -- Color Scheme
-  use 'PHSix/nvim-hyvrid'
-  config = function()
-    require('hybrid').setup()
-  end
+  use 'PHSix/nvim-hybrid'
 
   -- Pretty symbols
   use 'kyazdani42/nvim-web-devicons'
 
   -- File Manager
   use 'lambdalisue/fern.vim'
-
-  -- Color scheme
-  use 'w0ng/vim-hybrid'
 
   -- Airline
   use 'vim-airline/vim-airline'
