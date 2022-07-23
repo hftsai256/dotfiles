@@ -29,7 +29,7 @@ wo.cursorline = true
 wo.wrap = false
 
 -- GUI Font
-vim.opt.guifont = { "FiraCode Nerd Font:h12" }
+vim.opt.guifont = { "FiraCode Nerd Font Mono:h12" }
 
 -- Load Modules
 require('plugin')
@@ -49,12 +49,34 @@ function _G.put(...)
 end
 
 -- Color Scheme
--- require('hybrid').setup()
-vim.cmd [[colorscheme nvim-hybrid]]
+vim.cmd [[colorscheme base16-tomorrow-night]]
 
--- Airline Theme
-g.airline_theme = 'hybridline'
-g.airline_powerline_fonts = 1
-g['airline#extensions#tabline#enabled'] = 1
-g['airline#extensions#tabline#formatter'] = 'unique_tail_improved'
+-- Lualine
+require('lualine').setup{
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+    always_divide_middle = true
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff', 'diagnostics'},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {}
+}
 

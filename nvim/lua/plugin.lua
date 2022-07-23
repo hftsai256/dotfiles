@@ -26,7 +26,7 @@ packer.startup(function()
   use 'wbthomason/packer.nvim'
 
   -- Color Scheme
-  use 'PHSix/nvim-hybrid'
+  use 'RRethy/nvim-base16'
 
   -- Pretty symbols
   use 'kyazdani42/nvim-web-devicons'
@@ -34,9 +34,11 @@ packer.startup(function()
   -- File Manager
   use 'lambdalisue/fern.vim'
 
-  -- Airline
-  use 'vim-airline/vim-airline'
-  use 'vim-airline/vim-airline-themes'
+  -- Lualine
+  use {
+    'nvim-lualine/lualine.nvim',
+    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+  }
 
   -- LSP
   use 'neovim/nvim-lspconfig'
