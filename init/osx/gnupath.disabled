@@ -1,0 +1,24 @@
+# GNU Binaries
+GNUPATH="/usr/local/opt/gnu-sed/libexec/gnubin"
+GNUPATH+=":/usr/local/opt/coreutils/libexec/gnubin"
+GNUPATH+=":/usr/local/opt/binutils/bin"
+
+#openssl@3 is keg-only, which means it was not symlinked into /usr/local,
+#because macOS provides LibreSSL.
+
+#If you need to have openssl@3 first in your PATH, run:
+#  echo 'export PATH="/usr/local/opt/openssl@3/bin:$PATH"' >> ~/.zshrc
+GNUPATH+=":/usr/local/opt/openssl@3/bin"
+
+#For compilers to find openssl@3 you may need to set:
+#  export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
+#  export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
+
+#For pkg-config to find openssl@3 you may need to set:
+#  export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
+
+
+export PATH="${GNUPATH}:${PATH}"
+
+which exa > /dev/null 2>&1 && alias ls=exa
+

@@ -22,6 +22,7 @@ alias py='python'
 alias vim='nvim'
 alias jnb='jupyter notebook'
 alias ipy='ipython'
+which exa > /dev/null 2>&1 && alias ls=exa
 
 # Language Definitions
 export LC_ALL=en_US.UTF-8

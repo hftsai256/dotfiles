@@ -1,26 +1,24 @@
-# Load Common Init Scripts
-for f in ${DOTFILES}/init/common/*.sh; do
-    source $f;
-done
+function include () {
+    [[ -d "$1" ]] || return 0
 
-# Load Identity Sensitive Scripts
-if compgen -G "${DOTFILES}/init/secret/*.sh" > /dev/null; then
-	for f in ${DOTFILES}/init/secret/*.sh; do
-    	source $f;
-	done
-fi
+    for file in $1/*; do
+        [[ -e "$file" ]] || continue
+        source "$file"
+    done
+}
+
+# Load Common Init Scripts
+include ${DOTFILES}/init/common
+include ${DOTFILES}/init/secret
+
 
 # Load OSX-only Init Scripts
 if [[ "$OSTYPE" =~ ^darwin ]]; then
-	for f in ${DOTFILES}/init/osx/*.sh; do
-		source $f
-	done
+	include ${DOTFILES}/init/osx
 fi
 
 # Load Debian based Init Scripts
 if which apt-get 2>&1 > /dev/null; then
-	for f in ${DOTFILES}/init/debian/*.sh; do
-		source $f
-	done
+	include ${DOTFILES}/init/debian
 fi
 
