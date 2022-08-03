@@ -26,7 +26,9 @@ packer.startup(function()
   use 'wbthomason/packer.nvim'
 
   -- Color Scheme
-  use 'RRethy/nvim-base16'
+  -- use 'RRethy/nvim-base16'
+  use 'w0ng/vim-hybrid'
+  use 'PHSix/nvim-hybrid'
 
   -- Pretty symbols
   use 'kyazdani42/nvim-web-devicons'

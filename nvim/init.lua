@@ -21,6 +21,7 @@ o.softtabstop = 4
 o.shiftwidth = 4
 o.backspace = 'indent,eol,start'
 o.expandtab = true
+o.background = 'dark'
 bo.autoindent = true
 bo.smartindent = true
 wo.number = true
@@ -49,13 +50,14 @@ function _G.put(...)
 end
 
 -- Color Scheme
-vim.cmd [[colorscheme base16-tomorrow-night]]
+vim.cmd [[colorscheme hybrid]]
+-- require('hybrid').setup()
 
 -- Lualine
 require('lualine').setup{
   options = {
     icons_enabled = true,
-    theme = 'auto',
+    theme = 'Tomorrow',
     always_divide_middle = true
   },
   sections = {
