@@ -7,11 +7,14 @@ PATH="/usr/local/bin:${PATH}"
 function _util_isubuntu() {
   which apt-get 2>&1 >/dev/null || return 1
 }
+function _util_isarch() {
+  which pacman 2>&1 >/dev/null || return 1
+}
 function _util_isosx() {
   [[ "$OSTYPE" =~ ^darwin ]] || return 1
 }
 function util_getos() {
-  for os in osx ubuntu; do
+  for os in osx arch ubuntu; do
     _util_is${os}; [[ $? == ${1:-0} ]] && echo $os
   done
 }
@@ -62,7 +65,12 @@ fi
 
 if [[ $(util_getos) =~ ubuntu ]]; then
     PMANAGER="sudo apt -y"
-    pkg_list=(git wget curl zsh software-properties-common)
+    pkg_list=(git wget curl zsh software-properties-common exa bat)
+fi
+
+if [[ $(util_getos) =~ arch ]]; then
+    PMANAGER="sudo pacman -Syu"
+    pkg_list=(git wget curl zsh exa bat)
 fi
 
 # Install essential tools
@@ -92,7 +100,11 @@ if [[ ! -d ${REPOS}/zsh/oh-my-zsh/custom/plugins/zsh-autosuggestions ]]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions ${REPOS}/zsh/oh-my-zsh/custom/plugins/zsh-autosuggestions
 fi
 
-which pyenv > /dev/null 2>&1 || curl https://pyenv.run | bash
+which pyenv > /dev/null 2>&1 || {
+    curl https://pyenv.run | bash
+    mkdir -p $HOME/.local/bin
+    ln -s $HOME/.pyenv/bin/pyenv $HOME/.local/bin/pyenv
+}
 
 # Setting up shells
 if [[ $(util_getos) =~ osx ]]; then
