@@ -60,7 +60,7 @@ if [[ $(util_getos) =~ osx ]]; then
         ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     fi
     PMANAGER="brew"
-    pkg_list=(git wget)
+    pkg_list=(git wget exa bat)
 fi
 
 if [[ $(util_getos) =~ ubuntu ]]; then
