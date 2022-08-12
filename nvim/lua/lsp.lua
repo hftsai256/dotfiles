@@ -1,5 +1,7 @@
+vim.g.coq_settings = {auto_start = 'shut-up', }
+
 local nvim_lsp = require('lspconfig')
-local autocomplete = require('completion')
+local coq = require('coq')
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -18,8 +20,6 @@ local on_attach = function(client, bufnr)
   function _G.smart_stab()
     return vim.fn.pumvisible() == 1 and t('<C-p>') or t('<S-Tab>')
   end
-
-  autocomplete.on_attach()
 
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
@@ -58,11 +58,13 @@ local servers = {
 }
 
 for i, lsp in ipairs(servers) do
-  nvim_lsp[lsp.name].setup {
-    init_options = lsp.opts,
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    }
-  }
+  nvim_lsp[lsp.name].setup(
+    coq.lsp_ensure_capabilities{
+      init_options = lsp.opts,
+      on_attach = on_attach,
+      flags = {
+        debounce_text_changes = 150,
+      }
+  })
 end
+

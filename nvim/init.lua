@@ -1,5 +1,5 @@
 local g, fn = vim.g, vim.fn
-local o, wo, bo = vim.o, vim.wo, vim.bo
+local o, wo, bo, opt = vim.o, vim.wo, vim.bo, vim.opt
 local utils = require('utils')
 
 -- Leader/local leader
@@ -30,7 +30,7 @@ wo.cursorline = true
 wo.wrap = false
 
 -- GUI Font
-vim.opt.guifont = { "FiraCode Nerd Font Mono:h12" }
+opt.guifont = { "FiraCode Nerd Font Mono:h12" }
 
 -- Load Modules
 require('plugin')

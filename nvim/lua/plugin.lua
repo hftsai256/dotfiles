@@ -1,4 +1,3 @@
-local vim = vim
 local exec = vim.api.nvim_command
 local fn = vim.fn
 
@@ -63,7 +62,13 @@ packer.startup(function()
   }
 
   -- Completion
-  use 'nvim-lua/completion-nvim'
+  use {
+    'ms-jpq/coq_nvim',
+    requires = {
+      {'ms-jpq/coq.artifacts', branch = 'artifacts'},
+      {'ms-jpq/coq.thirdparty', branch = '3p'}
+    }
+  }
 
   -- Git Diff
   use 'sindrets/diffview.nvim'
