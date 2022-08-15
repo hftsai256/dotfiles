@@ -7,6 +7,7 @@ g.mapleader = ','
 
 -- Settings
 o.syntax = 'on'
+o.autochdir = true
 o.showmode = true
 o.swapfile = false
 o.backup = false
@@ -30,7 +31,7 @@ wo.cursorline = true
 wo.wrap = false
 
 -- GUI Font
-opt.guifont = { "FiraCode Nerd Font Mono:h12" }
+opt.guifont = { "Fira Code Regular Nerd Font Complete:h12" }
 
 -- Load Modules
 require('plugin')

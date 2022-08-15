@@ -35,6 +35,18 @@ packer.startup(function()
   -- File Manager
   use 'lambdalisue/fern.vim'
 
+  -- Indent Detection
+  use {
+    'Darazaki/indent-o-matic',
+    config = function()
+      require('indent-o-matic').setup {
+        filetype_ = {
+          standard_widths = {2, 4},
+        }
+      }
+    end
+  }
+
   -- Lualine
   use {
     'nvim-lualine/lualine.nvim',
@@ -43,6 +55,23 @@ packer.startup(function()
 
   -- LSP
   use 'neovim/nvim-lspconfig'
+
+  -- Completion
+  use {
+    'ms-jpq/coq_nvim',
+    requires = {
+      {'ms-jpq/coq.artifacts', branch = 'artifacts'},
+      {'ms-jpq/coq.thirdparty', branch = '3p'}
+    }
+  }
+
+  -- Rooter
+  use {
+    'ahmedkhalf/project.nvim',
+    config = function()
+      require('project_nvim').setup {}
+    end
+  }
 
   -- Search
   use {
@@ -55,19 +84,10 @@ packer.startup(function()
     'nvim-telescope/telescope-fzy-native.nvim'
   }
 
-  -- Highlights
+  -- Syntax Highlighting
   use {
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
-  }
-
-  -- Completion
-  use {
-    'ms-jpq/coq_nvim',
-    requires = {
-      {'ms-jpq/coq.artifacts', branch = 'artifacts'},
-      {'ms-jpq/coq.thirdparty', branch = '3p'}
-    }
   }
 
   -- Git Diff
