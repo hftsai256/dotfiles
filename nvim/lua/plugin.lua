@@ -2,96 +2,92 @@ local exec = vim.api.nvim_command
 local fn = vim.fn
 
 -- ensure that packer is installed
-local install_path = fn.stdpath('data')..'/site/pack/packer/opt/packer.nvim'
+local install_path = fn.stdpath("data") .. "/site/pack/packer/opt/packer.nvim"
 
 if fn.empty(fn.glob(install_path)) > 0 then
-    exec('!git clone https://github.com/wbthomason/packer.nvim '..install_path)
-    exec 'packadd packer.nvim'
+  exec("!git clone https://github.com/wbthomason/packer.nvim " .. install_path)
+  exec("packadd packer.nvim")
 end
 
-vim.cmd('packadd packer.nvim')
+vim.cmd("packadd packer.nvim")
 
-local packer = require('packer')
-local util = require('packer.util')
+local packer = require("packer")
+local util = require("packer.util")
 
 packer.init({
-  package_root = util.join_paths(vim.fn.stdpath('data'), 'site', 'pack')
+  package_root = util.join_paths(vim.fn.stdpath("data"), "site", "pack"),
 })
 
 packer.startup(function()
   local use = use
 
   -- Packer
-  use 'wbthomason/packer.nvim'
+  use("wbthomason/packer.nvim")
 
   -- Color Scheme
-  -- use 'RRethy/nvim-base16'
-  use 'w0ng/vim-hybrid'
-  use 'PHSix/nvim-hybrid'
+  use("w0ng/vim-hybrid")
 
   -- Pretty symbols
-  use 'kyazdani42/nvim-web-devicons'
+  use("kyazdani42/nvim-web-devicons")
 
   -- File Manager
-  use 'lambdalisue/fern.vim'
+  use("lambdalisue/fern.vim")
 
   -- Indent Detection
-  use {
-    'Darazaki/indent-o-matic',
+  use({
+    "Darazaki/indent-o-matic",
     config = function()
-      require('indent-o-matic').setup {
+      require("indent-o-matic").setup({
         filetype_ = {
-          standard_widths = {2, 4},
-        }
-      }
-    end
-  }
+          standard_widths = { 2, 4 },
+        },
+      })
+    end,
+  })
 
   -- Lualine
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true }
-  }
+  use({
+    "nvim-lualine/lualine.nvim",
+    requires = { "kyazdani42/nvim-web-devicons", opt = true },
+  })
 
   -- LSP
-  use 'neovim/nvim-lspconfig'
+  use("neovim/nvim-lspconfig")
 
   -- Completion
-  use {
-    'ms-jpq/coq_nvim',
+  use({
+    "ms-jpq/coq_nvim",
     requires = {
-      {'ms-jpq/coq.artifacts', branch = 'artifacts'},
-      {'ms-jpq/coq.thirdparty', branch = '3p'}
-    }
-  }
+      { "ms-jpq/coq.artifacts", branch = "artifacts" },
+      { "ms-jpq/coq.thirdparty", branch = "3p" },
+    },
+  })
 
   -- Rooter
-  use {
-    'ahmedkhalf/project.nvim',
+  use({
+    "ahmedkhalf/project.nvim",
     config = function()
-      require('project_nvim').setup {}
-    end
-  }
+      require("project_nvim").setup({})
+    end,
+  })
 
   -- Search
-  use {
-  	{
-      'nvim-telescope/telescope.nvim',
+  use({
+    {
+      "nvim-telescope/telescope.nvim",
       requires = {
-        'nvim-lua/plenary.nvim',
+        "nvim-lua/plenary.nvim",
       },
     },
-    'nvim-telescope/telescope-fzy-native.nvim'
-  }
+    "nvim-telescope/telescope-fzy-native.nvim",
+  })
 
   -- Syntax Highlighting
-  use {
-    'nvim-treesitter/nvim-treesitter',
-    run = ':TSUpdate',
-  }
+  use({
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+  })
 
   -- Git Diff
-  use 'sindrets/diffview.nvim'
-
-  end
-)
+  use("sindrets/diffview.nvim")
+end)
