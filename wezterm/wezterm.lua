@@ -24,4 +24,6 @@ return {
       action = wezterm.action.SplitVertical({ domain = "CurrentPaneDomain" }),
     },
   },
+
+  quote_dropped_files = "Posix",
 }
