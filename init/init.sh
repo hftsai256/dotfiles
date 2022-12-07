@@ -1,7 +1,7 @@
 function include () {
     [[ -d "$1" ]] || return 0
 
-    for file in $1/*; do
+    for file in $1/*.sh; do
         [[ -e "$file" ]] || continue
         source "$file"
     done
