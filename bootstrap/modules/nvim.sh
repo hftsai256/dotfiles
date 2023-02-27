@@ -95,7 +95,7 @@ if [[ ! -L ${NVIM_CFG_PATH} ]]; then
 fi
 
 p_arrow "Install plugins through Packer"
-nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync' -c 'COQdeps'
 
 p_success "Done"
 
