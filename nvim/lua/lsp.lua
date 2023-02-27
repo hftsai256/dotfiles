@@ -58,7 +58,7 @@ local servers = {
   },
   { name = "pyright", opts = {} },
   { name = "bashls", opts = {} },
-  { name = "sumneko_lua", opts = {} },
+  { name = "lua_ls", opts = {} },
   { name = "cmake", opts = {} },
 }
 
