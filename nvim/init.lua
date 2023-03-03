@@ -1,6 +1,5 @@
 local g, fn = vim.g, vim.fn
 local o, wo, bo, opt = vim.o, vim.wo, vim.bo, vim.opt
-local utils = require("utils")
 
 -- Leader/local leader
 g.mapleader = ","
@@ -38,6 +37,7 @@ require("plugin")
 require("lsp")
 require("fuzzysearch")
 require("keybindings")
+require("filemanager")
 
 function _G.put(...)
   local objects = {}
