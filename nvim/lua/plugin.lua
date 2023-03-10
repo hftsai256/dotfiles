@@ -31,7 +31,12 @@ packer.startup(function()
   use("kyazdani42/nvim-web-devicons")
 
   -- File Manager
-  use("lambdalisue/fern.vim")
+  use {
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    },
+  }
 
   -- Indent Detection
   use({

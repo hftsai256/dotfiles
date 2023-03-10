@@ -22,6 +22,7 @@ o.shiftwidth = 4
 o.backspace = "indent,eol,start"
 o.expandtab = true
 o.background = "dark"
+o.termguicolors = true
 bo.autoindent = true
 bo.smartindent = true
 wo.number = true
