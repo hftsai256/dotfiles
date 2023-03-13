@@ -71,6 +71,8 @@ packer.startup(function()
     requires = {
       "neovim/nvim-lspconfig",
       "williamboman/mason-lspconfig.nvim",
+      "mfussenegger/nvim-dap",
+      "jay-babu/mason-nvim-dap.nvim",
     }
   })
 

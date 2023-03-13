@@ -2,6 +2,7 @@ local coq = require("coq")
 local mason = require("mason")
 local nvim_lsp = require("lspconfig")
 local mason_lsp = require("mason-lspconfig")
+local mason_dap = require("mason-nvim-dap")
 
 vim.g.coq_settings = { auto_start = "shut-up" }
 
@@ -76,6 +77,7 @@ local lsp_opts = {
 }
 
 mason.setup()
+
 mason_lsp.setup()
 mason_lsp.setup_handlers({
   function (server_name)
@@ -88,3 +90,5 @@ mason_lsp.setup_handlers({
   end,
 })
 
+mason_dap.setup()
+mason_dap.setup_handlers({})

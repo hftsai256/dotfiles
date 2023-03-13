@@ -31,7 +31,7 @@ wo.cursorline = true
 wo.wrap = false
 
 -- GUI Font
-opt.guifont = { "Fira Code Regular Nerd Font Complete:h12" }
+opt.guifont = { "FiraCode NF:h9" }
 
 -- Load Modules
 require("plugin")
