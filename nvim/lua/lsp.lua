@@ -1,7 +1,9 @@
-vim.g.coq_settings = { auto_start = "shut-up" }
-
-local nvim_lsp = require("lspconfig")
 local coq = require("coq")
+local mason = require("mason")
+local nvim_lsp = require("lspconfig")
+local mason_lsp = require("mason-lspconfig")
+
+vim.g.coq_settings = { auto_start = "shut-up" }
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -47,27 +49,51 @@ local on_attach = function(client, bufnr)
   buf_set_keymap("i", "<S-Tab>", [[v:lua.smart_stab()]], { expr = true, noremap = true })
 end
 
--- Use a loop to conveniently call 'setup' on multiple servers and
--- map buffer local keybindings when the language server attaches
-local servers = {
-  {
-    name = "clangd",
-    -- opts = {compilationDatabaseDirectory = 'build',
-    --         cache = {directory='/tmp/ccls-cache'}}
-    opts = { filetypes = { "c", "cc", "cpp", "objc", "objcpp" } },
+
+local lsp_opts = {
+  ["clangd"] = {
+    filetypes = { "c", "cc", "cpp", "objc", "objcpp" }
   },
-  { name = "pyright", opts = {} },
-  { name = "bashls", opts = {} },
-  { name = "lua_ls", opts = {} },
-  { name = "cmake", opts = {} },
+
+  ["pyright"] = {
+    settings = {
+      python = {
+        analysis = {
+          typeCheckingMode = "off",
+        },
+      },
+    },
+  },
+
 }
 
-for i, lsp in ipairs(servers) do
-  nvim_lsp[lsp.name].setup(coq.lsp_ensure_capabilities({
-    init_options = lsp.opts,
-    on_attach = on_attach,
-    flags = {
-      debounce_text_changes = 150,
-    },
-  }))
-end
+
+mason.setup()
+mason_lsp.setup()
+mason_lsp.setup_handlers({
+  function (server_name)
+    local opts = coq.lsp_ensure_capabilities({
+      init_options = lsp_opts[server_name] or {},
+      on_attach = on_attach,
+      flags = {
+        debounce_text_changes = 150,
+      },
+    })
+
+    nvim_lsp[server_name].setup(opts)
+  end,
+})
+
+
+--for i, lsp in ipairs(servers) do
+--  nvim_lsp[lsp.name].setup(coq.lsp_ensure_capabilities({
+--   init_options = lsp.opts,
+--    on_attach = on_attach,
+--    flags = {
+--      debounce_text_changes = 150,
+--    },
+--  }))
+--end
+
+-- Mason LSP automatic configure
+

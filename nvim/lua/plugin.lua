@@ -56,9 +56,6 @@ packer.startup(function()
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
   })
 
-  -- LSP
-  use("neovim/nvim-lspconfig")
-
   -- Completion
   use({
     "ms-jpq/coq_nvim",
@@ -66,6 +63,15 @@ packer.startup(function()
       { "ms-jpq/coq.artifacts", branch = "artifacts" },
       { "ms-jpq/coq.thirdparty", branch = "3p" },
     },
+  })
+
+  -- Language Server Manager
+  use({
+    "williamboman/mason.nvim",
+    requires = {
+      "neovim/nvim-lspconfig",
+      "williamboman/mason-lspconfig.nvim",
+    }
   })
 
   -- Rooter
