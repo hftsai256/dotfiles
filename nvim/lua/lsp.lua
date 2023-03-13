@@ -56,15 +56,23 @@ local lsp_opts = {
   },
 
   ["pyright"] = {
-    settings = {
-      python = {
-        analysis = {
-          typeCheckingMode = "off",
-        },
-      },
-    },
+    python = { analysis = {
+      typeCheckingMode = "off",
+    }},
   },
 
+  ["lua_ls"] = {
+    Lua = {
+      semantic = { enable = false },
+      diagnostics = {
+        globals = { "vim" },
+      },
+      workspace = {
+        library = {
+          [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+          [vim.fn.stdpath "config" .. "/lua"] = true,
+        },
+  }}},
 }
 
 
@@ -72,12 +80,10 @@ mason.setup()
 mason_lsp.setup()
 mason_lsp.setup_handlers({
   function (server_name)
-    local opts = coq.lsp_ensure_capabilities({
-      init_options = lsp_opts[server_name] or {},
+    print(server_name)
+    local opts = ({
+      settings = lsp_opts[server_name] or {},
       on_attach = on_attach,
-      flags = {
-        debounce_text_changes = 150,
-      },
     })
 
     nvim_lsp[server_name].setup(opts)
