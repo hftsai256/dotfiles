@@ -75,12 +75,10 @@ local lsp_opts = {
   }}},
 }
 
-
 mason.setup()
 mason_lsp.setup()
 mason_lsp.setup_handlers({
   function (server_name)
-    print(server_name)
     local opts = ({
       settings = lsp_opts[server_name] or {},
       on_attach = on_attach,
@@ -89,17 +87,4 @@ mason_lsp.setup_handlers({
     nvim_lsp[server_name].setup(opts)
   end,
 })
-
-
---for i, lsp in ipairs(servers) do
---  nvim_lsp[lsp.name].setup(coq.lsp_ensure_capabilities({
---   init_options = lsp.opts,
---    on_attach = on_attach,
---    flags = {
---      debounce_text_changes = 150,
---    },
---  }))
---end
-
--- Mason LSP automatic configure
 
