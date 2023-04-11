@@ -18,7 +18,7 @@ if [[ "$OSTYPE" =~ ^darwin ]]; then
 fi
 
 # Load Debian based Init Scripts
-if which apt-get 2>&1 > /dev/null; then
+if which apt-get >/dev/null 2>&1; then
 	include ${DOTFILES}/init/debian
 fi
 

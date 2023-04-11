@@ -94,5 +94,4 @@ mason_lsp.setup_handlers({
 })
 
 mason_dap.setup()
-mason_dap.setup_handlers({})
 
