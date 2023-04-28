@@ -1,0 +1,10 @@
+exec "$scriptd/export_envs.sh"
+
+exec "$scriptd/sway-idle.sh"
+exec "waybar -c $confd/waybar.conf -s $confd/waybar.css"
+exec "/usr/bin/nm-applet --indicator"
+exec mako
+
+exec --no-startup-id /usr/lib/pam_kwallet_init
+
+

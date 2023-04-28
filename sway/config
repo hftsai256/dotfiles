@@ -7,5 +7,6 @@ set $scriptd $rootd/scripts
 set $term foot
 set $menu wofi -s $confd/wofi.css
 
+include init
 include ./sway.d/*
 
