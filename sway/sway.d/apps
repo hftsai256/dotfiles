@@ -1,0 +1,10 @@
+for_window [app_id="pinentry-qt"] {
+  move position center
+  floating enable
+}
+for_window [app_id="pavucontrol"] {
+  floating enable
+}
+for_window [app_id="wdisplays"] {
+  floating enable
+}

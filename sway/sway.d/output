@@ -1,0 +1,25 @@
+
+output "HP Inc. HP Z27n G2 6CM0150NZB" {
+# Effective resolution: 2560x1440
+    resolution 2560x1440
+    scale 1
+    scale_filter smart
+    position 2080,0
+}
+
+output "Sharp Corporation 0x1548 Unknown" {
+# Effective resolution: 1600x1000
+    resolution 1920x1200
+    scale 1.2
+    scale_filter smart
+    position 2560,1440
+}
+
+output "ASUSTek COMPUTER INC ASUS VP28U 0x00000F35" {
+# Effective resolution 2560x1440
+    resolution 3840x2160
+    scale 1.5
+    scale_filter smart
+    position 0,1440
+}
+

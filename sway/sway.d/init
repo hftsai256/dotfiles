@@ -1,0 +1,10 @@
+exec "$scriptd/sway-idle.sh"
+exec "waybar -c $confd/waybar.conf -s $confd/waybar.css"
+exec "/usr/bin/nm-applet --indicator"
+exec mako
+
+exec --no-startup-id /usr/lib/pam_kwallet_init
+
+exec "systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+exec "dbus-ipdate-activation-environent --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+
