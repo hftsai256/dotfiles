@@ -2,15 +2,19 @@ set $mod Mod4
 
 # start a terminal
 bindsym $mod+Ctrl+t exec $term -c $confd/foot.conf
-
-# start Dolphin
 bindsym $mod+Ctrl+e exec dolphin
+bindsym $mod+Ctrl+b exec firefox
+bindsym $mod+Ctrl+m exec thunderbird
 
 # kill focused window
 bindsym $mod+q kill
 
 # start your launcher
 bindsym $mod+Space exec $menu -S drun
+
+# Screenshots
+bindsym $mod+Ctrl+Shift+3 exec grim
+bindsym $mod+Ctrl+Shift+4 exec grim -g "$(slurp)"
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.

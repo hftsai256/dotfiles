@@ -21,8 +21,6 @@ o.softtabstop = 4
 o.shiftwidth = 4
 o.backspace = "indent,eol,start"
 o.expandtab = true
-o.background = "dark"
-o.termguicolors = true
 bo.autoindent = true
 bo.smartindent = true
 wo.number = true
@@ -31,7 +29,7 @@ wo.cursorline = true
 wo.wrap = false
 
 -- GUI Font
-opt.guifont = { "FiraCode NF:h9" }
+opt.guifont = { "monospace:h9" }
 
 -- Load Modules
 require("plugin")
@@ -52,6 +50,8 @@ function _G.put(...)
 end
 
 -- Color Scheme
+o.background = "dark"
+o.termguicolors = true
 vim.cmd([[colorscheme hybrid]])
 -- require('hybrid').setup()
 
@@ -59,7 +59,7 @@ vim.cmd([[colorscheme hybrid]])
 require("lualine").setup({
   options = {
     icons_enabled = true,
-    theme = "Tomorrow",
+    theme = "jellybeans",
     always_divide_middle = true,
   },
   sections = {

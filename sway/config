@@ -1,4 +1,4 @@
-xwayland disable
+#xwayland disable
 
 set $rootd $HOME/.config/sway
 set $confd $rootd/modules.d

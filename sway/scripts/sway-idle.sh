@@ -1,36 +1,41 @@
 #!/usr/bin/env bash
 # Adapted from https://unix.stackexchange.com/questions/591621/how-can-i-reload-swayidle-swaylock
 
+LOCK_CMD="swaylock-fancy --daemonize --ignore-empty-password"
 SELF=$(realpath $0)
+
 [[ "$SWAYSOCK" ]] && {
-    TIMEOUT=300
+    IDLE_GAP=5
+    IDLE_TIMEOUT=300
+    LOCK_TIMEOUT=600
+    SUSP_TIMEOUT=1800
 
     case "$1" in
         lock-now)
-            BG='&'
-            [[ "$2" == "wait" ]] && BG=''
-            swaylock-fancy 
+            [[ "$2" == "wait" ]] && BG='' || BG=&
+            $LOCK_CMD $BG
             ;;
 
         lock-off)
             pkill swayidle
             swayidle -w \
-                timeout $TIMEOUT  "swaymsg 'output * dpms off'" \
-                resume            "swaymsg 'output * dpms on'" \
-                before-sleep      "$SELF lock-now wait; $SELF enable-lock" &
+                timeout $IDLE_TIMEOUT "swaymsg 'output * dpms off'" \
+                    resume "swaymsg 'output * dpms on'" \
+                before-sleep "$SELF lock-now wait; $SELF enable-lock" &
             ;;
 
         enable-lock|*)
             pkill swayidle
             swayidle -w \
-                timeout $TIMEOUT                "swaymsg 'output * dpms off'"  resume "swaymsg 'output * dpms on'" \
-                timeout $(( TIMEOUT * 2 ))      "swaymsg 'output * dpms on'; $SELF lock-now" \
-                timeout $(( TIMEOUT * 3 ))      "swaymsg 'output * dpms off'" resume "swaymsg 'output * dpms on'" \
-                timeout $(( TIMEOUT * 4 ))      "sudo systemctl suspend" \
-                before-sleep                    "$SELF lock-now wait" &
+                timeout $IDLE_TIMEOUT "swaymsg 'output * dpms off'" \
+                    resume "swaymsg 'output * dpms on'" \
+                timeout $LOCK_TIMEOUT "swaymsg 'output * dpms on'; $SELF lock-now" \
+                timeout $((LOCK_TIMEOUT+IDLE_GAP)) "swaymsg 'output * dpms off'" \
+                    resume "swaymsg 'output * dpms on'" \
+                timeout $SUSP_TIMEOUT "systemctl suspend" \
+                before-sleep "$SELF lock-now wait" &
             ;;
     esac
 
-    #ps -ef |grep '[s]wayidle'
     exit $?
 }

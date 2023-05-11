@@ -7,3 +7,5 @@ exec mako
 
 exec --no-startup-id /usr/lib/pam_kwallet_init
 
+exec_always fcitx5 -d --replace
+

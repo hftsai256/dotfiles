@@ -1,6 +1,5 @@
 default_border pixel 4
 gaps inner 10
 
-#set $wallpapers_path /usr/share/wallpapers
-output * bg /usr/share/wallpapers/Patak/contents/images/5120x2880.png stretch
-#output * bg /usr/share/wallpapers/SafeLanding/contents/images/5120x2880.jpg stretch
+set $wallpapers $HOME/.config/sway/wallpapers
+exec_always swaybg -i $wallpapers/sway_bubyo.jpg

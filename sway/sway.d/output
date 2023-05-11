@@ -1,9 +1,13 @@
+set $laptop eDP-1
+bindswitch --reload lid:on output $laptop disable
+bindswitch --reload lid:off output $laptop enable
 
 output "HP Inc. HP Z27n G2 6CM0150NZB" {
 # Effective resolution: 2560x1440
     resolution 2560x1440
     scale 1
-    scale_filter smart
+    scale_filter linear
+    subpixel rgb
     position 2080,0
 }
 
