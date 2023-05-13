@@ -3,8 +3,8 @@ set $mod Mod4
 # start a terminal
 bindsym $mod+Ctrl+t exec $term -c $confd/foot.conf
 bindsym $mod+Ctrl+e exec dolphin
-bindsym $mod+Ctrl+b exec firefox
-bindsym $mod+Ctrl+m exec thunderbird
+bindsym $mod+Ctrl+b exec MOZ_ENABLE_WAYLAND=1 MOZ_ACCELERATED=1 MOZ_WEBRENDER=1 firefox
+bindsym $mod+Ctrl+m exec MOZ_ENABLE_WAYLAND=1 MOZ_ACCELERATED=1 MOZ_WEBRENDER=1 thunderbird
 
 # kill focused window
 bindsym $mod+q kill

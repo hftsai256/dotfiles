@@ -3,3 +3,5 @@ gaps inner 10
 
 set $wallpapers $HOME/.config/sway/wallpapers
 exec_always swaybg -i $wallpapers/sway_bubyo.jpg
+
+seat seat0 xcursor_theme breeze_cursors

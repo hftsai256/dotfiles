@@ -1,36 +1,18 @@
 #!/usr/bin/env bash
 export _JAVA_AWT_WM_NONREPARENTING=1
 export QT_AUTO_SCREEN_SCALE_FACTOR=1
-export QT_QPA_PLATFORM=wayland
+export QT_QPA_PLATFORM=wayland-egl
+export QT_QPA_PLATFORMTHEME=qt5ct
 export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-export GTK_USE_PORTAL=1
 export QT_IM_MODULE=fcitx
 export GTK_IM_MODULE=fcitx
 export XMODIFIERS=@im=fcitx
+export GTK_USE_PORTAL=1
+export GDK_BACKEND=wayland
 export SDL_VIDEODRIVER=wayland
 export MOZ_ENABLE_WAYLAND=1
-export MOZ_WEBRENDER=1
 export MOZ_ACCELERATED=1
+export MOZ_WEBRENDER=1
 
-systemctl --user import-environment \
-    WAYLAND_DISPLAY \
-    XDG_CURRENT_DESKTOP \
-    QT_QPA_PLATFORM \
-    QT_AUTO_SCREEN_SCALE_FACTOR \
-    QT_WAYLAND_DISABLE_WINDOWDECORATION \
-    GTK_USE_PORTAL \
-    QT_IM_MODULE \
-    GTK_IM_MODULE \
-    XMODIFIERS
-
-dbus-ipdate-activation-environent --systemd \
-    WAYLAND_DISPLAY \
-    XDG_CURRENT_DESKTOP \
-    QT_QPA_PLATFORM \
-    QT_AUTO_SCREEN_SCALE_FACTOR \
-    QT_WAYLAND_DISABLE_WINDOWDECORATION \
-    GTK_USE_PORTAL \
-    QT_IM_MODULE \
-    GTK_IM_MODULE \
-    XMODIFIERS
+dbus-update-activation-environment --systemd --all
 

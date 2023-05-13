@@ -1,4 +1,5 @@
-#xwayland disable
+xwayland force
+exec "$scriptd/export-envs.sh"
 
 set $rootd $HOME/.config/sway
 set $confd $rootd/modules.d

@@ -6,8 +6,7 @@ output "HP Inc. HP Z27n G2 6CM0150NZB" {
 # Effective resolution: 2560x1440
     resolution 2560x1440
     scale 1
-    scale_filter linear
-    subpixel rgb
+    scale_filter smart
     position 2080,0
 }
 

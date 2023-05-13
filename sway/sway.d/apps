@@ -12,4 +12,5 @@ for_window {
   [app_id="org.kde.gwenview"] floating enable
   [app_id="org.kde.knetattach"] floating enable
   [app_id="org.remmina.Remmina"] floating enable
+  [app_id="org.kde.polkit-kde-authentication-agent-1"] floating enable
 }
