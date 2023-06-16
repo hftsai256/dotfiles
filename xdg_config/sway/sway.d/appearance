@@ -1,0 +1,15 @@
+set $wallpapers $HOME/.dotfiles/wallpapers
+exec swaybg -i $wallpapers/hanabi.jpg
+
+exec --no-startup-id ~/.third-party-repos/sway-alternating-layout/alternating_layouts.py
+
+default_border pixel 4
+gaps inner 10
+
+seat seat0 xcursor_theme breeze_cursors
+
+font pango:system-ui 10
+
+workspace  9 output eDP-1
+workspace 10 output eDP-1
+

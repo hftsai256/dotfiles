@@ -1,0 +1,44 @@
+/*
+*
+* Base16 Hybrid
+* Adapted from https://github.com/w0ng/vim-hybrid
+*
+*/
+
+@define-color term00 #282a2e;
+@define-color term01 #a54242;
+@define-color term02 #8c9440;
+@define-color term03 #de935f;
+@define-color term04 #5f819d;
+@define-color term05 #85678f;
+@define-color term06 #5e8d87;
+@define-color term07 #707880;
+@define-color term08 #373b41;
+@define-color term09 #cc6666;
+@define-color term10 #b5bd68;
+@define-color term11 #f0c674;
+@define-color term12 #81a2be;
+@define-color term13 #b294bb;
+@define-color term14 #8abeb7;
+@define-color term15 #ffffff;
+
+@define-color termBG #1d1f21;
+@define-color termFG #c5c8c6;
+
+@define-color base00 #1d1f21;
+@define-color base01 #232c31;
+@define-color base02 #373b41;
+@define-color base03 #6c7a80;
+@define-color base04 #707880;
+@define-color base05 #969896;
+@define-color base06 #c5c8c6;
+@define-color base07 #ffffff;
+@define-color base08 #cc6666;
+@define-color base09 #de935f;
+@define-color base0A #f0c674;
+@define-color base0B #b5bd68;
+@define-color base0C #8abeb7;
+@define-color base0D #81a2be;
+@define-color base0E #b294bb;
+@define-color base0F #a54242;
+

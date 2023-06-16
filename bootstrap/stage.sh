@@ -115,6 +115,10 @@ if [[ $(util_getos) =~ osx ]]; then
     fi
 fi
 
+# Sway Layouts
+[[ $(which sway) ]] && \
+    git clone https://github.com/greole/sway-alternating-layout.git ${REPOS}/sway-alternating-layout
+
 # Link zshrc
 if [[ ! -L ${HOME}/.zshrc ]]; then
     ln -s ${DOTFILES}/zsh/zshrc.zsh ${HOME}/.zshrc

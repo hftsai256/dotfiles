@@ -1,18 +1,12 @@
+# MacOS thumbnails
 .DS_Store
 
-# User specified data
-pyvenv
-wine
-
-# Sublime text cache
-sublime/user/*.cache
-sublime/user/*.last-run
-sublime/user/*.*-ca-bundle
-sublime/user/*.crt
+# Python cache
+**/__pycache__
 
 # Vim Plugins (Shall be pulled independently)
-nvim/plugin
-nvim/undodir
+xdg_config/nvim/plugin
+xdg_config/nvim/undodir
 
 # Other repository
 rime-liur-lua/
@@ -22,3 +16,4 @@ init/secret
 
 # Identity sensitive files
 ssh/config
+

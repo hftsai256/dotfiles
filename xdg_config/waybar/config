@@ -1,0 +1,141 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 24,
+        "modules-left": ["sway/workspaces", "wlr/workspaces", "sway/mode", "hyprland/submap", "sway/window", "hyprland/window"],
+    "modules-center": ["clock"],
+    "modules-right": ["tray", "idle_inhibitor", "temperature", "cpu", "memory", "battery", "network", "pulseaudio", "custom/powermenu"],
+    "sway/mode": {
+        "format": "mode  {}"
+    },
+    "hyprland/submap": {
+        "format": "mode  {}"
+    },
+    "wlr/workspaces": { 
+        "on-click": "activate",
+        "disable-scroll": true,
+        "all-outputs": false,
+        "disable-markup": false,
+    },
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "disable-markup": false,
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "",
+            "deactivated": "󰓠"
+        }
+    },
+    "tray": {
+        "icon-size": 20,
+        "spacing": 8
+    },
+    "sway/window": {
+        "max-length": 60,
+        "tooltip": false,
+    },
+    "clock": {
+        "format": "{:%a %d %b %H:%M}",
+        "format-alt": "{:%A, %B %d, %Y (%R)}",
+    },
+    "cpu": {
+        "format": "",
+        "on-click-right": "alacritty -e btop",
+    },
+    "memory": {
+        "interval": 30,
+        "format": "",
+        "on-click-right": "alacritty -e btop",
+    },
+    "custom/powermenu": {
+        "return-type": "json",
+        "format": "{icon} {}",
+        "format-icons": [""],
+        "escape": true,
+        "on-click": "~/.config/sway/scripts/wofi-power.sh",
+        "tooltip": false
+    },
+    "custom/recorder": {
+		"format": "!",
+		"return-type": "json",
+		"interval": 3,
+		"exec": "echo '{\"class\": \"recording\"}'",
+		"exec-if": "pgrep wf-recorder",
+        "tooltip": false,
+        "on-click": "killall -s SIGINT wf-recorder"
+	},
+    "custom/wl-gammarelay-brightness": {
+        "format": "{icon}{}%",
+        "format-icons": ["󰃞"],
+        "exec": "wl-gammarelay-rs watch {bp}",
+        "on-scroll-up": "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateBrightness d -0.02",
+        "on-scroll-down": "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateBrightness d +0.02",
+        "on-click-right": "busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 1",
+        "tooltip": false
+    },
+    "custom/wl-gammarelay-gamma": {
+        "format": "󱃮{}",
+        "exec": "wl-gammarelay-rs watch {g}",
+        "on-scroll-up": "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateGamma d +0.02",
+        "on-scroll-down": "busctl --user -- call rs.wl-gammarelay / rs.wl.gammarelay UpdateGamma d -0.02",
+        "on-click-right": "busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Gamma d 1",
+        "tooltip": false
+    },
+    "battery": {
+        "format": "{icon}",
+        "format-icons": ["", "", "", "", ""],
+        "format-time": " ({H}h{M}m)",
+        "format-charging": "{icon}",
+        "format-full": "{icon}",
+        "interval": 15,
+        "states": {
+            "warning": 25,
+            "critical": 10
+        },
+        "on-click-right": "alacritty -e btop",
+    },
+    "network": {
+        "format": "{icon}",
+        "format-alt": "︁ ︁{ipaddr}/{cidr} {icon}",
+        "format-alt-click": "click-left",
+        "format-wifi": " {essid} ({signalStrength}%)",
+        "format-ethernet": "󰈀{ifname}",
+        "format-disconnected": "⚠ Disconnected",
+        "on-click-right": "nm-connection-editor"
+    },
+    "pulseaudio": {
+        "format": "{icon:2}{volume}%",
+        "format-bluetooth": "{icon:2}{volume}%",
+        "format-muted": "󰝟",
+        "format-icons": {
+            "headphone": [" ", " ", " ", " "],
+            "default": ["", "", "", ""]
+        },
+        "scroll-step": 5,
+        "on-click-right": "pavucontrol",
+        "tooltip": true
+    },
+    "backlight": {
+        "format": "{icon}",
+        "format-icons": ["", ""],
+        "on-scroll-up": "brightnessctl set +5%",
+        "on-scroll-down": "brightnessctl set 5%-",
+        "on-click-right": "brightnessctl set 25%"
+    },
+    "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "critical-threshold": 75,
+        "interval": 5,
+        "format": "{icon}",
+        "format-icons": [
+            "", // Icon: temperature-empty
+            "", // Icon: temperature-quarter
+            "", // Icon: temperature-half
+            "", // Icon: temperature-three-quarters
+            ""  // Icon: temperature-full
+        ]
+    }
+}

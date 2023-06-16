@@ -1,0 +1,12 @@
+exec "$scriptd/sway-idle.sh"
+exec "$scriptd/powertune.sh"
+exec_always "[[ $(pgrep waybar) ]] && pkill waybar; exec waybar"
+exec_always "[[ $(pgrep kanshi) ]] && pkill kanshi; exec kanshi"
+exec_always "[[ $(pgrep mako) ]] && pkill mako; exec mako"
+
+exec --no-startup-id dolphin --daemon
+exec --no-startup-id /usr/lib/pam_kwallet_init
+exec --no-startup-id /usr/lib/polkit-kde-authentication-agent-1
+
+exec_always fcitx5 -d --replace
+
