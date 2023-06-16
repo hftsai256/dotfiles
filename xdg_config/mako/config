@@ -1,0 +1,10 @@
+font=sans-serif 10
+text-color=#C5C8C6
+
+background-color=#373b41c8
+
+border-color=#5F819D
+border-radius=4
+
+default-timeout=10000
+

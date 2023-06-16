@@ -6,7 +6,7 @@ set $confd $rootd/modules.d
 set $scriptd $rootd/scripts
 
 #set $term flatpak run org.wezfurlong.wezterm
-set $term alacritty
+set $term foot
 set $menu wofi
 
 include ./sway.d/*
