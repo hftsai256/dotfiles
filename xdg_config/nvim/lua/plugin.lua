@@ -18,11 +18,14 @@ packer.init({
   package_root = util.join_paths(vim.fn.stdpath("data"), "site", "pack"),
 })
 
-packer.startup(function()
-  local use = use
-
+packer.startup(function(use)
   -- Packer
-  use("wbthomason/packer.nvim")
+  use({
+    "wbthomason/packer.nvim",
+    run = function()
+      pcall(vim.cmd, "MasonUpdate")
+    end
+  })
 
   -- Color Scheme
   use("w0ng/vim-hybrid")
@@ -57,14 +60,43 @@ packer.startup(function()
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
   })
 
-  -- Completion
+  -- Language Server
+  use("neovim/nvim-lspconfig")
+
   use({
-    "ms-jpq/coq_nvim",
+    "glepnir/lspsaga.nvim",
+    opt = true,
+    branch = "main",
+    event = "LspAttach",
+    config = function()
+      require("lspsaga").setup({})
+    end,
     requires = {
-      { "ms-jpq/coq.artifacts", branch = "artifacts" },
-      { "ms-jpq/coq.thirdparty", branch = "3p" },
-    },
+      "neovim/nvim-lspconfig",
+      "nvim-tree/nvim-web-devicons",
+      --Please make sure you install markdown and markdown_inline parser
+      "nvim-treesitter/nvim-treesitter"
+    }
   })
+
+  use({
+    "VonHeikemen/lsp-zero.nvim",
+    branch = "v2.x"
+  })
+
+  -- Completion
+  use("hrsh7th/nvim-cmp")
+  use("hrsh7th/cmp-nvim-lsp")
+  use("L3MON4D3/LuaSnip")
+
+  --  use({
+  --    "ms-jpq/coq_nvim",
+  --    requires = {
+  --      "neovim/nvim-lspconfig",
+  --      { "ms-jpq/coq.artifacts", branch = "artifacts" },
+  --      { "ms-jpq/coq.thirdparty", branch = "3p" },
+  --    },
+  --  })
 
   -- Language Server Manager
   use({
@@ -82,7 +114,7 @@ packer.startup(function()
     "ahmedkhalf/project.nvim",
     config = function()
       require("project_nvim").setup({})
-    end,
+    end
   })
 
   -- Search
@@ -100,8 +132,16 @@ packer.startup(function()
   use({
     "nvim-treesitter/nvim-treesitter",
     run = ":TSUpdate",
+    config = function()
+      require("nvim-treesitter.configs").setup({
+        ensure_installed = {"c", "cpp", "cmake", "python", "markdown", "markdown_inline", "jsonc", "rust", "lua"},
+      })
+    end
   })
 
   -- Git Diff
   use("sindrets/diffview.nvim")
+
+  -- Jupyter Connector
+  use("untitled-ai/jupyter_ascending.vim")
 end)

@@ -53,6 +53,7 @@ end
 o.background = "dark"
 o.termguicolors = true
 vim.cmd([[colorscheme hybrid]])
+vim.cmd([[hi Normal guibg=None ctermbg=None]])
 -- require('hybrid').setup()
 
 -- Lualine
