@@ -16,9 +16,6 @@ o.incsearch = true
 o.hlsearch = true
 o.hidden = true
 o.completeopt = "menuone,noinsert,noselect"
-o.tabstop = 4
-o.softtabstop = 4
-o.shiftwidth = 4
 o.backspace = "indent,eol,start"
 o.expandtab = true
 bo.autoindent = true
@@ -30,13 +27,6 @@ wo.wrap = false
 
 -- GUI Font
 opt.guifont = { "monospace:h9" }
-
--- Load Modules
-require("plugin")
-require("lsp")
-require("fuzzysearch")
-require("keybindings")
-require("filemanager")
 
 function _G.put(...)
   local objects = {}
@@ -84,3 +74,11 @@ require("lualine").setup({
   inactive_winbar = {},
   extensions = {},
 })
+
+-- Load Modules
+require("plugin")
+require("lsp")
+require("fuzzysearch")
+require("keybindings")
+require("filemanager")
+

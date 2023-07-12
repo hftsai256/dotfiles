@@ -1,69 +1,14 @@
+vim.lsp.set_log_level("ERROR")
 require('mason').setup()
 require('mason-lspconfig').setup()
 
 local lsp = require("lsp-zero").preset({})
-local lspconfig = require("lspconfig")
-local cmp = require("cmp")
-local keymap = require("cmp.utils.keymap")
-local luasnip = require("luasnip")
 
 lsp.on_attach(function(client, bufnr)
   lsp.default_keymaps({buffer = bufnr})
 end)
 
-lsp.setup_nvim_cmp({
-  mapping = {
-    -- from: https://github.com/hrsh7th/nvim-cmp/wiki/Example-mappings#intellij-like-mapping
-    ["<Tab>"] = cmp.mapping(
-      function(fallback)
-        -- This little snippet will confirm with tab, and if no entry is selected, will confirm the first item
-        if cmp.visible() then
-          print("cmp visible");
-          local entry = cmp.get_selected_entry()
-          if not entry then
-            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
-          else
-            cmp.confirm()
-          end
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        else
-          if vim.fn.pumvisible() == 0 then
-            vim.api.nvim_feedkeys(keymap.t('<C-z>'), 'in', true)
-          else
-            vim.api.nvim_feedkeys(keymap.t('<C-n>'), 'in', true)
-          end
-        end
-      end, {"i","s","c",}),
-    ["<S-Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        if vim.fn.pumvisible() == 0 then
-          vim.api.nvim_feedkeys(keymap.t('<C-z><C-p><C-p>'), 'in', true)
-        else
-          vim.api.nvim_feedkeys(keymap.t('<C-p>'), 'in', true)
-        end
-      end
-    end, {"i", "s"}),
-    ['<CR>'] = cmp.mapping.confirm(),
-    ['<Down>'] = cmp.mapping.select_next_item(),
-    ['<Up>'] = cmp.mapping.select_prev_item(),
-  }
-})
-
--- (Optional) Configure lua language server for neovim
-lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
-lspconfig.tsserver.setup({
-  on_attach = function(client, bufnr)
-    lsp.default_keymaps({buffer = bufnr})
-  end
-})
-
 lsp.setup()
-
 local keymap = vim.keymap.set
 
 -- LSP finder - Find the symbol's definition
@@ -151,3 +96,18 @@ keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
 -- Floating terminal
 keymap({"n", "t"}, "<A-t>", "<cmd>Lspsaga term_toggle<CR>")
 
+local cmp = require("cmp")
+cmp.setup({
+  mapping = cmp.mapping.preset.insert({
+    ['<CR>'] = cmp.mapping.confirm({
+      select = true,
+      behavior = cmp.ConfirmBehavior.Replace,
+    })
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'ultisnips' },
+  }, {
+    { name = 'buffer' },
+  }),
+})

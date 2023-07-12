@@ -47,10 +47,21 @@ packer.startup(function(use)
     "Darazaki/indent-o-matic",
     config = function()
       require("indent-o-matic").setup({
-        filetype_ = {
-          standard_widths = { 2, 4 },
-        },
+        standard_widths = { 2, 4 },
+        max_lines = 1024,
+        skip_multiline = true,
       })
+    end,
+  })
+
+  use({
+    "nvimdev/indentmini.nvim",
+    event = "BufEnter",
+    config = function()
+      require("indentmini").setup({
+        char = "│"
+      })
+      vim.cmd.highlight("default link IndentLine NonText")
     end,
   })
 
@@ -64,10 +75,8 @@ packer.startup(function(use)
   use("neovim/nvim-lspconfig")
 
   use({
-    "glepnir/lspsaga.nvim",
-    opt = true,
-    branch = "main",
-    event = "LspAttach",
+    "nvimdev/lspsaga.nvim",
+    after = "nvim-lspconfig",
     config = function()
       require("lspsaga").setup({})
     end,
@@ -79,24 +88,23 @@ packer.startup(function(use)
     }
   })
 
-  use({
-    "VonHeikemen/lsp-zero.nvim",
-    branch = "v2.x"
-  })
+ use({
+   "VonHeikemen/lsp-zero.nvim",
+   branch = "v2.x"
+ })
 
   -- Completion
-  use("hrsh7th/nvim-cmp")
-  use("hrsh7th/cmp-nvim-lsp")
-  use("L3MON4D3/LuaSnip")
-
-  --  use({
-  --    "ms-jpq/coq_nvim",
-  --    requires = {
-  --      "neovim/nvim-lspconfig",
-  --      { "ms-jpq/coq.artifacts", branch = "artifacts" },
-  --      { "ms-jpq/coq.thirdparty", branch = "3p" },
-  --    },
-  --  })
+  use({
+    "hrsh7th/nvim-cmp",
+    requires = {
+      "neovim/nvim-lspconfig",
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      "hrsh7th/cmp-cmdline",
+      "L3MON4D3/LuaSnip"
+    }
+  })
 
   -- Language Server Manager
   use({
