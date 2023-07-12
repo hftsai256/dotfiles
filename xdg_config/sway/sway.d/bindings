@@ -109,3 +109,8 @@ bindsym XF86AudioMicMute exec pactl set-source-mute  alsa_input.pci-0000_00_1b.0
 bindsym XF86MonBrightnessUp exec brightnessctl -q s +10%
 bindsym XF86MonBrightnessDown exec brightnessctl -q s 10%-
 
+# Disable built-in monitor when lid closed
+set $laptop eDP-1
+bindswitch --reload lid:on output $laptop disable
+bindswitch --reload lid:off output $laptop enable
+
