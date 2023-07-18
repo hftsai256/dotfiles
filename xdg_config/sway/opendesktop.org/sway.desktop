@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Sway
-Comment=An i3-compatible Wayland compositor
-Exec=env \
-MOZ_ENABLE_WAYLAND=1 \
-MOZ_ACCELERATED=1 \
-MOZ_WEBRENDER=1 \
-sway
-Type=Application
