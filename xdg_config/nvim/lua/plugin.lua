@@ -88,6 +88,19 @@ packer.startup(function(use)
     }
   })
 
+  use({
+    "simrat39/symbols-outline.nvim",
+    after = {
+      "nvim-lspconfig",
+    },
+    config = function()
+      require("symbols-outline").setup()
+    end,
+    requires = {
+      "neovim/nvim-lspconfig",
+    }
+  })
+
  use({
    "VonHeikemen/lsp-zero.nvim",
    branch = "v2.x"

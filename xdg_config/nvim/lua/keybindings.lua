@@ -8,6 +8,6 @@ exec.abbrev("#i", "#include")
 exec.abbrev("#d", "#define")
 
 -- User Keybindings
-opt = { noremap = true, silent = true }
+local opt = { noremap = true, silent = true }
 keymap("n", "<leader><Space>", [[<Cmd>nohlsearch<CR>]], opt)
 

@@ -18,4 +18,5 @@ require("nvim-tree").setup({
 -- Keybindings
 local opt = { noremap = true, silent = true }
 keymap("n", "<C-e>", "<cmd>NvimTreeToggle<CR>", opt)
+keymap("n", "<C-s>", "<cmd>SymbolsOutline<CR>", opt)
 

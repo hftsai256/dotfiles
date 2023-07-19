@@ -80,5 +80,5 @@ require("plugin")
 require("lsp")
 require("fuzzysearch")
 require("keybindings")
-require("filemanager")
+require("browsers")
 
