@@ -1,8 +1,8 @@
 xwayland force
-#exec "dbus-update-activation-environment --systemd --all"
-exec systemctl --user import-environment GTK_USE_PORTAL
-exec hash dbus-update-activation-environment 2>/dev/null && \
-     dbus-update-activation-environment --systemd GTK_USE_PORTAL
+exec "dbus-update-activation-environment --systemd --all"
+#exec systemctl --user import-environment QT_QPA_PLATFORM
+#exec hash dbus-update-activation-environment 2>/dev/null && \
+#     dbus-update-activation-environment --systemd QT_QPA_PLATFORM
 
 set $rootd $HOME/.config/sway
 set $confd $rootd/modules.d

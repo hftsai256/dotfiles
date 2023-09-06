@@ -19,7 +19,7 @@ return {
     { family = "Noto Sans CJK SC" },
     { family = "Noto Sans CJK JP" },
     { family = "Noto Sans CJK KR" }}),
-  font_size = 9,
+  font_size = 10,
   freetype_load_flags = "NO_HINTING | NO_BITMAP",
   freetype_load_target = "Light",
 

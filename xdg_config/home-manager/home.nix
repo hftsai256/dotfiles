@@ -1,4 +1,18 @@
-{ config, pkgs, ... }: let nixgl = import <nixgl> {};
+{ config, pkgs, ... }:
+
+let
+  unstablepkgs = import <nixpkgs-unstable> {
+    config = {
+      allowUnfree = true;
+    };
+  };
+  nixpkgs = import <nixpkgs> {
+    config = {
+      allowUnfree = true;
+    };
+  };
+  nixgl = import (builtins.fetchTarball "https://github.com/guibou/nixGL/archive/main.tar.gz") {};
+
 in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -17,18 +31,19 @@ in {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
-    pkgs.swayfx
     nixgl.auto.nixGLDefault
     nixgl.nixVulkanIntel
-    # # Adds the 'hello' command to your environment. It prints a friendly
-    # # "Hello, world!" when run.
-    # pkgs.hello
+    nixpkgs.direnv
 
-    # # It is sometimes useful to fine-tune packages, for example, by applying
-    # # overrides. You can do that directly here, just don't forget the
-    # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
+    #nixpkgs.fzf
+    #nixpkgs.ripgrep
+    #nixpkgs.btop
+    #nixpkgs.lf
+    #nixpkgs.neovim
+    #nixpkgs.fira-code
+    #(nixpkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+    unstablepkgs.drawio
+    unstablepkgs.azuredatastudio
 
     # # You can also create simple shell scripts directly inside your
     # # configuration. For example, this adds a command 'my-hello' to your

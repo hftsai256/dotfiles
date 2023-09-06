@@ -72,7 +72,30 @@ packer.startup(function(use)
   })
 
   -- Language Server
-  use("neovim/nvim-lspconfig")
+  --use("neovim/nvim-lspconfig")
+  --use {
+  --  "lewis6991/hover.nvim",
+  --  config = function()
+  --    require("hover").setup {
+  --      init = function()
+  --        -- Require providers
+  --        require("hover.providers.lsp")
+  --        require('hover.providers.gh')
+  --        require('hover.providers.gh_user')
+  --        require('hover.providers.jira')
+  --        -- require('hover.providers.man')
+  --        -- require('hover.providers.dictionary')
+  --      end,
+  --      preview_opts = {
+  --        border = "single"
+  --      },
+  --      -- Whether the contents of a currently open hover window should be moved
+  --      -- to a :h preview-window when pressing the hover keymap.
+  --      preview_window = true,
+  --      title = true
+  --    }
+  --  end
+  --}
 
   use({
     "nvimdev/lspsaga.nvim",
@@ -88,18 +111,18 @@ packer.startup(function(use)
     }
   })
 
-  use({
-    "simrat39/symbols-outline.nvim",
-    after = {
-      "nvim-lspconfig",
-    },
-    config = function()
-      require("symbols-outline").setup()
-    end,
-    requires = {
-      "neovim/nvim-lspconfig",
-    }
-  })
+  --use({
+  --  "simrat39/symbols-outline.nvim",
+  --  after = {
+  --    "nvim-lspconfig",
+  --  },
+  --  config = function()
+  --    require("symbols-outline").setup()
+  --  end,
+  --  requires = {
+  --    "neovim/nvim-lspconfig",
+  --  }
+  --})
 
  use({
    "VonHeikemen/lsp-zero.nvim",
@@ -156,6 +179,7 @@ packer.startup(function(use)
     config = function()
       require("nvim-treesitter.configs").setup({
         ensure_installed = {"c", "cpp", "cmake", "python", "markdown", "markdown_inline", "jsonc", "rust", "lua"},
+        indent = { enable = true },
       })
     end
   })

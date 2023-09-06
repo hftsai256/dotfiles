@@ -5,7 +5,7 @@ require('mason-lspconfig').setup()
 local lsp = require("lsp-zero").preset({})
 
 lsp.on_attach(function(client, bufnr)
-  lsp.default_keymaps({buffer = bufnr})
+  lsp.default_keymaps({ buffer = bufnr })
 end)
 
 lsp.setup()
@@ -18,7 +18,7 @@ local keymap = vim.keymap.set
 keymap("n", "gh", "<cmd>Lspsaga finder<CR>")
 
 -- Code action
-keymap({"n","v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
+keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
 
 -- Rename all occurrences of the hovered word for the selected files
 keymap("n", "gr", "<cmd>Lspsaga rename ++project<CR>")
@@ -72,29 +72,23 @@ keymap("n", "]E", function()
 end)
 
 -- Toggle outline
-keymap("n","<leader>o", "<cmd>Lspsaga outline<CR>")
+keymap("n", "<leader>o", "<cmd>Lspsaga outline<CR>")
+
+-- Toggle outline
+keymap("n", "<leader>f", "<cmd>Lspsaga finder<CR>")
 
 -- Hover Doc
--- If there is no hover doc,
--- there will be a notification stating that
--- there is no information available.
--- To disable it just use ":Lspsaga hover_doc ++quiet"
--- Pressing the key twice will enter the hover window
---keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>")
-
--- If you want to keep the hover window in the top right hand corner,
--- you can pass the ++keep argument
--- Note that if you use hover with ++keep, pressing this key again will
--- close the hover window. If you want to jump to the hover window
--- you should use the wincmd command "<C-w>w"
-keymap("n", "K", "<cmd>Lspsaga hover_doc ++keep<CR>")
+keymap("n", "K", "<cmd>Lspsaga hover_doc<CR>", { desc = "hover.nvim" })
 
 -- Call hierarchy
 keymap("n", "<Leader>ci", "<cmd>Lspsaga incoming_calls<CR>")
 keymap("n", "<Leader>co", "<cmd>Lspsaga outgoing_calls<CR>")
 
 -- Floating terminal
-keymap({"n", "t"}, "<A-t>", "<cmd>Lspsaga term_toggle<CR>")
+keymap({ "n", "t" }, "<A-t>", "<cmd>Lspsaga term_toggle<CR>")
+
+-- Code formatting
+keymap("n", "ff", "<cmd>lua vim.lsp.buf.format()<CR>")
 
 local cmp = require("cmp")
 cmp.setup({
