@@ -1,7 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 export DOTFILES="${HOME}/.dotfiles"
 export REPOS="${HOME}/.third-party-repos"
-export PATH="${PATH}:${DOTFILES}/bin:${HOME}/.local/bin"
+export PATH="${PATH}:${DOTFILES}/bin:${HOME}/.local/bin:${HOME}/.cargo/bin"
 
 # Oh-my-zsh Path
 export ZSH="${REPOS}/zsh/oh-my-zsh"

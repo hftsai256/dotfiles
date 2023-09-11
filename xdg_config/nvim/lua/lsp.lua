@@ -47,7 +47,7 @@ keymap("n", "gT", "<cmd>Lspsaga goto_type_definition<CR>")
 -- Show line diagnostics
 -- You can pass argument ++unfocus to
 -- unfocus the show_line_diagnostics floating window
-keymap("n", "<leader>sl", "<cmd>Lspsaga show_line_diagnostics<CR>")
+keymap("n", "<leader>sl", "<cmd>Lspsaga show_line_diagnostics ++float<CR>")
 
 -- Show buffer diagnostics
 keymap("n", "<leader>sb", "<cmd>Lspsaga show_buf_diagnostics<CR>")

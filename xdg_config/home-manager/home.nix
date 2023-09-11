@@ -35,13 +35,15 @@ in {
     nixgl.nixVulkanIntel
     nixpkgs.direnv
 
-    #nixpkgs.fzf
-    #nixpkgs.ripgrep
-    #nixpkgs.btop
-    #nixpkgs.lf
+    nixpkgs.fzf
+    nixpkgs.ripgrep
+    nixpkgs.btop
+    nixpkgs.lf
+    nixpkgs.jo
     #nixpkgs.neovim
     #nixpkgs.fira-code
     #(nixpkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+    unstablepkgs.eza
     unstablepkgs.drawio
     unstablepkgs.azuredatastudio
 
