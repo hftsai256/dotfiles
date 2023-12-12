@@ -30,7 +30,7 @@ require("telescope").load_extension("fzy_native")
 
 -- Keybindings
 opt = { noremap = true, silent = true }
-keymap("n", "<C-p>", [[<Cmd>lua require('telescope.builtin').find_files()<CR>]], opt)
+keymap("n", "<C-p>", [[<Cmd>lua require('telescope.builtin').find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<CR>]], opt)
 keymap("n", "<Leader>fg", [[<Cmd>lua require("telescope.builtin").live_grep()<CR>]], opt)
 keymap("n", "<Leader>fb", [[<Cmd>lua require("telescope.builtin").buffers()<CR>]], opt)
 keymap("n", "<Leader>fh", [[<Cmd>lua require("telescope.builtin").help_tags()<CR>]], opt)
