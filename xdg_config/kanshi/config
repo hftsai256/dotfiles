@@ -9,6 +9,11 @@ profile {
 }
 
 profile {
+    output "Dell Inc. DELL S2721QS FYCXM43" mode 3840x2160 scale 1.5 position 0,0
+    output "Sharp Corporation 0x1548 Unknown" mode 1920x1200 scale 1.2 position 480,1440
+}
+
+profile {
     output "Sharp Corporation 0x1548 Unknown" mode 1920x1200 scale 1.2 position 0,0
 }
 
