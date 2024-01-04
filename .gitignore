@@ -17,3 +17,5 @@ init/secret
 # Identity sensitive files
 ssh/config
 
+# Nix
+xdg_config/home-manager/result

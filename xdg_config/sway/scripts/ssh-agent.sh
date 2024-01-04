@@ -8,6 +8,6 @@ pgrep -u "$USER" ssh-agent > /dev/null || {
 }
 
 for key in $HOME/.ssh/{id_*,*_rsa}; do
-    ssh-add -k $key 2>&1 | tee -a $HOME/ssh-agent-add.log; 
+    ssh-add -k $key
 done
 
