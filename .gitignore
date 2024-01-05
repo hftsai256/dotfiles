@@ -19,3 +19,4 @@ ssh/config
 
 # Nix
 xdg_config/home-manager/result
+xdg_config/home-manager/ACTIVATED_USER

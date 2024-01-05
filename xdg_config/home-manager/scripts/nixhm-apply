@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+ROOT=$HOME/.config/home-manager
+USER_FILE=$ROOT/ACTIVATED_USER
+
+update() {
+        pushd $ROOT > /dev/null
+        nix flake update
+        popd > /dev/null
+}
+
+apply() {
+        pushd $ROOT > /dev/null
+        nix build .#homeManagerConfigurations.$1.activationPackage \
+                --show-trace \
+                --impure \
+                --extra-experimental-features flakes \
+                --extra-experimental-features nix-command \
+        && ./result/activate
+        popd > /dev/null
+}
+
+user_menu() {
+        unset options i
+        while IFS= read -r -d $'\0' f; do
+                options[i++]="$(basename $f)"
+        done < <(find $ROOT/users -maxdepth 1 -type f -name "*.nix" -print0 )
+
+        PS3="Select user profile: "
+        select opt in "${options[@]}"; do
+                case $opt in
+                *.nix)
+                        echo ${opt%.nix}
+                        break
+                        ;;
+                *)
+                        break
+                        ;;
+                esac
+        done
+}
+
+get_user() {
+        [[ -f $USER_FILE ]] && cat $USER_FILE || (
+                echo $(user_menu) | tee $USER_FILE
+        )
+}
+
+install_nix() {
+        curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install 
+}
+
+active_user=$(get_user)
+command -v nix 2>&1 >/dev/null || install_nix
+
+echo "→ update flake"
+update
+
+echo "→ apply nix environment for user $active_user"
+apply $active_user
+
