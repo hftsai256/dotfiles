@@ -21,6 +21,8 @@
   ];
 
   home.packages = with pkgs; [
+    nixgl.auto.nixGLDefault
+    nixgl.nixVulkanIntel
     kitty
     xclip
   ];
