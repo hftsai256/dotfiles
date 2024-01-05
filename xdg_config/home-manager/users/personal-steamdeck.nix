@@ -13,10 +13,11 @@
   home.sessionPath = [ "$HOME/.local/bin" ];
 
   imports = [
-    ../common/home.nix
-    ../common/nix.nix
-    ../common/fonts
-    ../common/nvim
+    ../modules/home.nix
+    ../modules/nix.nix
+    ../modules/fonts
+    ../modules/nvim
+    ../modules/zsh
   ];
 
   home.packages = with pkgs; [
