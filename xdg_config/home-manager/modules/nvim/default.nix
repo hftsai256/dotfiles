@@ -1,15 +1,5 @@
 { config, pkgs, lib, ... }:
-let
-  pluginGit = ref: rev: repo: pkgs.vimUtils.buildVimPlugin {
-    pname = "${lib.strings.sanitizeDerivationName repo}";
-    version = ref;
-    src = builtins.fetchGit {
-      url = "https://github.com/${repo}.git";
-      ref = ref;
-      rev = rev;
-    };
-  };
-in {
+{
   xdg.configFile."nvim/lua" = {
     source = ./lua;
     recursive = true;
@@ -24,40 +14,51 @@ in {
 
     withNodeJs = true;
 
-    plugins = with pkgs; [
+    plugins = with pkgs.vimPlugins; [
       # Essential library
-      vimPlugins.plenary-nvim
+      plenary-nvim
 
       # Cosmetics
-      vimPlugins.lualine-nvim
-      vimPlugins.vim-hybrid
-      vimPlugins.nvim-web-devicons
-      vimPlugins.indent-o-matic
+      lualine-nvim
+      vim-hybrid
+      nvim-web-devicons
+      indent-o-matic
 
       # Navigation
-      vimPlugins.project-nvim
-      vimPlugins.nvim-tree-lua
-      vimPlugins.telescope-nvim
-      vimPlugins.telescope-fzy-native-nvim
+      project-nvim
+      nvim-tree-lua
+      telescope-nvim
+      telescope-fzy-native-nvim
 
       # LSP
-      vimPlugins.lspsaga-nvim
-      vimPlugins.lsp-zero-nvim
-      vimPlugins.mason-nvim
-      vimPlugins.mason-lspconfig-nvim
-      vimPlugins.mason-tool-installer-nvim
-      vimPlugins.cmp-nvim-lsp
-      vimPlugins.nvim-cmp
-      vimPlugins.nvim-treesitter.withAllGrammars
-
+      nvim-lspconfig
+      lspsaga-nvim
+      lsp-zero-nvim
+      cmp-nvim-lsp
+      luasnip
+      cmp_luasnip
+      nvim-cmp
+      nvim-treesitter.withAllGrammars
+      vim-nix
+      
       # Editing
-      vimPlugins.nvim-surround
+      nvim-surround
+    ];
+
+    extraPackages = with pkgs; [
+      python311Packages.python-lsp-server
+      nodePackages.bash-language-server
+      lua-language-server
+      rust-analyzer
+      nil
+      nixpkgs-fmt
     ];
 
     extraConfig = ''
       luafile ${./init.lua}
       luafile ${./lua/lsp.lua}
       luafile ${./lua/browsers.lua}
+      luafile ${./lua/keybindings.lua}
       luafile ${./lua/fuzzysearch.lua}
       luafile ${./lua/utils.lua}
     '';
