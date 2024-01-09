@@ -20,19 +20,15 @@ apply() {
 }
 
 user_menu() {
-        unset options i
-        while IFS= read -r -d $'\0' f; do
-                options[i++]="$(basename $f)"
-        done < <(find $ROOT/users -maxdepth 1 -type f -name "*.nix" -print0 )
-
+        options=($(awk '/(\S*)\s?=\s?homeManagerConfiguration/ {print $1}' flake.nix))
         PS3="Select user profile: "
-        select opt in "${options[@]}"; do
+        select opt in "${options[@]}" "quit"; do
                 case $opt in
-                *.nix)
-                        echo ${opt%.nix}
+                "quit")
                         break
                         ;;
                 *)
+                        echo ${opt%.nix}
                         break
                         ;;
                 esac
