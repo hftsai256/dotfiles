@@ -11,6 +11,8 @@ require("lspconfig").nil_ls.setup({})
 require("lspconfig").lua_ls.setup({})
 require("lspconfig").pylsp.setup({})
 require("lspconfig").rust_analyzer.setup({})
+require("lspconfig").clangd.setup({})
+
 
 require('lspsaga').setup({})
 

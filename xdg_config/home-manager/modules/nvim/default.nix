@@ -40,6 +40,10 @@
       nvim-cmp
       nvim-treesitter.withAllGrammars
       vim-nix
+
+      # LSP: Language specific
+      rustaceanvim
+      clangd_extensions-nvim
       
       # Editing
       nvim-surround
@@ -50,6 +54,8 @@
       nodePackages.bash-language-server
       lua-language-server
       rust-analyzer
+      clang
+      clang-tools
       nil
       nixpkgs-fmt
     ];

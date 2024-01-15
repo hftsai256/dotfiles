@@ -20,7 +20,7 @@ apply() {
 }
 
 user_menu() {
-        options=($(awk '/(\S*)\s?=\s?homeManagerConfiguration/ {print $1}' flake.nix))
+        options=($(awk '/(.*)[[:space:]]*=[[:space:]]*homeManagerConfiguration/ {print $1}' flake.nix))
         PS3="Select user profile: "
         select opt in "${options[@]}" "quit"; do
                 case $opt in
@@ -45,12 +45,43 @@ install_nix() {
         curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install 
 }
 
+usage() {
+        echo
+        cat<<EOF
+$(basename $0) [-u] [-r] [-s] -- Helper script for updating packages and profiles managed by nix, flakes and home-manager
+
+Options:
+        -u  update flakes
+        -r  reset user profile
+        -s  apply new settings
+
+Example:
+        $(basename $0) -su
+EOF
+}
+
 active_user=$(get_user)
 command -v nix 2>&1 >/dev/null || install_nix
 
-echo "→ update flake"
-update
-
-echo "→ apply nix environment for user $active_user"
-apply $active_user
+while getopts ":su" o; do
+        case "${o}" in
+                u)
+                        echo "→ update flake"
+                        update
+                        ;;
+                r)
+                        echo "→ reset user profile"
+                        rm $USER_FILE
+                        get_user
+                        ;;
+                s)
+                        echo "→ apply nix environment for user $active_user"
+                        apply $active_user
+                        ;;
+                *)
+                        usage
+                        exit 0
+                        ;;
+        esac
+done
 
