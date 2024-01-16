@@ -6,9 +6,9 @@
   ];
 
   programs.kitty = {
-    enable = true;
-
     font.name = "monospace";
-    font.size = 10;
+    font.size = 10.0;
+    shellIntegration.enableZshIntegration = true;
+    theme = "hybrid";
   };
 }

@@ -22,7 +22,7 @@ apply() {
 }
 
 user_menu() {
-        options=($(awk '/(.*)[[:space:]]*=[[:space:]]*homeManagerConfiguration/ {print $1}' flake.nix))
+        options=($(awk '/(.*)[[:space:]]*=[[:space:]]*homeManagerConfiguration/ {print $1}' $ROOT/flake.nix))
         PS3="Select user profile: "
         select opt in "${options[@]}" "quit"; do
                 case $opt in
@@ -58,14 +58,14 @@ Options:
         -s  apply new settings
 
 Example:
-        $(basename $0) -su
+        $(basename $0) -us
 EOF
 }
 
 active_user=$(get_user)
 command -v nix 2>&1 >/dev/null || install_nix
 
-while getopts ":su" opt; do
+while getopts ":sru" opt; do
         case "$opt" in
                 u)
                         action=1

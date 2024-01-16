@@ -16,9 +16,14 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { nixpkgs, nixgl, flake-utils, home-manager, ... }:
+  outputs = { nixpkgs, nixgl, flake-utils, home-manager, nix-darwin, ... }:
   flake-utils.lib.eachDefaultSystem (
     system:
     let
@@ -38,6 +43,10 @@
           { nix.registry.nixpkgs.flake = nixpkgs; }
           { home = { inherit username homeDirectory stateVersion; }; }
         ] ++ modules;
+      };
+
+      nixDarwinConfiguration = { modules, username, homeDirectory, extraSpecialArgs ? {} }: nix-darwin.lib.darwinSystem {
+
       };
     in {
       packages.homeManagerConfigurations = {
