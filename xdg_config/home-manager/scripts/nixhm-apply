@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+set -e
+
 ROOT=$HOME/.config/home-manager
 USER_FILE=$ROOT/ACTIVATED_USER
 
@@ -63,25 +65,28 @@ EOF
 active_user=$(get_user)
 command -v nix 2>&1 >/dev/null || install_nix
 
-while getopts ":su" o; do
-        case "${o}" in
+while getopts ":su" opt; do
+        case "$opt" in
                 u)
+                        action=1
                         echo "→ update flake"
                         update
                         ;;
                 r)
+                        action=1
                         echo "→ reset user profile"
                         rm $USER_FILE
                         get_user
                         ;;
                 s)
+                        action=1
                         echo "→ apply nix environment for user $active_user"
                         apply $active_user
-                        ;;
-                *)
-                        usage
-                        exit 0
                         ;;
         esac
 done
 
+[[ -z ${action+x} ]] && (
+        usage
+        exit 1
+)
