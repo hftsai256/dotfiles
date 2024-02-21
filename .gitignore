@@ -18,5 +18,6 @@ init/secret
 ssh/config
 
 # Nix
-xdg_config/home-manager/result
-xdg_config/home-manager/ACTIVATED_USER
+home-manager/result
+home-manager/ACTIVATED_USER
+home-manager/modules/neovim/nvim/undodir

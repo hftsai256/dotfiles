@@ -1,9 +1,11 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, ... }:
+let
+  inherit (config.lib.file) mkOutOfStoreSymlink;
+  inherit (config.home) homeDirectory;
+
+in
 {
-  xdg.configFile."nvim/lua" = {
-    source = ./lua;
-    recursive = true;
-  };
+  xdg.configFile."nvim".source = mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/xdg_config/nvim";
 
   programs.neovim = {
     enable = true;
@@ -33,7 +35,6 @@
       # LSP
       nvim-lspconfig
       lspsaga-nvim
-      lsp-zero-nvim
       cmp-nvim-lsp
       luasnip
       cmp_luasnip
@@ -53,20 +54,10 @@
       python311Packages.python-lsp-server
       nodePackages.bash-language-server
       lua-language-server
-      rust-analyzer
       clang
       clang-tools
       nil
       nixpkgs-fmt
     ];
-
-    extraConfig = ''
-      luafile ${./init.lua}
-      luafile ${./lua/lsp.lua}
-      luafile ${./lua/browsers.lua}
-      luafile ${./lua/keybindings.lua}
-      luafile ${./lua/fuzzysearch.lua}
-      luafile ${./lua/utils.lua}
-    '';
   };
 }

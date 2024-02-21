@@ -74,3 +74,9 @@ require("lualine").setup({
   extensions = {},
 })
 
+-- Load Modules
+require("lsp")
+require("fuzzysearch")
+require("keybindings")
+require("browsers")
+require("utils")
