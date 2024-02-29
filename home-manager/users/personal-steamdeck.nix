@@ -15,8 +15,8 @@
   imports = [
     ../modules/home.nix
     ../modules/nix.nix
+    ../modules/neovim.nix
     ../modules/fonts
-    ../modules/nvim
     ../modules/zsh
   ];
 

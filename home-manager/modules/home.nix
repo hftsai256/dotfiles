@@ -4,9 +4,9 @@
 
   home.packages = with pkgs; [
     ripgrep
+    fd
     btop
     broot
-    zoxide
     yazi
     tree
   ];

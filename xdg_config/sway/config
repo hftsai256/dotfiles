@@ -6,7 +6,7 @@ set $confd $rootd/modules.d
 set $scriptd $rootd/scripts
 
 #set $term flatpak run org.wezfurlong.wezterm
-set $term alacritty
+set $term kitty
 set $menu wofi
 set $filemanager dolphin
 set $browser brave --gtk-version=4

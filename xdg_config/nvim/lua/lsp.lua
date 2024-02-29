@@ -1,9 +1,26 @@
 vim.lsp.set_log_level("ERROR")
 
+local lsp_zero = require("lsp-zero")
+
+lsp_zero.on_attach(function(client, bufnr)
+  lsp_zero.default_keymaps({ buffer = bufnr })
+end)
+
 require("lspconfig").bashls.setup({})
 require("lspconfig").nil_ls.setup({})
 require("lspconfig").lua_ls.setup({})
-require("lspconfig").pylsp.setup({})
+require("lspconfig").pylsp.setup({
+  settings = {
+    pylsp = {
+      plugins = {
+        autopep8 = { enabled = false },
+        yapf = { enabled = true },
+        rope_autoimport = { enabled = true },
+        jedi_completion = { enabled = true },
+      }
+    }
+  }
+})
 require("lspconfig").clangd.setup({})
 
 

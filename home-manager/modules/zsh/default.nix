@@ -1,7 +1,15 @@
 { config, pkgs, lib, ... }:
 {
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   programs.eza = {
     enable = true;
+    enableAliases = true;
+    git = true;
+    icons = true;
   };
 
   programs.fzf = {
@@ -17,19 +25,20 @@
 
   programs.zsh = {
     enable = true;
+    syntaxHighlighting.enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
-    completionInit = ''
-      autoload -U compinit && compinit -u
-    '';
 
     shellAliases = {
-      ls = "eza";
       br = "broot";
       py = "python3";
       jnb = "jupyter notebook";
       ipy = "ipython";
     };
+
+    initExtra = ''
+      ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=magenta"
+    '';
 
     plugins = [
       {

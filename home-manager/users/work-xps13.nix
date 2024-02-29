@@ -20,6 +20,7 @@
     ../modules/zsh
   ];
 
-  home.packages = [];
+  home.packages = with pkgs; [
+  ];
 }
 

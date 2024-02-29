@@ -35,6 +35,7 @@ in
       # LSP
       nvim-lspconfig
       lspsaga-nvim
+      lsp-zero-nvim
       cmp-nvim-lsp
       luasnip
       cmp_luasnip
@@ -51,7 +52,7 @@ in
     ];
 
     extraPackages = with pkgs; [
-      python311Packages.python-lsp-server
+      tree-sitter
       nodePackages.bash-language-server
       lua-language-server
       clang
