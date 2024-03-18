@@ -22,6 +22,14 @@ require("lspconfig").pylsp.setup({
   }
 })
 require("lspconfig").clangd.setup({})
+require("lspconfig").rust_analyzer.setup({})
+require("lspconfig").ltex.setup({
+  settings = {
+    ltex = {
+      language = "en-US",
+    },
+  },
+})
 
 
 require('lspsaga').setup({})

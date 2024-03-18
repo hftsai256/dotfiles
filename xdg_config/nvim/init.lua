@@ -74,6 +74,9 @@ require("lualine").setup({
   extensions = {},
 })
 
+-- surrounds
+require("nvim-surround").setup()
+
 -- Load Modules
 require("lsp")
 require("fuzzysearch")
