@@ -7,9 +7,9 @@
 
   programs.eza = {
     enable = true;
-    enableAliases = true;
     git = true;
     icons = true;
+    enableZshIntegration = true;
   };
 
   programs.fzf = {
@@ -25,10 +25,9 @@
 
   programs.zsh = {
     enable = true;
+    autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    enableAutosuggestions = true;
     enableCompletion = true;
-
     shellAliases = {
       br = "broot";
       py = "python3";

@@ -1,5 +1,5 @@
 {
-  description = "Home Manager configuration of Halley";
+  description = "My Home Manager configuration";
 
   inputs = {
     # nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";

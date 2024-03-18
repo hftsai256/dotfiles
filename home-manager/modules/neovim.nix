@@ -44,8 +44,9 @@ in
       vim-nix
 
       # LSP: Language specific
-      rustaceanvim
       clangd_extensions-nvim
+      coc-ltex
+      ltex_extra-nvim
       
       # Editing
       nvim-surround
@@ -58,6 +59,7 @@ in
       clang
       clang-tools
       nil
+      ltex-ls
       nixpkgs-fmt
     ];
   };
