@@ -28,11 +28,14 @@
     system:
     let
       stateVersion = "23.11";
+
       pkgs = import nixpkgs {
         inherit system;
         config.allowUnfree = true;
         overlays = [
           nixgl.overlay
+          (import ./overlays/nvfetcher.nix)
+          (import ./overlays/librime.nix)
         ];
       };
 
@@ -45,9 +48,7 @@
         ] ++ modules;
       };
 
-      nixDarwinConfiguration = { modules, username, homeDirectory, extraSpecialArgs ? {} }: nix-darwin.lib.darwinSystem {
-
-      };
+      nixDarwinConfiguration = { modules, username, homeDirectory, extraSpecialArgs ? {} }: nix-darwin.lib.darwinSystem {};
     in {
       packages.homeManagerConfigurations = {
         work-xps13 = homeManagerConfiguration {

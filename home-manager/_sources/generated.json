@@ -1,0 +1,42 @@
+{
+    "librime-lua": {
+        "cargoLocks": null,
+        "date": "2024-03-08",
+        "extract": null,
+        "name": "librime-lua",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "hchunhui",
+            "repo": "librime-lua",
+            "rev": "20ddea907e0b0c9c60d1dcb6b102bee38697cb5c",
+            "sha256": "sha256-kU3pceqQoIM4pypPg2nLLnnyrgQSUEWZW9VLmmPJltU=",
+            "type": "github"
+        },
+        "version": "20ddea907e0b0c9c60d1dcb6b102bee38697cb5c"
+    },
+    "librime-proto": {
+        "cargoLocks": null,
+        "date": "2023-10-17",
+        "extract": null,
+        "name": "librime-proto",
+        "passthru": null,
+        "pinned": false,
+        "src": {
+            "deepClone": false,
+            "fetchSubmodules": false,
+            "leaveDotGit": false,
+            "name": null,
+            "owner": "lotem",
+            "repo": "librime-proto",
+            "rev": "657a923cd4c333e681dc943e6894e6f6d42d25b4",
+            "sha256": "sha256-HdypebfmzreSdEQBwbvRG6sJZPASP+e8Tew+GrMnpOQ=",
+            "type": "github"
+        },
+        "version": "657a923cd4c333e681dc943e6894e6f6d42d25b4"
+    }
+}

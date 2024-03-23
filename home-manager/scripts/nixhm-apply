@@ -5,14 +5,15 @@ ROOT=$HOME/.config/home-manager
 USER_FILE=$ROOT/ACTIVATED_USER
 
 update() {
-        pushd $ROOT > /dev/null
+        pushd "$ROOT" > /dev/null
+        nix run github:berberman/nvfetcher
         nix flake update
         popd > /dev/null
 }
 
 apply() {
-        pushd $ROOT > /dev/null
-        nix build .#homeManagerConfigurations.$1.activationPackage \
+        pushd "$ROOT" > /dev/null
+        nix build .#homeManagerConfigurations."$1".activationPackage \
                 --show-trace \
                 --impure \
                 --extra-experimental-features flakes \
@@ -22,7 +23,7 @@ apply() {
 }
 
 user_menu() {
-        options=($(awk '/(.*)[[:space:]]*=[[:space:]]*homeManagerConfiguration/ {print $1}' $ROOT/flake.nix))
+        options=($(awk '/(.*)[[:space:]]*=[[:space:]]*homeManagerConfiguration/ {print $1}' "$ROOT/flake.nix"))
         PS3="Select user profile: "
         select opt in "${options[@]}" "quit"; do
                 case $opt in
@@ -30,7 +31,7 @@ user_menu() {
                         break
                         ;;
                 *)
-                        echo ${opt%.nix}
+                        echo "${opt%.nix}"
                         break
                         ;;
                 esac
@@ -38,9 +39,11 @@ user_menu() {
 }
 
 get_user() {
-        [[ -f $USER_FILE ]] && cat $USER_FILE || (
-                echo $(user_menu) | tee $USER_FILE
-        )
+        if [ -f "$USER_FILE" ]; then 
+                cat "$USER_FILE"
+        else
+                user_menu | tee "$USER_FILE"
+        fi
 }
 
 install_nix() {
@@ -50,7 +53,7 @@ install_nix() {
 usage() {
         echo
         cat<<EOF
-$(basename $0) [-u] [-r] [-s] -- Helper script for updating packages and profiles managed by nix, flakes and home-manager
+$(basename "$0") [-u] [-r] [-s] -- Helper script for updating packages and profiles managed by nix, flakes and home-manager
 
 Options:
         -u  update flakes
@@ -58,35 +61,60 @@ Options:
         -s  apply new settings
 
 Example:
-        $(basename $0) -us
+        $(basename "$0") -us
 EOF
 }
 
-active_user=$(get_user)
-command -v nix 2>&1 >/dev/null || install_nix
+has_element () {
+        array=("$@")
+        target=${array[-1]}
+        unset "array[-1]"
 
+        for element in "${array[@]}"; do
+                [[ $element == "$target" ]] && return 0
+        done
+        return 1
+}
+
+active_user=$(get_user)
+command -v nix >/dev/null 2>&1 || install_nix
+
+declare actions=()
 while getopts ":sru" opt; do
         case "$opt" in
                 u)
-                        action=1
-                        echo "→ update flake"
-                        update
+                        actions+=(u)
                         ;;
                 r)
-                        action=1
-                        echo "→ reset user profile"
-                        rm $USER_FILE
-                        get_user
+                        actions+=(r)
                         ;;
                 s)
-                        action=1
-                        echo "→ apply nix environment for user $active_user"
-                        apply $active_user
+                        actions+=(s)
+                        ;;
+                *)
+                        echo "unknown option $opt"
+                        exit 1
                         ;;
         esac
 done
 
-[[ -z ${action+x} ]] && (
+[[ ${#actions[@]} -eq 0 ]] && (
         usage
         exit 1
 )
+
+has_element "${actions[@]}" r && {
+        echo "→ reset user profile"
+        rm "$USER_FILE"
+        get_user
+}
+
+has_element "${actions[@]}" u && {
+        echo "→ update flake"
+        update
+}
+
+has_element "${actions[@]}" s && {
+        echo "→ apply nix environment for user $active_user"
+        apply "$active_user"
+}
