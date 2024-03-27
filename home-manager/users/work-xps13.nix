@@ -16,7 +16,7 @@
     ../modules/home.nix
     ../modules/nix.nix
     ../modules/neovim.nix
-    ../modules/rime.nix
+#    ../modules/rime.nix
     ../modules/fonts
     ../modules/zsh
   ];
