@@ -5,11 +5,10 @@ set $rootd $HOME/.config/sway
 set $confd $rootd/modules.d
 set $scriptd $rootd/scripts
 
-#set $term flatpak run org.wezfurlong.wezterm
 set $term kitty
 set $menu wofi
 set $filemanager dolphin
-set $browser brave --gtk-version=4
+set $browser flatpak run com.brave.Browser
 set $email thunderbird
 
 include ./sway.d/*.conf

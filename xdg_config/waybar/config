@@ -2,7 +2,7 @@
     "layer": "top",
     "position": "top",
     "height": 24,
-        "modules-left": ["sway/workspaces", "wlr/workspaces", "sway/mode", "hyprland/submap", "sway/window", "hyprland/window"],
+        "modules-left": ["sway/workspaces", "hyprland/workspaces", "sway/mode", "hyprland/submap", "sway/window", "hyprland/window"],
     "modules-center": ["clock"],
     "modules-right": ["tray", "idle_inhibitor", "temperature", "cpu", "memory", "battery", "network", "pulseaudio", "custom/powermenu"],
     "sway/mode": {
@@ -11,7 +11,7 @@
     "hyprland/submap": {
         "format": "mode  {}"
     },
-    "wlr/workspaces": { 
+    "hyprland/workspaces": { 
         "on-click": "activate",
         "disable-scroll": true,
         "all-outputs": false,
