@@ -5,7 +5,9 @@ let
 
 in
 {
-  xdg.configFile."nvim".source = mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/xdg_config/nvim";
+  # Workaround a bug introduced in v1.19.2 (issue #9579, PR #9723)
+  # Need to symlink it manually before the PR is merged
+  #xdg.configFile."nvim".source = mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/xdg_config/nvim";
 
   programs.neovim = {
     enable = true;
