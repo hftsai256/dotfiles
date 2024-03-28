@@ -13,7 +13,6 @@
   home.sessionPath = [ "$HOME/.local/bin" ];
 
   imports = [
-    ../modules/nix.nix
     ../modules/neovim.nix
     ../modules/kitty.nix
 #    ../modules/rime.nix
