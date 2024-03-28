@@ -20,7 +20,7 @@ o.backspace = "indent,eol,start"
 o.expandtab = true
 bo.autoindent = true
 bo.smartindent = true
-wo.number = true
+wo.relativenumber = true
 wo.signcolumn = "yes"
 wo.cursorline = true
 wo.wrap = false
@@ -42,8 +42,11 @@ end
 -- Color Scheme
 o.background = "dark"
 o.termguicolors = true
+g.enable_bold_font = 1
+g.enable_italic_font = 1
 vim.cmd([[colorscheme hybrid]])
 vim.cmd([[hi Normal guibg=None ctermbg=None]])
+vim.cmd([[hi LineNr guifg=#707880 ctermfg=7]])
 
 -- lualine
 require("lualine").setup({
