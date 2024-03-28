@@ -11,6 +11,12 @@ update() {
         popd > /dev/null
 }
 
+refresh() {
+        pushd "$ROOT" > /dev/null
+        nix run github:berberman/nvfetcher
+        popd > /dev/null
+}
+
 apply() {
         pushd "$ROOT" > /dev/null
         nix build .#homeManagerConfigurations."$1".activationPackage \
@@ -28,7 +34,8 @@ user_menu() {
         select opt in "${options[@]}" "quit"; do
                 case $opt in
                 "quit")
-                        break
+                        echo user abort
+                        exit 0
                         ;;
                 *)
                         echo "${opt%.nix}"
@@ -50,21 +57,6 @@ install_nix() {
         curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install 
 }
 
-usage() {
-        echo
-        cat<<EOF
-$(basename "$0") [-u] [-r] [-s] -- Helper script for updating packages and profiles managed by nix, flakes and home-manager
-
-Options:
-        -u  update flakes
-        -r  reset user profile
-        -s  apply new settings
-
-Example:
-        $(basename "$0") -us
-EOF
-}
-
 has_element () {
         array=("$@")
         target=${array[-1]}
@@ -76,14 +68,31 @@ has_element () {
         return 1
 }
 
+USAGE=$(cat <<EOF
+$(basename "$0") [options] -- Helper script for updating packages and profiles managed by nix, flakes and home-manager
+
+Options:
+        -u  update flakes
+        -f  refresh source hash
+        -r  reset user profile
+        -s  apply new settings
+
+Example:
+        $(basename "$0") -us
+EOF
+)
+
 active_user=$(get_user)
 command -v nix >/dev/null 2>&1 || install_nix
 
 declare actions=()
-while getopts ":sru" opt; do
+while getopts ":ufrs" opt; do
         case "$opt" in
                 u)
                         actions+=(u)
+                        ;;
+                f)
+                        actions+=(f)
                         ;;
                 r)
                         actions+=(r)
@@ -99,7 +108,7 @@ while getopts ":sru" opt; do
 done
 
 [[ ${#actions[@]} -eq 0 ]] && (
-        usage
+        echo "$USAGE"
         exit 1
 )
 
@@ -107,6 +116,11 @@ has_element "${actions[@]}" r && {
         echo "→ reset user profile"
         rm "$USER_FILE"
         get_user
+}
+
+has_element "${actions[@]}" f && {
+        echo "→ refresh source hashes"
+        refresh
 }
 
 has_element "${actions[@]}" u && {

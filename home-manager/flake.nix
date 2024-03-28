@@ -35,6 +35,7 @@
         overlays = [
           nixgl.overlay
           (import ./overlays/nvfetcher.nix)
+          (import ./overlays/kitty.nix)
           (import ./overlays/librime.nix)
         ];
       };

@@ -6,9 +6,11 @@
   ];
 
   programs.kitty = {
+    enable = true;
+    package = pkgs.kitty-nixgl;
     font.name = "monospace";
     font.size = 10.0;
     shellIntegration.enableZshIntegration = true;
-    theme = "hybrid";
+    theme = "Hybrid";
   };
 }

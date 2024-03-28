@@ -16,6 +16,7 @@
     ../modules/home.nix
     ../modules/nix.nix
     ../modules/neovim.nix
+    ../modules/kitty.nix
     ../modules/fonts
     ../modules/zsh
   ];
@@ -23,7 +24,6 @@
   home.packages = with pkgs; [
     nixgl.auto.nixGLDefault
     nixgl.nixVulkanIntel
-    kitty
     xclip
   ];
 }
