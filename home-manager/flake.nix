@@ -2,30 +2,23 @@
   description = "My Home Manager configuration";
 
   inputs = {
-    # nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+
+    # I have no idea what I'm doing. Peeking into its source,
+    # seems like it provides nix-darwin and home-manager input sources
+    # so that I can hook them up in the output section below without
+    # explicitly define their URLs here.
+    nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
 
     nixgl = {
       url = "github:guibou/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { nixpkgs, nixgl, flake-utils, home-manager, nix-darwin, ... }:
-  flake-utils.lib.eachDefaultSystem (
-    system:
+  outputs = { nixpkgs, nixgl, flake-utils, home-manager, nix-darwin, ... } @ inputs:
+  flake-utils.lib.eachDefaultSystem (system:
     let
       stateVersion = "23.11";
 
@@ -44,12 +37,19 @@
         inherit pkgs extraSpecialArgs;
 
         modules = [
-          { nix.registry.nixpkgs.flake = nixpkgs; }
+          inputs.nix.homeManagerModules.default
           { home = { inherit username homeDirectory stateVersion; }; }
         ] ++ modules;
       };
 
-      nixDarwinConfiguration = { modules, username, homeDirectory, extraSpecialArgs ? {} }: nix-darwin.lib.darwinSystem {};
+      nixDarwinConfiguration = { modules, username, homeDirectory, extraSpecialArgs ? {} }: nix-darwin.lib.darwinSystem {
+        inherit pkgs extraSpecialArgs;
+
+        modules = [
+          inputs.nix.darwinModules.default
+        ] ++ modules;
+      };
+
     in {
       packages.homeManagerConfigurations = {
         work-xps13 = homeManagerConfiguration {
