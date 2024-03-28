@@ -13,7 +13,6 @@
   home.sessionPath = [ "$HOME/.local/bin" ];
 
   imports = [
-    ../modules/home.nix
     ../modules/nix.nix
     ../modules/neovim.nix
     ../modules/kitty.nix
@@ -22,8 +21,6 @@
   ];
 
   home.packages = with pkgs; [
-    nixgl.auto.nixGLDefault
-    nixgl.nixVulkanIntel
-    xclip
+    xclip  # steamOS is still on X11
   ];
 }
