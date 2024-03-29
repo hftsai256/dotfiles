@@ -27,7 +27,7 @@
         config.allowUnfree = true;
         overlays = [
           nixgl.overlay
-          (import ./overlays/pkgsource.nix)
+          (import ./overlays/glsource.nix)
           (import ./overlays/nvfetcher.nix)
           (import ./overlays/librime.nix)
         ];
@@ -58,7 +58,7 @@
           homeDirectory = "/home/hftsai";
 
           modules = [ ./users/work-xps13.nix ];
-          extraSpecialArgs = { pkgsource = "null"; };
+          extraSpecialArgs = { glSource = "null"; };
         };
 
         personal-xps13 = homeManagerConfiguration {
@@ -66,7 +66,7 @@
           homeDirectory = "/home/hftsai";
 
           modules = [ ./users/personal.nix ];
-          extraSpecialArgs = { pkgsource = "null"; };
+          extraSpecialArgs = { glSource = "null"; };
         };
 
         personal-m1 = homeManagerConfiguration {
@@ -74,7 +74,7 @@
           homeDirectory = "/Users/hftsai";
 
           modules = [ ./users/personal.nix ];
-          extraSpecialArgs = { pkgsource = "darwin"; };
+          extraSpecialArgs = { glSource = "darwin"; };
         };
 
         personal-steamdeck = homeManagerConfiguration {
@@ -82,7 +82,10 @@
           homeDirectory = "/home/deck";
 
           modules = [ ./users/personal-steamdeck.nix ];
-          extraSpecialArgs = { pkgsource = "nixgl"; };
+          extraSpecialArgs = {
+            glSource = "nixgl";
+            term.name = "kitty";
+          };
         };
       };
     }

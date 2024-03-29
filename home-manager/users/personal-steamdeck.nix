@@ -1,7 +1,13 @@
-{ config, pkgs, ... }:
+{ config, pkgs, specialArgs, ... }:
+let
+  term = (builtins.trace specialArgs specialArgs.term) // {
+    font.size = 9.5;
+  };
+
+in
 {
   programs.git = {
-    enable = true;
+    enable = builtins.trace specialArgs true;
     userName = "Halley Tsai";
     userEmail = "hftsai256@gmail.com";
   };
@@ -14,7 +20,7 @@
 
   imports = [
     ../modules/neovim.nix
-    ../modules/kitty.nix
+    ../modules/term.nix
     ../modules/fonts
     ../modules/zsh
   ];

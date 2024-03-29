@@ -1,6 +1,6 @@
 { pkgs, specialArgs, ... }:
 let
-  inherit (specialArgs) pkgsource;
+  inherit (specialArgs) glSource;
 
 in {
   programs.home-manager.enable = true;
@@ -9,10 +9,11 @@ in {
     ripgrep
     fd
     btop
+    bat
     broot
     yazi
     tree
-  ] ++ (if pkgsource == "nixgl" then with pkgs; [
+  ] ++ (if glSource == "nixgl" then with pkgs; [
     nixgl.auto.nixGLDefault
     nixgl.nixVulkanIntel
   ] else []);
