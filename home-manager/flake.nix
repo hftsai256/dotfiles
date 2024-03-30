@@ -58,7 +58,10 @@
           homeDirectory = "/home/hftsai";
 
           modules = [ ./users/work-xps13.nix ];
-          extraSpecialArgs = { glSource = "null"; };
+          extraSpecialArgs = {
+            glSource = "null";
+            term.name = "kitty";
+          };
         };
 
         personal-xps13 = homeManagerConfiguration {

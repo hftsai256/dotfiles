@@ -1,10 +1,4 @@
 { config, pkgs, specialArgs, ... }:
-let
-  term = (builtins.trace specialArgs specialArgs.term) // {
-    font.size = 9.5;
-  };
-
-in
 {
   programs.git = {
     enable = builtins.trace specialArgs true;
