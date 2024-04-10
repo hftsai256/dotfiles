@@ -21,6 +21,7 @@ o.expandtab = true
 bo.autoindent = true
 bo.smartindent = true
 wo.relativenumber = true
+wo.number=true
 wo.signcolumn = "yes"
 wo.cursorline = true
 wo.wrap = false
