@@ -1,0 +1,109 @@
+(defwidget powermenu []
+  (box :class "powermenu"
+       :space-evenly false
+    (button :onclick "pgrep caffeine && pkill caffeine || caffeine &"
+            idle_icon)
+    (button :onclick "./scripts/power" "⏻")
+  ))
+
+(defvar util-reveal false)
+(defvar tray-reveal false)
+
+(defwidget clock []
+  (tooltip :class "clock"
+           :orientation "h"
+           :space-evenly false
+           :halign "right"
+    (calendar :day day
+              :month month
+              :year year)
+    (button time)))
+
+; NOTE: GTK revealer transitions are kinda stupid
+(defwidget hovered-sign [var]
+  (box :space-evenly false
+      (revealer :reveal {!var}
+                :duration "100ms"
+                :transition "slideleft"
+        (children :nth 0)) 
+      (revealer :reveal {var}
+                :duration "100ms"
+                :transition "slideleft"
+        (children :nth 1)))) 
+
+; Revealer on hover, using children
+(defwidget revealer-on-hover [var varname ?class ?duration ?transition]
+  (box :class "${class} revealer-on-hover"
+       :orientation "h"
+       :space-evenly false
+    (eventbox :class "eventbox"
+              :onhover "eww update ${varname}=true"
+              :onhoverlost "eww update ${varname}=false"
+      (box :space-evenly false
+        (children :nth 0)
+        (revealer :reveal var
+                  :transition {transition ?: "slideright"}
+                  :duration {duration ?: "500ms"}
+          (children :nth 1))
+        (children :nth 2)))))
+
+
+(defwidget util-drawer [?class]
+  (box :space-evenly false
+       :class "drawer ${class}"
+    (revealer-on-hover :class "hl-on-hover"
+                       :var util-reveal
+                       :varname "util-reveal"
+                       :transition "slideleft"
+          
+      (hovered-sign :var util-reveal 
+        "  "
+        "  ")
+      (util-menu)
+      "")))
+
+(defwidget tray-drawer [?class]
+  (box :space-evenly false
+       :class "drawer ${class}"
+    (revealer-on-hover :class "hl-on-hover"
+                       :var tray-reveal
+                       :varname "tray-reveal"
+                       :transition "slideleft"
+          
+      (hovered-sign :var tray-reveal 
+        "  "
+        "  ")
+      (systray :class "systray")
+      "󱊖")))
+
+
+(defwidget util-menu []
+  (box :class "utils" :orientation "h" :space-evenly false :halign "end"
+    (metric :label ""
+            :value volume
+            :onchange "amixer sset Master {}%")
+)) 
+
+(defwidget metric [label value onchange]
+  (box :orientation "h"
+       :class "metric"
+       :space-evenly false
+    (box :class "label" label)
+    (scale :min 0
+           :max 101
+           :active {onchange != ""}
+           :value value
+           :onchange onchange)))
+
+(defwidget rightsides []
+  (box :class "rightsides"
+       :orientation "h"
+       :space-evenly false
+       :halign "end"
+       :spacing 10
+    (util-drawer)
+    (tray-drawer)
+    (clock)
+    (powermenu)))
+
+

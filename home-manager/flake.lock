@@ -222,12 +222,12 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1712192574,
-        "narHash": "sha256-LbbVOliJKTF4Zl2b9salumvdMXuQBr2kuKP5+ZwbYq4=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "f480f9d09e4b4cf87ee6151eba068197125714de",
-        "type": "github"
+        "lastModified": 1711715736,
+        "narHash": "sha256-9slQ609YqT9bT/MNX9+5k5jltL9zgpn36DpFB7TkttM=",
+        "rev": "807c549feabce7eddbf259dbdcec9e0600a0660d",
+        "revCount": 604449,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/DeterminateSystems/nixpkgs-weekly/0.1.604449%2Brev-807c549feabce7eddbf259dbdcec9e0600a0660d/018e9d4c-083b-74f0-89e8-132f152273eb/source.tar.gz"
       },
       "original": {
         "id": "nixpkgs",

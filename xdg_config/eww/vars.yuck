@@ -1,0 +1,24 @@
+(deflisten hypr_title :initial ""
+  "dspy -i org.hypryuck -p /monitors -m title")
+
+(deflisten hypr_workspaces :initial "{}"
+  "dspy -i org.hypryuck -p /monitors -m workspaces")
+
+(deflisten idle_icon :initial "󰡶"
+  "dspy -i org.hypryuck -p /idle -m icon")
+
+(defpoll volume :interval "1s"
+  "scripts/getvol")
+
+(defpoll time :interval "10s"
+  ;"date '+%H:%M %b %d, %Y'")
+  "date '+%H:%M'")
+
+(defpoll day :interval "3600s"
+  "date '+%d'")
+
+(defpoll month :interval "3600s"
+  "date '+%m'")
+
+(defpoll year :interval "3600s"
+  "date '+%Y'")
