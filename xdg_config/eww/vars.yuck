@@ -1,24 +1,27 @@
 (deflisten hypr_title :initial ""
-  "dspy -i org.hypryuck -p /monitors -m title")
+  "dpeek -i org.hypryuck -p /monitors -m title")
 
-(deflisten hypr_workspaces :initial "{}"
-  "dspy -i org.hypryuck -p /monitors -m workspaces")
+(deflisten hypr_workspaces
+  "dpeek -i org.hypryuck -p /monitors -m workspaces")
 
-(deflisten idle_icon :initial "󰡶"
-  "dspy -i org.hypryuck -p /idle -m icon")
+(deflisten idle_icon :initial "󰸊"
+  "dpeek -i org.hypryuck -p /icons -m idle")
 
-(defpoll volume :interval "1s"
+(defpoll volume :initial 0
+                :interval "1s"
   "scripts/getvol")
 
 (defpoll time :interval "10s"
-  ;"date '+%H:%M %b %d, %Y'")
   "date '+%H:%M'")
 
-(defpoll day :interval "3600s"
+(defpoll day :initial 1
+             :interval "3600s"
   "date '+%d'")
 
-(defpoll month :interval "3600s"
+(defpoll month :initial 1
+               :interval "3600s"
   "date '+%m'")
 
-(defpoll year :interval "3600s"
+(defpoll year :initial 1970
+              :interval "3600s"
   "date '+%Y'")

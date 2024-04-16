@@ -1,7 +1,7 @@
 (defwidget powermenu []
   (box :class "powermenu"
        :space-evenly false
-    (button :onclick "pgrep caffeine && pkill caffeine || caffeine &"
+    (button :onclick "dpoke -i org.hypryuck -p /rpc -m caffeine -t method_call -s s toggle"
             idle_icon)
     (button :onclick "./scripts/power" "⏻")
   ))
@@ -11,9 +11,6 @@
 
 (defwidget clock []
   (tooltip :class "clock"
-           :orientation "h"
-           :space-evenly false
-           :halign "right"
     (calendar :day day
               :month month
               :year year)
