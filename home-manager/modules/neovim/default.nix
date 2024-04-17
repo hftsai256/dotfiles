@@ -1,9 +1,4 @@
 { config, pkgs, ... }:
-let
-  inherit (config.lib.file) mkOutOfStoreSymlink;
-  inherit (config.home) homeDirectory;
-
-in
 {
   # Workaround a bug introduced in v1.19.2 (issue #9579, PR #9723)
   # Need to symlink it manually before the PR is merged
@@ -17,6 +12,7 @@ in
     vimdiffAlias = true;
 
     withNodeJs = true;
+    withPython3 = true;
 
     plugins = with pkgs.vimPlugins; [
       # Essential library
@@ -53,16 +49,19 @@ in
       # Editing
       nvim-surround
     ];
-
-    extraPackages = with pkgs; [
-      tree-sitter
-      nodePackages.bash-language-server
-      lua-language-server
-      clang
-      clang-tools
-      nil
-      ltex-ls
-      nixpkgs-fmt
-    ];
   };
+
+  home.packages = with pkgs; [
+    tree-sitter
+    nodePackages.bash-language-server
+    (python3Packages.callPackage ./python-lsp-server.nix {})
+    mypy
+    ruff
+    lua-language-server
+    clang
+    clang-tools
+    nil
+    ltex-ls
+    nixpkgs-fmt
+  ];
 }
