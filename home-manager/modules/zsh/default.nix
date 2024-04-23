@@ -1,4 +1,10 @@
-{ config, pkgs, lib, ... }:
+{ pkgs, specialArgs, lib, ... }:
+let
+  nix_shell = if (builtins.hasAttr "nix_shell" specialArgs)
+    then specialArgs.nix_shell
+    else false;
+
+in
 {
   programs.zoxide = {
     enable = true;
@@ -25,6 +31,7 @@
 
   programs.zsh = {
     enable = true;
+    package = if nix_shell then pkgs.zsh else pkgs.null;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     enableCompletion = true;

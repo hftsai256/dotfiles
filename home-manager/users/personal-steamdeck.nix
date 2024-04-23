@@ -1,7 +1,7 @@
-{ config, pkgs, specialArgs, ... }:
+{ pkgs, ... }:
 {
   programs.git = {
-    enable = builtins.trace specialArgs true;
+    enable = true;
     userName = "Halley Tsai";
     userEmail = "hftsai256@gmail.com";
   };
