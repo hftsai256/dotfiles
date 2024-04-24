@@ -2,8 +2,11 @@
   (box :class "powermenu"
        :space-evenly false
     (button :onclick "dpoke -i org.hypryuck -p /rpc -m caffeine -t method_call -s s toggle"
-            idle_icon)
-    (button :onclick "./scripts/power" "⏻")
+            :class {idle_icon.css}
+            {idle_icon.icon})
+    ; need to fork the process due to a recent bug with Hyprland v0.34
+    ; see https://github.com/elkowar/eww/issues/1022
+    (button :onclick "./scripts/power &" "⏻")
   ))
 
 (defvar util-reveal false)

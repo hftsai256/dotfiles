@@ -1,19 +1,30 @@
+*{
+    font-family: monospace;
+    font-weight: 600;
+}
+
 window {
-    background-color: #707880;
+    border-radius: 8px;
+    background-color: #5f819d;
+}
+
+#outer-box {
+    margin: 5px;
+    padding: 20px;
+    background-color: #1d1f21;
 }
 
 #input {
-    margin: 5px;
+    margin: 4px;
     border-radius: 0px;
     border: none;
     border-bottom: 3px solid black;
     background-color: #373b41;
-    color: white;
+    color: #c5c8c6;
 }
 
 #inner-box {
-    background-color: #373b41;
-
+    background-color: #1d1f21;
 }
 
 window box scrolledwindow viewport box flowbox flowboxchild expander #text:selected{
@@ -24,34 +35,32 @@ window box scrolledwindow viewport box flowbox flowboxchild expander list row{
     background-color: #1d1f21;
 }
 
+#text {
+    color: #c5c8c6;
+}
+
 #entry:unselected {
+    border-radius: 5px;
     background-color: #1d1f21;
 }
 
 #entry:selected {
+    border-radius: 5px;
     background-color: #81a2be;
 }
 
-#outer-box {
-    margin: 4px;
-    padding: 16px;
-    background-color: #373b41;
+#img {
+    border-radius: 5px;
+    margin: 5px;
+    background-color: #1d1f21;
 }
 
-#text {
-    font-family: monospace;
-    padding: 4px;
-    color: #c5c8c6;
-}
-
-#entry:nth-child(even){
-    background-color: #464b53;
-}
-
-#entry:selected {
-    background-color: #5f819d;
+#img:selected{
+    border-radius: 5px;
+    background-color: #81a2be;
 }
 
 #text:selected {
     color: #282a2e;
 }
+

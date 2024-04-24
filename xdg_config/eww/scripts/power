@@ -1,15 +1,32 @@
 #!/bin/bash
-entries="⇠ Logout\n⏾ Suspend\n⭮ Reboot\n⏻ Shutdown"
-selected=$(echo -e $entries | wofi --width 250 --height 210 --dmenu --cache-file /dev/null | awk '{print tolower($2)}')
+entries=" Poweroff\n⭮ Reboot\n Suspend\n Lock\n Logout"
 
-case $selected in
+menu () {
+  echo -e "$1" | \
+    wofi --width 160 --height 240 --dmenu --cache-file /dev/null |\
+    awk '{print tolower($2)}'
+}
+
+
+case $(menu "$entries") in
+  lock)
+    hyprlock
+    ;;
+
   logout)
-    swaymsg exit || hyprctl dispatch exit;;
-  suspend)
-    exec systemctl suspend;;
-  reboot)
-    exec systemctl reboot;;
-  shutdown)
-    exec systemctl poweroff -i;;
-esac
+    hyprctl dispatch exit
+    ;;
 
+  suspend)
+    systemctl suspend
+    ;;
+
+  reboot)
+    systemctl reboot
+    ;;
+
+  poweroff)
+    systemctl poweroff
+    ;;
+
+esac

@@ -1,11 +1,12 @@
-(deflisten hypr_title :initial ""
-  "dpeek -i org.hypryuck -p /monitors -m title")
+(defvar hypr_title "")
 
-(deflisten hypr_workspaces
-  "dpeek -i org.hypryuck -p /monitors -m workspaces")
+(defpoll hypr_workspaces :initial "{}"
+                         :interval "86400s"
+  "dpoke -i org.hypryuck -p /query -t call -m workspaces")
 
-(deflisten idle_icon :initial "󰸊"
-  "dpeek -i org.hypryuck -p /icons -m idle")
+(defpoll idle_icon :initial "{}"
+                   :interval "86400s"
+  "dpoke -i org.hypryuck -p /query -t call -m inhibitor")
 
 (defpoll volume :initial 0
                 :interval "1s"
@@ -24,4 +25,4 @@
 
 (defpoll year :initial 1970
               :interval "3600s"
-  "date '+%Y'")
+  "dpoke -i org.hypryuck -p /rpc -m query -t method_call >/dev/null; date '+%Y'")

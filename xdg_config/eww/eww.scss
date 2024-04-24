@@ -15,8 +15,11 @@ $color_12: #81a2be;
 $color_13: #b294bb;
 $color_14: #8abeb7;
 $color_15: #c5c8c6;
-$color_white: #ffffff;
+$color_30_cyan: #3d5c58;
+$color_30_brown: #846815;
+$color_40_white: #5f666d;
 $color_neon_cyan: #b4e0f3;
+$color_neon_brown: #f3e3b4;
 
 * {
   all: unset;
@@ -34,6 +37,7 @@ $color_neon_cyan: #b4e0f3;
   color: $color_15;
   background-color: rgba(40, 42, 46, 0.9);
   box-shadow: 0px 0px 4px $color_01;
+  padding: 1px;
   border-radius: 8px;
 }
 
@@ -107,18 +111,27 @@ calendar:selected {
 
 .workspaces button.sp_occupied {
   font-weight: 800;
-  color: $color_04;
-}
-
-.workspaces button.sp_active {
-  font-weight: 800;
   color: $color_14;
   text-shadow: $color_14 0px 0px 5px;
 }
 
+.workspaces button.sp_active {
+  font-weight: 800;
+  color: $color_neon_cyan;
+  background-color: $color_30_cyan;
+  border-color: $color_neon_cyan;
+  text-shadow: $color_neon_cyan 0px 0px 5px;
+}
+
 .workspaces button.active {
-  color: $color_white;
-  background-color: $color_07; 
+  color: $color_15;
+  background-color: $color_40_white; 
+}
+
+.workspaces button.focused {
+  color: $color_neon_cyan;
+  background-color: $color_30_cyan;
+  border-color: $color_neon_cyan;
 }
 
 .workspaces button:hover {
@@ -131,10 +144,16 @@ calendar:selected {
   font-size: large;
 }
 
+.powermenu button.focused {
+  color: $color_neon_brown;
+  background-color: $color_30_brown;
+  border-color: $color_neon_brown;
+}
+
 .powermenu button:hover {
-  color: $color_neon_cyan;
+  color: $color_neon_brown;
   background-color: unset;
-  border-color: $color_neon_cyan;
+  border-color: $color_neon_brown;
 }
 
 tooltip {
