@@ -49,19 +49,19 @@
       # Editing
       nvim-surround
     ];
-  };
 
-  home.packages = with pkgs; [
-    tree-sitter
-    nodePackages.bash-language-server
-    (python3Packages.callPackage ./python-lsp-server.nix {})
-    mypy
-    ruff
-    lua-language-server
-    clang
-    clang-tools
-    nil
-    ltex-ls
-    nixpkgs-fmt
-  ];
+    extraPackages = with pkgs; [
+      tree-sitter
+      nodePackages.bash-language-server
+      (python3Packages.callPackage ./python-lsp-server.nix {})
+      mypy
+      ruff
+      lua-language-server
+      clang
+      clang-tools
+      nil
+      ltex-ls
+      nixpkgs-fmt
+    ];
+  };
 }
