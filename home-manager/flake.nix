@@ -64,6 +64,16 @@
           };
         };
 
+        work-headless = homeManagerConfiguration {
+          username = "hftsai";
+          homeDirectory = "/home/hftsai";
+
+          modules = [ ./users/work-headless.nix ];
+          extraSpecialArgs = {
+            glSource = "null";
+          };
+        };
+
         personal-xps13 = homeManagerConfiguration {
           username = "hftsai";
           homeDirectory = "/home/hftsai";
