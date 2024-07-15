@@ -58,11 +58,12 @@ install_nix() {
 }
 
 has_element () {
-        array=("$@")
-        target=${array[-1]}
-        unset "array[-1]"
+        args=("$@")
+        nargs=${#args[@]}
+        target=${args[nargs - 1]}
+        unset "args[nargs - 1]"
 
-        for element in "${array[@]}"; do
+        for element in "${args[@]}"; do
                 [[ $element == "$target" ]] && return 0
         done
         return 1
