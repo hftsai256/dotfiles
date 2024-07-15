@@ -14,6 +14,7 @@
 
   imports = [
     ../modules/neovim
+    ../modules/term.nix
     ../modules/fonts
     ../modules/zsh
   ];

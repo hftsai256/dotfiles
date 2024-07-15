@@ -86,8 +86,15 @@
           username = "hftsai";
           homeDirectory = "/Users/hftsai";
 
-          modules = [ ./users/personal.nix ];
-          extraSpecialArgs = { glSource = "darwin"; };
+          modules = [ ./users/personal-m1.nix ];
+          extraSpecialArgs = { 
+            glSource = "darwin";
+            term.name = "kitty";
+            term.font = {
+              name = "monospace";
+              size = 11;
+            };
+          };
         };
 
         personal-steamdeck = homeManagerConfiguration {
