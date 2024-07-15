@@ -3,15 +3,15 @@
 {
   librime-lua = {
     pname = "librime-lua";
-    version = "7c1b93965962b7c480d4d7f1a947e4712a9f0c5f";
+    version = "7be6974b6d81c116bba39f6707dc640f6636fa4e";
     src = fetchFromGitHub {
       owner = "hchunhui";
       repo = "librime-lua";
-      rev = "7c1b93965962b7c480d4d7f1a947e4712a9f0c5f";
+      rev = "7be6974b6d81c116bba39f6707dc640f6636fa4e";
       fetchSubmodules = false;
-      sha256 = "sha256-H/ufyHIfYjAjF/Dt3CilL4x9uAXGcF1BkdAgzIbSGA8=";
+      sha256 = "sha256-jsrnAFE99d0U0LdddTL7G1p416qJfSNR935TZFH3Swk=";
     };
-    date = "2024-04-13";
+    date = "2024-05-19";
   };
   librime-proto = {
     pname = "librime-proto";

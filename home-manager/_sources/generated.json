@@ -1,7 +1,7 @@
 {
     "librime-lua": {
         "cargoLocks": null,
-        "date": "2024-04-13",
+        "date": "2024-05-19",
         "extract": null,
         "name": "librime-lua",
         "passthru": null,
@@ -13,11 +13,12 @@
             "name": null,
             "owner": "hchunhui",
             "repo": "librime-lua",
-            "rev": "7c1b93965962b7c480d4d7f1a947e4712a9f0c5f",
-            "sha256": "sha256-H/ufyHIfYjAjF/Dt3CilL4x9uAXGcF1BkdAgzIbSGA8=",
+            "rev": "7be6974b6d81c116bba39f6707dc640f6636fa4e",
+            "sha256": "sha256-jsrnAFE99d0U0LdddTL7G1p416qJfSNR935TZFH3Swk=",
+            "sparseCheckout": [],
             "type": "github"
         },
-        "version": "7c1b93965962b7c480d4d7f1a947e4712a9f0c5f"
+        "version": "7be6974b6d81c116bba39f6707dc640f6636fa4e"
     },
     "librime-proto": {
         "cargoLocks": null,
@@ -35,6 +36,7 @@
             "repo": "librime-proto",
             "rev": "657a923cd4c333e681dc943e6894e6f6d42d25b4",
             "sha256": "sha256-HdypebfmzreSdEQBwbvRG6sJZPASP+e8Tew+GrMnpOQ=",
+            "sparseCheckout": [],
             "type": "github"
         },
         "version": "657a923cd4c333e681dc943e6894e6f6d42d25b4"
