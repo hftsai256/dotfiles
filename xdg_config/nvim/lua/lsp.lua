@@ -33,6 +33,7 @@ require("lspconfig").ltex.setup({
     },
   },
 })
+require("lspconfig").tsserver.setup({})
 
 
 require('lspsaga').setup({})
@@ -55,6 +56,7 @@ cmp.setup({
 
 local keymap = vim.keymap.set
 keymap("n", "<leader>f", "<cmd>Lspsaga finder<CR>")
+keymap("n", "<leader>fi", "<cmd>Lspsaga finder imp<CR>")
 keymap({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
 keymap("n", "<leader>r", "<cmd>Lspsaga rename ++project<CR>")
 keymap("n", "gd", "<cmd>Lspsaga peek_definition<CR>")

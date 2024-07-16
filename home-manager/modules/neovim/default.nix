@@ -53,6 +53,7 @@
     extraPackages = with pkgs; [
       tree-sitter
       nodePackages.bash-language-server
+      nodePackages.typescript-language-server
       (python3Packages.callPackage ./python-lsp-server.nix {})
       mypy
       ruff
