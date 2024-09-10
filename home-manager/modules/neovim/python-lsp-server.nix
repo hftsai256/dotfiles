@@ -15,7 +15,7 @@ with builtins; let
 
   pylsp-mypy' = pylsp-mypy.overridePythonAttrs (oldAttrs: {
     doCheck = false;
-    propagatedBuildInputs = removeInput oldAttrs.propagatedBuildInputs;
+    dependencies = removeInput oldAttrs.dependencies;
     postPatch = oldAttrs.postPatch or "" + ''
       substituteInPlace setup.cfg \
         --replace-fail "python-lsp-server >=1.7.0" ""
@@ -24,15 +24,16 @@ with builtins; let
 
   pylsp-rope' = pylsp-rope.overridePythonAttrs (oldAttrs: {
     doCheck = false;
-    propagatedBuildInputs = removeInput oldAttrs.propagatedBuildInputs;
+    dependencies = removeInput oldAttrs.dependencies;
     postPatch = oldAttrs.postPatch or "" + ''
       sed -i '/python-lsp-server/d' setup.cfg
     '';
+    build-system = [setuptools] ++ (oldAttrs.build-system or []);
   });
 
   python-lsp-ruff' = python-lsp-ruff.overridePythonAttrs (oldAttrs: {
     doCheck = false;
-    propagatedBuildInputs = removeInput oldAttrs.propagatedBuildInputs;
+    dependencies = removeInput oldAttrs.dependencies;
     postPatch = oldAttrs.postPatch or "" + ''
         sed -i '/python-lsp-server/d' pyproject.toml
     '';
