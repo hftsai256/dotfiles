@@ -6,6 +6,7 @@
 
   home.packages = [
     pkgs.fira-code
+    pkgs.fira-sans
     (pkgs.nerdfonts.override { fonts = ["NerdFontsSymbolsOnly"]; })
   ];
 
