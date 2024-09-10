@@ -6,7 +6,7 @@
     "modules-center": ["clock"],
     "modules-right": ["tray", "backlight", "pulseaudio", "bluetooth", "network", "battery", "idle_inhibitor", "custom/power"],
     "custom/power" : {
-        "format": " ",
+        "format": "",
         "tooltip": false,
         "on-click": "$HOME/.config/sway/scripts/power",
         "escape": true,
@@ -22,7 +22,7 @@
             "5": "5",
             "6": "6",
             "7": "7",
-            "8": "8",
+            "8": "",
             "9": "󰺻",
             "10": "󰭹",
             "default": " "
@@ -86,12 +86,12 @@
     "pulseaudio": {
         "format": "{icon}{volume}%",
         "format-bluetooth": "{icon}{volume}%",
-        "format-muted": " ",
+        "format-muted": "",
         "format-icons": {
-            "headphone": [" ", "  ", "  "],
-            "default": ["", " ", " "]
+            "headphone": ["  ", "  ", "  "],
+            "default": [" ", " ", " "]
         },
-        "scroll-step": 5,
+        "scroll-step": 1,
         "on-click-right": "pavucontrol",
         "tooltip": true
     },

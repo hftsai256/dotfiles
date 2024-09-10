@@ -36,10 +36,9 @@ tooltip label {
 #tray,
 #clock {
   margin-top: 8px;
-  margin-right: 8px;
-  padding-left: 8px;
-  padding-right: 8px;
-  border-radius: 6px;
+  margin-bottom: 8px;
+  padding: 4px 8px 4px 8px;
+  border-radius: 8px;
   color: @termFG;
   background-color: @term00;
   opacity: 0.9;
@@ -47,61 +46,75 @@ tooltip label {
 
 #workspaces {
   margin-left: 8px;
-  margin-right: 0;
+  margin-right: 4px;
+  padding: 4px;
 }
 
 #workspaces button {
   color: @term07;
-  border-radius: 4px;
   padding-left: 4px;
   padding-right: 4px;
+  min-width: 12px;
 }
 
 #workspaces button.visible {
-  color: #add9ff;
+  color: @term12hl;
   text-shadow: @term12 0 0 4px;
 }
 
 #workspaces button.active {
-  color: #b9fff6;
+  color: @term14hl;
   text-shadow: @term14 0 0 4px;
 }
 
 #workspaces button.urgent {
-  color: #ffd27b;
+  color: @term11hl;
   text-shadow: @term11 0 0 4px;
 }
 
+#clock {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
 #custom-power, #network, #pulseaudio {
-  margin-right: 8px;
+  margin-right: 4px;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  padding-left: 8px;
+  padding-left: 4px;
+}
+
+#custom-power {
+  color: @term09hl;
+}
+
+#battery {
+  color: @term10hl;
 }
 
 #idle_inhibitor {
   border-radius: 0;
   margin-left: 0;
   margin-right: 0;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  color: @term12hl;
 }
 
 #backlight, #bluetooth, #battery {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  padding-right: 8px;
+  padding-right: 4px;
+  margin-left: 4px;
   margin-right: 0;
 }
 
 #tray, #window {
-  margin-left: 8px;
-  margin-right: 8px;
+  margin-left: 4px;
+  margin-right: 4px;
   font-family: 'Fira Sans', 'Symbols Nerd Font Mono';
   color: @termBG;
   background-color: @termFG;
-  border-color: @term00;
-  border-width: 2px;
-  border-style: ridge;
+  box-shadow: @termBG 2px 1px 2px;
 }
 

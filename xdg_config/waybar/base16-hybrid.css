@@ -6,6 +6,7 @@
 */
 
 @define-color term00 #282a2e;
+
 @define-color term01 #a54242;
 @define-color term02 #8c9440;
 @define-color term03 #de935f;
@@ -13,14 +14,26 @@
 @define-color term05 #85678f;
 @define-color term06 #5e8d87;
 @define-color term07 #707880;
+
 @define-color term08 #373b41;
+
 @define-color term09 #cc6666;
 @define-color term10 #b5bd68;
 @define-color term11 #f0c674;
 @define-color term12 #81a2be;
 @define-color term13 #b294bb;
 @define-color term14 #8abeb7;
-@define-color term15 #ffffff;
+
+@define-color term15 #c5c8c6;
 
 @define-color termBG #1d1f21;
 @define-color termFG #c5c8c6;
+
+@define-color term09hl #ff8080;
+@define-color term10hl #f4ff8c;
+@define-color term11hl #ffd27b;
+@define-color term12hl #add9ff;
+@define-color term13hl #f3caff;
+@define-color term14hl #b9fff6;
+@define-color term15hl #fbfffc;
+
