@@ -20,7 +20,7 @@
   outputs = { nixpkgs, nixgl, flake-utils, home-manager, nix-darwin, ... } @ inputs:
   flake-utils.lib.eachDefaultSystem (system:
     let
-      stateVersion = "24.11";
+      stateVersion = "24.05";
 
       pkgs = import nixpkgs {
         inherit system;
