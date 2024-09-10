@@ -57,6 +57,10 @@ install_nix() {
         curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install 
 }
 
+upgrade_nix() {
+        sudo -i nix upgrade-nix
+}
+
 has_element () {
         args=("$@")
         nargs=${#args[@]}
@@ -77,6 +81,7 @@ Options:
         -f  refresh source hash
         -r  reset user profile
         -s  apply new settings
+        -n  upgrade system nix (requires privilege)
 
 Example:
         $(basename "$0") -us
@@ -87,7 +92,7 @@ active_user=$(get_user)
 command -v nix >/dev/null 2>&1 || install_nix
 
 declare actions=()
-while getopts ":ufrs" opt; do
+while getopts ":nufrs" opt; do
         case "$opt" in
                 u)
                         actions+=(u)
@@ -100,6 +105,9 @@ while getopts ":ufrs" opt; do
                         ;;
                 s)
                         actions+=(s)
+                        ;;
+                n)
+                        actions+=(n)
                         ;;
                 *)
                         echo "unknown option $opt"
@@ -132,4 +140,9 @@ has_element "${actions[@]}" u && {
 has_element "${actions[@]}" s && {
         echo "→ apply nix environment for user $active_user"
         apply "$active_user"
+}
+
+has_element "${actions[@]}" n && {
+        echo "→ upgrade system nix"
+        upgrade_nix
 }
