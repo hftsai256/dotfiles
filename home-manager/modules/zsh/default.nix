@@ -44,6 +44,7 @@ in
 
     initExtra = ''
       ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=magenta"
+      export EDITOR=$(which $EDITOR)
     '';
 
     plugins = [

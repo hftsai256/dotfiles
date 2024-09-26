@@ -3,12 +3,12 @@
 
   inputs = {
     flake-utils.url = "github:numtide/flake-utils";
-
-    # I have no idea what I'm doing. Peeking into its source,
-    # seems like it provides nix-darwin and home-manager input sources
-    # so that I can hook them up in the output section below without
-    # explicitly define their URLs here.
     nix.url = "https://flakehub.com/f/DeterminateSystems/nix/2.0";
+
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixgl = {
       url = "github:guibou/nixGL";
@@ -17,7 +17,7 @@
     };
   };
 
-  outputs = { nixpkgs, nixgl, flake-utils, home-manager, nix-darwin, ... } @ inputs:
+  outputs = { nixpkgs, nixvim, nixgl, flake-utils, home-manager, nix-darwin, ... } @ inputs:
   flake-utils.lib.eachDefaultSystem (system:
     let
       stateVersion = "24.05";
@@ -33,23 +33,28 @@
         ];
       };
 
-      homeManagerConfiguration = { modules, username, homeDirectory, extraSpecialArgs ? {} }: home-manager.lib.homeManagerConfiguration {
-        inherit pkgs extraSpecialArgs;
+      homeManagerConfiguration = { modules, username, homeDirectory, extraSpecialArgs ? {} }:
+        home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
 
-        modules = [
-          inputs.nix.homeManagerModules.default
-          { home = { inherit username homeDirectory stateVersion; }; }
-          ./modules/home.nix
-        ] ++ modules;
-      };
+          extraSpecialArgs = {
+            inherit nixvim;
+          } // extraSpecialArgs;
 
-      nixDarwinConfiguration = { modules, username, homeDirectory, extraSpecialArgs ? {} }: nix-darwin.lib.darwinSystem {
-        inherit pkgs extraSpecialArgs;
+          modules = [
+            { home = { inherit username homeDirectory stateVersion; }; }
+            ./modules/home.nix
+          ] ++ modules;
+        };
 
-        modules = [
-          inputs.nix.darwinModules.default
-        ] ++ modules;
-      };
+      nixDarwinConfiguration = { modules, username, homeDirectory, extraSpecialArgs ? {} }:
+        nix-darwin.lib.darwinSystem {
+          inherit pkgs extraSpecialArgs;
+
+          modules = [
+            inputs.nix.darwinModules.default
+          ] ++ modules;
+        };
 
     in {
       packages.homeManagerConfigurations = {

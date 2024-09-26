@@ -40,7 +40,7 @@ in {
     font.name = term.font.name;
     font.size = term.font.size;
     shellIntegration.enableZshIntegration = true;
-    theme = "Hybrid";
+    themeFile = "Hybrid";
 
     settings = {
       background_opacity = (toString term.opacity);

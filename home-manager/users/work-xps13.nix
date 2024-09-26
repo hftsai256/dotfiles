@@ -13,7 +13,7 @@
   home.sessionPath = [ "$HOME/.local/bin" ];
 
   imports = [
-    ../modules/neovim
+    ../modules/nixvim
     ../modules/term.nix
     ../modules/fonts
     ../modules/zsh
