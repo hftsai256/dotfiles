@@ -11,12 +11,7 @@
         lua-ls.enable = true;
         ts-ls.enable = true;
         nixd.enable = true;
-        ccls = {
-          enable = true;
-          settings = {
-            filetypes = ["c" "cpp" "cxx" "cc"];
-          };
-        };
+        clangd.enable = true;
 
         pylsp = {
           enable = true;

@@ -36,6 +36,7 @@ in
     syntaxHighlighting.enable = true;
     enableCompletion = true;
     shellAliases = {
+      lg = "lazygit";
       br = "broot";
       py = "python3";
       jnb = "jupyter notebook";

@@ -13,7 +13,7 @@
   home.sessionPath = [ "$HOME/.local/bin" ];
 
   imports = [
-    ../modules/neovim
+    ../modules/nixvim
     ../modules/term.nix
     ../modules/fonts
     ../modules/zsh
@@ -21,5 +21,6 @@
 
   home.packages = with pkgs; [
     xclip  # steamOS is still on X11
+    mame-tools
   ];
 }
