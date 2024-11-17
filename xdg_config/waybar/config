@@ -8,7 +8,7 @@
     "custom/power" : {
         "format": "",
         "tooltip": false,
-        "on-click": "$HOME/.config/sway/scripts/power",
+        "on-click": "$HOME/.config/waybar/scripts/power",
         "escape": true,
     },
     "hyprland/workspaces": { 
@@ -74,13 +74,13 @@
     },
     "network": {
         "format-wifi": " {signalStrength}%",
-        "format-ethernet": " {ifname}",
+        "format-ethernet": "󰈀 {ifname}",
         "format-disconnected": "󰜺 No Network",
         "max-length": 8,
         "on-click-right": "nm-connection-editor",
         "tooltip": true,
-        "tooltip-format-wifi": "︁ {ipaddr}/{cidr}\n󰑩 {gwaddr}\n {essid} ({signalStrength}%)\n󰶣{bandwidthUpBytes} 󰶡{bandwidthDownBytes}",
-        "tooltip-format-ethernet": "︁ {ipaddr}/{cidr}\n󰑩 {gwaddr}\n󰾲 {ifname}\n󰶣{bandwidthUpBytes} 󰶡{bandwidthDownBytes}",
+        "tooltip-format-wifi": "󰒗 {ipaddr}/{cidr}\n󰑩 {gwaddr}\n {essid} ({signalStrength}%)\n󰶣{bandwidthUpBytes} 󰶡{bandwidthDownBytes}",
+        "tooltip-format-ethernet": "󰒗 {ipaddr}/{cidr}\n󰑩 {gwaddr}\n󰾲 {ifname}\n󰶣{bandwidthUpBytes} 󰶡{bandwidthDownBytes}",
         "tooltip-format-disconnected": "󰜺 No Network"
     },
     "pulseaudio": {

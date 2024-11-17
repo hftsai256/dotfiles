@@ -2,7 +2,7 @@
 ## Quick Start
 1. Clone this repository.
 2. Simlink `home-manager` and other required folders under `xdg_config` to `$HOME/.config`.
-3. Run the script `$HOME/.config/home-manager/scripts/nixhm-apply`
+3. Run the script `$HOME/.dotfiles/nix/scripts/nixhm-apply`
 4. Select the proper config profile from the menu.
 5. Run `nixhm-apply` as the command for future updates.
 6. Profit! [^1]

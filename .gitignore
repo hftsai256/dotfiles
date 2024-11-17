@@ -18,6 +18,6 @@ init/secret
 ssh/config
 
 # Nix
-home-manager/result
-home-manager/ACTIVATED_USER
-home-manager/modules/neovim/nvim/undodir
+nix/result
+nix/ACTIVATED_USER
+nix/modules/neovim/nvim/undodir
