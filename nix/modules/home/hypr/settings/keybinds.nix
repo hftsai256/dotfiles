@@ -1,9 +1,9 @@
-{ pkgs, ... }:
+{ config, ... }:
 {
   wayland.windowManager.hyprland.settings = {
     bind = [
-      "SUPER+CTRL, t, exec, kitty"
-      "SUPER+CTRL, e, exec, dolphin $HOME"
+      "SUPER+CTRL, t, exec, ${config.term.app}"
+      "SUPER+CTRL, e, exec, nautilus $HOME"
       "SUPER+CTRL, b, exec, brave"
       "SUPER+CTRL, m, exec, thunderbird"
 
@@ -61,12 +61,12 @@
       ",XF86MonBrightnessDown, exec, brightnessctl -q s 10%\-"
     ] ++ (
       builtins.concatLists (builtins.genList (i:
-        let ws = i + 1;
+        let ws = if i == 0 then 10 else i;
         in [
-          "SUPER, code:1${toString i}, workspace, ${toString ws}"
-          "SUPER+SHIFT, code:1${toString i}, movetoworkspace, ${toString ws}"
+          "SUPER, ${toString i}, workspace, ${toString ws}"
+          "SUPER+SHIFT, ${toString i}, movetoworkspace, ${toString ws}"
         ]
-      ) 9)
+      ) 10)
     );
 
     bindm = [

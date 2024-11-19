@@ -8,24 +8,24 @@
     name = "Simp1e-Breeze";
   };
 
-  qt.style.name = "breeze";
+  qt = {
+    enable = true;
+    platformTheme.name = "qtct";
+  };
 
   gtk = {
     enable = true;
-
     theme = {
       package = pkgs.vimix-gtk-themes;
       name = "vimix-light-doder";
     };
-
     iconTheme = {
-      package = pkgs.tela-icon-theme;
-      name = "Tela";
+      package = pkgs.vimix-icon-theme;
+      name = "Vimix-Doder";
     };
-
     font = {
       name = "Noto Sans";
-      size = 10;
+      size = 9;
     };
   };
 }

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, ... }:
 {
   imports = [
     ./keybinds.nix
@@ -33,12 +33,12 @@
 
     decoration = {
       blur.enabled = false;
+      shadow.enabled = false;
       rounding = 8;
     };
 
     animations = {
-      enabled = true;
-      bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
+      enabled = if config.hypr.lowSpec then false else true;
       animation = [
         "windows, 1, 6, default, popin 80%"
         "border, 1, 6, default"

@@ -15,15 +15,17 @@
   home.packages = with pkgs; [
     brave
     firefox
+    firefoxpwa
     thunderbird
     teams-for-linux
     mpv
-    obs-studio
     naps2
-    libreoffice
-  ];
+    kicad
 
-  hypr.lowSpec = true;
+    gnome-network-displays
+    solaar
+    selectdefaultapplication
+  ];
 
   kanshiSettings = [
     { profile.name = "office";
@@ -34,8 +36,8 @@
         position = "1280,0";
       }
       {
-        criteria = "Sharp Corporation 0x148B Unknown";
-        scale = 3.0;
+        criteria = "AU Optronics 0x403D Unknown";
+        scale = 1.5;
         position = "0,0";
       }
     ]; }
@@ -48,8 +50,8 @@
         position = "0,0";
       }
       {
-        criteria = "Sharp Corporation 0x148B Unknown";
-        scale = 3.0;
+        criteria = "AU Optronics 0x403D Unknown";
+        scale = 1.5;
         position = "560,1350";
       }
     ]; }
@@ -57,8 +59,8 @@
     { profile.name = "standalone";
       profile.outputs = [
       {
-        criteria = "Sharp Corporation 0x148B Unknown";
-        scale = 2.0;
+        criteria = "AU Optronics 0x403D Unknown";
+        scale = 1.0;
         position = "0,0";
       }
     ]; }

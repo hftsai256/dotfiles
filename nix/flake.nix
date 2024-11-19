@@ -4,6 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware";
+    lanzaboote.url = "github:nix-community/lanzaboote";
+    impermanence.url = "github:nix-community/impermanence";
     flake-utils.url = "github:numtide/flake-utils";
 
     home-manager = {
@@ -33,7 +35,7 @@
         config.allowUnfree = true;
         overlays = [
           inputs.nixgl.overlay
-          (import ./overlays/glsource.nix)
+          (import ./overlays/gfx.nix)
           (import ./overlays/nvfetcher.nix)
           (import ./overlays/librime.nix)
         ];
@@ -60,10 +62,6 @@
           homeDirectory = "/home/hftsai";
 
           modules = [ ./users/work-xps13.nix ];
-          extraSpecialArgs = {
-            glSource = "null";
-            term.name = "kitty";
-          };
         };
 
         personal-xps13 = homeManagerConfiguration {
@@ -72,10 +70,14 @@
           modules = [ 
             ./users/personal-xps13.nix
           ];
-          extraSpecialArgs = { 
-            glSource = "native";
-            term.name = "kitty";
-          };
+        };
+
+        rainberry = homeManagerConfiguration {
+          username = "hftsai";
+          homeDirectory = "/home/hftsai";
+          modules = [ 
+            ./users/rainberry.nix
+          ];
         };
 
         personal-steamdeck = homeManagerConfiguration {
@@ -83,10 +85,6 @@
           homeDirectory = "/home/deck";
 
           modules = [ ./users/personal-steamdeck.nix ];
-          extraSpecialArgs = {
-            glSource = "nixgl";
-            term.name = "kitty";
-          };
         };
       };
     }
@@ -94,10 +92,18 @@
     nixosConfigurations = {
       hft-xps9370 = nixpkgs.lib.nixosSystem {
         specialArgs = with inputs; { 
-          inherit nixos-hardware;
+          inherit nixos-hardware lanzaboote impermanence;
         };
         modules = [
           ./hosts/hft-xps9370/configuration.nix
+        ];
+      };
+      rainberry = nixpkgs.lib.nixosSystem {
+        specialArgs = with inputs; { 
+          inherit nixos-hardware lanzaboote impermanence;
+        };
+        modules = [
+          ./hosts/rainberry/configuration.nix
         ];
       };
     };

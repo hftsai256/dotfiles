@@ -18,6 +18,12 @@
       settings.General.Experimental = true;
     };
 
+    sane = {
+      enable = true;
+      extraBackends = [ pkgs.sane-airscan ];
+      disabledDefaultBackends = [ "v4l" "escl" ];
+    };
+
     gpgSmartcards.enable = true;
   };
 
@@ -47,18 +53,21 @@
   users.users.hftsai = {
     isNormalUser = true;
     description = "Halley Tsai";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "scanner" "lp" ];
     shell = pkgs.zsh;
   };
 
-  environment.systemPackages = with pkgs; [
-    neovim 
-    git
-    wget
-    usbutils
-    pciutils
-    lm_sensors
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      neovim 
+      git
+      wget
+      usbutils
+      pciutils
+      lm_sensors
+    ];
+
+  };
 
   programs.gnupg.agent = {
     enable = true;
@@ -70,6 +79,12 @@
   services = {
     openssh.enable = true;
     blueman.enable = true;
+    printing.enable = true;
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
     pcscd.enable = true;
     udev.packages = with pkgs; [
       yubikey-personalization
@@ -77,6 +92,8 @@
       media-player-info
     ];
   };
+
+  hypr.lowSpec = true;
 
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

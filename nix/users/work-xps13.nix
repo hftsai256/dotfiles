@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 {
   programs.git = {
     enable = true;
@@ -11,6 +11,9 @@
   };
 
   home.sessionPath = [ "$HOME/.local/bin" ];
+
+  gfx = "null";
+  term.app = "foot";
 
   imports = [
     ../modules/home/nixvim

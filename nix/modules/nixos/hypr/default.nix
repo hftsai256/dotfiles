@@ -1,50 +1,90 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   imports = [
     ./kde-ecosystem.nix
-    ./sddm.nix
+    ./gtk-ecosystem.nix
   ];
 
-  environment.systemPackages = with pkgs; [
-    libsForQt5.qt5.qtwayland
-    kdePackages.qtwayland
+  options = {
+    hypr.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = ''
+        Enable Hyprland compositor
+      '';
+    };
 
-    libsForQt5.qt5.qtsvg
-    kdePackages.qtsvg
+    hypr.lowSpec = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = ''
+        Enable this option on HW limited/low spec machine to apply patches and
+        reduce animation
+      '';
+    };
 
-    libsForQt5.qt5ct
-    kdePackages.qt6ct
-    nwg-look
-
-    hyprlock
-    hyprcursor
-    hyprpaper
-    dconf
-    kanshi
-    waybar
-    mako
-    wofi
-
-    networkmanagerapplet
-    pavucontrol
-    brightnessctl
-
-    wl-clipboard
-    cliphist
-    grim
-    slurp
-  ];
-
-  programs.hyprland.enable = true;
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-  services = {
-    dbus.enable = true;
-    udisks2.enable = true;
-    upower.enable = true;
-    power-profiles-daemon.enable = true;
-    system-config-printer.enable = true;
-    libinput.enable = true;
+    hypr.ecoSystem = lib.mkOption {
+      type = lib.types.enum [ "kde" "gtk" ];
+      default = "gtk";
+      description = ''
+        Use either KDE or Gtk for system service backend
+      '';
+    };
   };
 
+  config = lib.mkIf config.hypr.enable {
+    environment = {
+      systemPackages = with pkgs; [
+        plasma5Packages.qt5.qtwayland
+        plasma5Packages.qt5.qtsvg
+        plasma5Packages.qt5ct
+
+        kdePackages.qtwayland
+        kdePackages.qtsvg
+        kdePackages.qt6ct
+
+        nwg-look
+
+        hypridle
+        hyprlock
+        hyprcursor
+        hyprpaper
+        kanshi
+        waybar
+        mako
+        wofi
+
+        networkmanagerapplet
+        pavucontrol
+        brightnessctl
+
+        wl-clipboard
+        cliphist
+        grim
+        slurp
+      ];
+
+      sessionVariables = {
+        NIXOS_OZONE_WL = 1;
+      } // lib.optionalAttrs config.hypr.lowSpec {
+        AQ_NO_MODIFIERS = 1;
+      };
+    };
+
+    xdg.portal = {
+      enable = true;
+      xdgOpenUsePortal = true;
+    };
+
+    programs.hyprland.enable = true;
+
+    programs.uwsm = {
+      enable = true;
+      waylandCompositors.hyprland = {
+        binPath = "/run/current-system/sw/bin/Hyprland";
+        comment = "Hyprland session managed by uwsm";
+        prettyName = "Hyprland";
+      };
+    };
+  };
 }

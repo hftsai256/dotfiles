@@ -1,103 +1,119 @@
-{ pkgs, specialArgs, ... }:
+{ config, pkgs, lib, ... }:
 let
-  inherit (specialArgs) glSource;
   toString = pkgs.lib.strings.floatToString;
-
-  term = {
-    name = "kitty";
-    font.name = "monospace";
-    font.size = 9;
-    opacity = 0.9;
-  } // (if builtins.hasAttr "term" specialArgs
-    then specialArgs.term else {}
-  );
 
   kitty-pkg = {
     native = pkgs.kitty;
     nixgl = pkgs.kitty-nixgl;
     null = pkgs.null;
-    darwin = pkgs.null;
   };
 
   alacritty-pkg = {
     native = pkgs.alacritty;
     nixgl = pkgs.alacritty-nixgl;
     null = pkgs.null;
-    darwin = pkgs.null;
   };
 
   foot-pkg = {
     native = pkgs.foot;
     nixgl = pkgs.foot-nixgl;
     null = pkgs.null;
-    darwin = pkgs.null;
   };
 
 in {
-  programs.kitty = {
-    enable = if term.name == "kitty" then true else false;
-    package = kitty-pkg."${glSource}";
-    font.name = term.font.name;
-    font.size = term.font.size;
-    shellIntegration.enableZshIntegration = true;
-    themeFile = "Hybrid";
+  options = {
+    term.app = lib.options.mkOption {
+      type = lib.types.enum ["kitty" "alacritty" "foot"];
+      default = "kitty";
+      description = ''
+        Terminal application. Supported options are:
+          "kitty", "alacritty", "foot"
+      '';
+    };
 
-    settings = {
-      background_opacity = (toString term.opacity);
-      selection_background = "#81a2be";
+    term.fontsize = lib.options.mkOption {
+      type = lib.types.float;
+      default = 9.0;
+      description = ''
+        Terminal font size
+      '';
+    };
+
+    term.opacity = lib.options.mkOption {
+      type = lib.types.float;
+      default = 0.9;
+      description = ''
+        Terminal opacity
+      '';
     };
   };
 
-  programs.alacritty = {
-    enable = if term.name == "alacritty" then true else false;
-    package = alacritty-pkg."${glSource}";
+  config = {
+    programs.kitty = {
+      enable = if config.term.app == "kitty" then true else false;
+      package = kitty-pkg."${config.gfx}";
+      font.name = "monospace";
+      font.size = config.term.fontsize;
+      shellIntegration.enableZshIntegration = true;
+      themeFile = "Hybrid";
 
-    settings = {
-      bell = {
-        animation = "EaseOutExpo";
-        color = "#ffffff";
-        duration = 250;
+      settings = {
+        background_opacity = (toString config.term.opacity);
+        selection_background = "#81a2be";
       };
-
-      font.size = term.font.size;
-      font.normal.family = term.font.name;
-
-      window.opacity = term.opacity;
     };
-  };
 
-  programs.foot = {
-    enable = if term.name == "foot" then true else false;
-    package = foot-pkg."${glSource}";
+    programs.alacritty = {
+      enable = if config.term.app == "alacritty" then true else false;
+      package = alacritty-pkg."${config.gfx}";
 
-    settings = {
-      main = {
-        font = "${term.font.name}:${(toString term.font.size)}";
-        dpi-aware = "yes";
+      settings = {
+        bell = {
+          animation = "EaseOutExpo";
+          color = "#ffffff";
+          duration = 250;
+        };
+
+        font.size = config.term.fontsize;
+        font.normal.family = "monospace";
+
+        window.opacity = config.term.opacity;
       };
+    };
 
-      colors = {
-        alpha = term.opacity;
-        foreground = "c5c8c6";
-        background = "1d1f21";
+    programs.foot = {
+      enable = if config.term.app == "foot" then true else false;
+      package = foot-pkg."${config.gfx}";
 
-        regular0 = "282a2e";
-        regular1 = "a54242";
-        regular2 = "8c9440";
-        regular3 = "de935f";
-        regular4 = "5f819d";
-        regular5 = "85678f";
-        regular6 = "5e8d87";
-        regular7 = "707880";
+      settings = {
+        main = {
+          font = "monospace:${(toString config.term.fontsize)}";
+          dpi-aware = "no";
+        };
 
-        bright0 = "373b41";
-        bright1 = "cc6666";
-        bright2 = "b5bd68";
-        bright3 = "f0c674";
-        bright4 = "81a2be";
-        bright5 = "b294bb";
-        bright6 = "8abeb7";
-        bright7 = "c5c8c6";
+        colors = {
+          alpha = config.term.opacity;
+          foreground = "c5c8c6";
+          background = "1d1f21";
+
+          regular0 = "282a2e";
+          regular1 = "a54242";
+          regular2 = "8c9440";
+          regular3 = "de935f";
+          regular4 = "5f819d";
+          regular5 = "85678f";
+          regular6 = "5e8d87";
+          regular7 = "707880";
+
+          bright0 = "373b41";
+          bright1 = "cc6666";
+          bright2 = "b5bd68";
+          bright3 = "f0c674";
+          bright4 = "81a2be";
+          bright5 = "b294bb";
+          bright6 = "8abeb7";
+          bright7 = "c5c8c6";
+        };
       };
     };
   };

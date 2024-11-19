@@ -12,6 +12,9 @@
 
   home.sessionPath = [ "$HOME/.local/bin" ];
 
+  gfx = "nixgl";
+  term.app = "foot";
+
   imports = [
     ../modules/home/nixvim
     ../modules/home/term.nix

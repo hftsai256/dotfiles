@@ -1,52 +1,45 @@
-{ config, pkgs, specialArgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
   inherit (config.home) homeDirectory;
-  inherit (specialArgs) glSource;
 
   xdgPath = "${homeDirectory}/.dotfiles/xdg_config";
-
-  hyprland-pkg = {
-    native = pkgs.hyprland;
-    nixgl = pkgs.null;
-    null = pkgs.null;
-    darwin = pkgs.null;
-  };
 
 in
 {
   imports = [
     ./themes.nix
+    ./kanshi.nix
+    ./notifier.nix
     ./settings
   ];
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    package = hyprland-pkg.${glSource};
+  options = {
+    hypr.lowSpec = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = ''
+        Enable this option on HW limited/low spec machine to apply patches and
+        reduce animation
+      '';
+    };
   };
 
-  home.sessionVariables.NIXOS_OZONE_WL = "1";
-  services.hypridle.enable = true;
-
-  xdg = {
-    portal = {
+  config = {
+    wayland.windowManager.hyprland = {
       enable = true;
-      extraPortals = with pkgs; [
-        xdg-desktop-portal-kde 
-        xdg-desktop-portal-gtk
-      ];
-      config.hyprland.default = [ "hyprland" "kde" "gtk" ];
+      package = if (config.gfx == "native") then pkgs.hyprland else pkgs.null;
     };
 
-    configFile = {
-      "hypr/hyprlock.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprlock.conf";
-      "hypr/hypridle.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hypridle.conf";
-      "hypr/hyprpaper.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprpaper.conf";
-      kanshi.source = mkOutOfStoreSymlink "${xdgPath}/kanshi";
-      mako.source = mkOutOfStoreSymlink "${xdgPath}/mako";
-      wofi.source = mkOutOfStoreSymlink "${xdgPath}/wofi";
-      waybar.source = mkOutOfStoreSymlink "${xdgPath}/waybar";
+    xdg = {
+      configFile = {
+        "hypr/hyprpaper.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprpaper.conf";
+        "hypr/hypridle.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hypridle.conf";
+        "hypr/hyprlock.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprlock.conf";
+        wofi.source = mkOutOfStoreSymlink "${xdgPath}/wofi";
+        waybar.source = mkOutOfStoreSymlink "${xdgPath}/waybar";
+      };
     };
+
   };
-
 }
