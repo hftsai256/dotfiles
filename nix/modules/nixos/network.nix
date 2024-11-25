@@ -1,20 +1,37 @@
-{ config, ... }:
+{ config, pkgs, lib, ... }:
 {
-  networking = {
-    hostName = config.hostname;
-    networkmanager.enable = true;
+  options = {
+    fortinet.enable = lib.options.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = ''
+        Enable Fortinet VPN related packages
+      '';
+    };
   };
 
-  services = {
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
+  config = {
+    environment.systemPackages = lib.mkIf config.fortinet.enable (with pkgs; [
+      openfortivpn
+      (callPackage ../../packages/openfortivpn-webview.nix {})
+    ]);
+
+    networking = {
+      hostName = config.hostname;
+      networkmanager.enable = true;
     };
 
-    openssh.enable = true;
+    services = {
+      avahi = {
+        enable = true;
+        nssmdns4 = true;
+        openFirewall = true;
+      };
 
-    samba.enable = true;
-    samba-wsdd.enable = true;
+      openssh.enable = true;
+
+      samba.enable = true;
+      samba-wsdd.enable = true;
+    };
   };
 }

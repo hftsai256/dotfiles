@@ -13,6 +13,7 @@
   secureBoot.enable = true;
   impermanence.enable = true;
 
+  fortinet.enable = true;
   gaming.enable = true;
   gpuType = "amd";
 

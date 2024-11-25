@@ -29,6 +29,7 @@
         "/etc/NetworkManager/system-connections"
         "/etc/ssh"
         "/etc/secureboot"
+        "/etc/openfortivpn"
       ];
 
       files = [

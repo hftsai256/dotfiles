@@ -74,6 +74,7 @@
     environment.systemPackages = with pkgs; [
       neovim
       git
+      dig
       wget
       usbutils
       pciutils
