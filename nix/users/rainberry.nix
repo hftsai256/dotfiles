@@ -20,9 +20,12 @@
     teams-for-linux
     mpv
     naps2
+
     kicad
+    ngspice
 
     gnome-network-displays
+
     solaar
     selectdefaultapplication
   ];

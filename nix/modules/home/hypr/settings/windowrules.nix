@@ -28,6 +28,8 @@ in
       "float, class:org.mozilla.Thunderbird, initialTitle:^$"
       "float, class:org.mozilla.Thunderbird, initialTitle:^Write.*$"
 
+      "float, initialTitle:MainPicker"
+
       "${popupLandscape}, class:org.kde.dolphin"
       "${popupLandscape}, class:^(xdg-desktop-portal-*)$"
     ];
