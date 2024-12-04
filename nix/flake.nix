@@ -106,6 +106,14 @@
           ./hosts/rainberry/configuration.nix
         ];
       };
+      rowanshade = nixpkgs.lib.nixosSystem {
+        specialArgs = with inputs; {
+          inherit nixos-hardware lanzaboote impermanence;
+        };
+        modules = [
+          ./hosts/rowanshade/configuration.nix
+        ];
+      };
     };
   };
 }

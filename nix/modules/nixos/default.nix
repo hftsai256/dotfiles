@@ -25,6 +25,7 @@
     ./boot.nix
     ./impermanence.nix
     ./secure-boot.nix
+    ./thunderbolt.nix
     ./bluetooth.nix
     ./logitech.nix
     ./tablet.nix
@@ -61,6 +62,7 @@
       lm_sensors
       efibootmgr
       v4l-utils
+      libcamera
     ];
 
     programs.zsh.enable = true;
