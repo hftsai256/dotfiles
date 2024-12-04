@@ -15,14 +15,10 @@ in
   ];
 
   options = {
-    hypr.lowSpec = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = ''
-        Enable this option on HW limited/low spec machine to apply patches and
-        reduce animation
-      '';
-    };
+    hypr.lowSpec = lib.mkEnableOption ''
+      Enable this option on HW limited/low spec machine to apply patches and
+      reduce animation
+    '';
   };
 
   config = {

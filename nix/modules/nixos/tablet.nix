@@ -1,13 +1,8 @@
 { config, lib, ... }:
 {
   options = {
-    tablet.enable = lib.options.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = ''
-        Enable OpenTabletDriver with systemd user service
-      '';
-    };
+    tablet.enable = lib.options.mkEnableOption 
+        "OpenTabletDriver with systemd user service";
   };
 
   config = lib.mkIf config.tablet.enable {

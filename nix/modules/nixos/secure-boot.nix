@@ -1,10 +1,7 @@
 { config, pkgs, lib, lanzaboote, ... }:
 {
   options = {
-    secureBoot.enable = lib.options.mkOption {
-      type = lib.types.bool;
-      default = false;
-    };
+    secureBoot.enable = lib.options.mkEnableOption "Secure boot (supported by lanzaboote)";
   };
 
   imports = [ lanzaboote.nixosModules.lanzaboote ];

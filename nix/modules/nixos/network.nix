@@ -1,13 +1,8 @@
 { config, pkgs, lib, ... }:
 {
   options = {
-    fortinet.enable = lib.options.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = ''
-        Enable Fortinet VPN related packages
-      '';
-    };
+    fortinet.enable = lib.options.mkEnableOption
+        "Fortinet VPN and related packages";
   };
 
   config =

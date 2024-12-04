@@ -1,13 +1,7 @@
-{ config, pkgs, lib, impermanence,... }:
+{ config, lib, impermanence,... }:
 {
   options = {
-    impermanence.enable = lib.options.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = ''
-        Enable impermanence config
-      '';
-    };
+    impermanence.enable = lib.options.mkEnableOption "Impermanence module";
   };
 
   imports = [
@@ -27,6 +21,7 @@
         "/var/lib/systemd/coredump"
         "/var/lib/flatpak"
         "/etc/NetworkManager/system-connections"
+        "/etc/nixos"
         "/etc/ssh"
         "/etc/secureboot"
         "/etc/openfortivpn"

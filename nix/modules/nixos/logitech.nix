@@ -1,13 +1,7 @@
 { config, pkgs, lib, ... }:
 {
   options = {
-    logitech.enable = lib.options.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = ''
-        Set up Logitect Unifying Receiver
-      '';
-    };
+    logitech.enable = lib.options.mkEnableOption "Logitech Unifying Receiver";
   };
 
   config = {

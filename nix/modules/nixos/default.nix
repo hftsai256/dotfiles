@@ -1,29 +1,9 @@
 { config, pkgs, lib, ... }:
 {
   options = {
-    kde.enable = lib.options.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = ''
-        Enable KDE Plasma desktop
-      '';
-    };
-
-    gnome.enable = lib.options.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = ''
-        Enable Gnome desktop
-      '';
-    };
-
-    opengl.enable = lib.options.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = ''
-        Enable GPU acceleration
-      '';
-    };
+    kde.enable = lib.options.mkEnableOption "KDE Plasma desktop";
+    gnome.enable = lib.options.mkEnableOption "Gnome desktop";
+    opengl.enable = lib.options.mkEnableOption "GPU acceleration";
 
     hostname = lib.options.mkOption {
       type = lib.types.nonEmptyStr;
