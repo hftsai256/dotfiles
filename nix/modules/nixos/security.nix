@@ -1,35 +1,48 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
-  hardware.gpgSmartcards.enable = true;
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
+  options = {
+    yubikey.enable = lib.options.mkEnableOption "Yubikey support";
   };
 
-  services = {
-    pcscd.enable = true;
-    udev.packages = [
-      pkgs.yubikey-personalization
-    ];
-  };
+  config = {
+    hardware.gpgSmartcards.enable = config.yubikey.enable;
 
-  systemd = {
-    user.services.polkit-gnome-authentication-agent-1 = {
-      description = "polkit-gnome-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
-      serviceConfig = {
-        Type = "simple";
-        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-        Restart = "on-failure";
-        RestartSec = 1;
-        TimeoutStopSec = 10;
-      };
+    environment.systemPackages = lib.optionals config.yubikey.enable (with pkgs; [
+      yubikey-personalization
+      yubikey-personalization-gui
+      yubikey-manager
+      yubikey-manager-qt
+    ]);
+
+    programs.gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
     };
-    extraConfig = ''
-      DefaultTimeoutStopSec=10s
-    '';
+
+    services = lib.mkIf config.yubikey.enable {
+      pcscd.enable = true;
+      udev.packages = [
+        pkgs.yubikey-personalization
+      ];
+    };
+
+    systemd = {
+      user.services.polkit-gnome-authentication-agent-1 = {
+        description = "polkit-gnome-authentication-agent-1";
+        wantedBy = [ "graphical-session.target" ];
+        wants = [ "graphical-session.target" ];
+        after = [ "graphical-session.target" ];
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+          Restart = "on-failure";
+          RestartSec = 1;
+          TimeoutStopSec = 10;
+        };
+      };
+      extraConfig = ''
+        DefaultTimeoutStopSec=10s
+      '';
+    };
   };
 }

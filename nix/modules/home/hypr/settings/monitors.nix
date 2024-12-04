@@ -6,7 +6,7 @@
     ];
 
     bindl = [
-      '',switch:off:Lid Switch, execr, hyprctl keyword monitor "eDP-1,preferred,0x0,1.5"''
+      '',switch:off:Lid Switch, execr, hyprctl keyword monitor "eDP-1,preferred"''
       '',switch:on:Lid Switch, execr, hyprctl keyword monitor "eDP-1,disable"''
     ];
 

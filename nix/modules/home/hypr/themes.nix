@@ -8,11 +8,6 @@
     name = "Simp1e-Breeze";
   };
 
-  qt = {
-    enable = true;
-    platformTheme.name = "qtct";
-  };
-
   gtk = {
     enable = true;
     theme = {

@@ -1,13 +1,7 @@
 { config, pkgs, lib, ... }:
 {
   options = {
-    gaming.enable = lib.options.mkOption {
-      type = lib.types.bool;
-      default = false;
-      description = ''
-        Install gaming infrastructures
-      '';
-    };
+    gaming.enable = lib.options.mkEnableOption "Graphical stack for gaming";
 
     gpuType = lib.options.mkOption {
       type = lib.types.enum [ "amd" "nvidia" "intel" "virgl" "headless" ];
@@ -18,16 +12,31 @@
     };
   };
 
-  config = {
-    hardware.graphics = lib.mkIf (config.gpuType != "headless") {
-      enable = true;
-      enable32Bit = true;
-      extraPackages = [
-        pkgs.amdvlk
-        pkgs.amdenc
-      ];
-      extraPackages32 = [ pkgs.driversi686Linux.amdvlk ];
+  config = let
+    graphics = {
+      amd = {
+        enable = true;
+        enable32Bit = config.gaming.enable;
+        extraPackages = with pkgs; [
+          amdvlk
+          amdenc
+        ];
+        extraPackages32 = lib.mkIf config.gaming.enable [
+          pkgs.driversi686Linux.amdvlk
+        ];
+      };
+
+      intel = {
+        enable = true;
+        enable32Bit = config.gaming.enable;
+        extraPackages = with pkgs; [
+          vpl-gpu-rt
+        ];
+      };
     };
+
+  in {
+    hardware.graphics = graphics.${config.gpuType};
 
     environment.systemPackages = lib.mkIf (config.gpuType != "headless") [
       pkgs.glxinfo
@@ -41,6 +50,10 @@
     };
 
     programs.gamemode.enable = config.gaming.enable;
-    programs.corectrl.enable = (config.gpuType != "headless");
+
+    programs.corectrl.enable = (config.gpuType == "amd");
+    boot.kernelParams = lib.mkIf (config.gpuType == "amd") [
+      "amdgpu.ppfeaturemask=0xffffffff"
+    ];
   };
 }

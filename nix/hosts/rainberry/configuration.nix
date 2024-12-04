@@ -11,6 +11,7 @@
 
   tablet.enable = true;
   secureBoot.enable = true;
+  yubikey.enable = true;
   impermanence.enable = true;
 
   fortinet.enable = true;

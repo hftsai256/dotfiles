@@ -24,7 +24,12 @@
       gedit
 
       gsettings-desktop-schemas
+
+      adwaita-qt
+      adwaita-qt6
     ];
+
+    qt.platformTheme = "qtct";
 
     security = {
       polkit.enable = true;
