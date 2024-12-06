@@ -1,37 +1,50 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
+let
+  inherit (config.lib.file) mkOutOfStoreSymlink;
+
+in
 {
   fonts.fontconfig = {
     enable = true;
 
     defaultFonts = {
       monospace = [
+        "Symbols Nerd Font"
         "Fira Code"
         "Source Han Sans"
-        "Symbols Nerd Font"
       ];
       serif = [
+        "Symbols Nerd Font"
         "Noto Serif"
         "Source Han Serif"
-        "Symbols Nerd Font"
       ];
       sansSerif = [
+        "Symbols Nerd Font"
         "Noto Sans"
         "Source Han Sans"
-        "Symbols Nerd Font"
       ];
       emoji = [
-        "Noto Color Emoji"
         "Symbols Nerd Font"
+        "Noto Color Emoji"
       ];
     };
+  };
+
+
+  xdg.configFile = {
+    "fontconfig/conf.d/99-aliases.conf".source =
+      mkOutOfStoreSymlink ./conf.d/99-aliases.conf;
   };
 
   home.packages = with pkgs; [
     fira-code
     fira-sans
     noto-fonts
+    inter
     source-han-sans
     source-han-serif
-    (nerdfonts.override { fonts = ["NerdFontsSymbolsOnly"]; })
+    nerd-fonts.symbols-only
+
+    font-manager
   ];
 }

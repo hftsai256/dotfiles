@@ -10,6 +10,7 @@
   hypr.ecoSystem = "gtk";
 
   thunderbolt.enable = true;
+  yubikey.enable = true;
   tablet.enable = true;
   secureBoot.enable = true;
   impermanence.enable = true;

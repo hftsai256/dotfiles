@@ -4,9 +4,13 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware";
-    lanzaboote.url = "github:nix-community/lanzaboote";
     impermanence.url = "github:nix-community/impermanence";
     flake-utils.url = "github:numtide/flake-utils";
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       url = "github:nix-community/home-manager/master";
@@ -51,7 +55,7 @@
 
           modules = [
             { home = { inherit username homeDirectory stateVersion; }; }
-            ./modules/home/home.nix
+            ./modules/home
           ] ++ modules;
         };
 

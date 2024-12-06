@@ -8,6 +8,12 @@
     name = "Simp1e-Breeze";
   };
 
+  qt = {
+    enable = true;
+    platformTheme.name = "qtct";
+    style.name = "adwaita";
+  };
+
   gtk = {
     enable = true;
     theme = {
@@ -19,7 +25,7 @@
       name = "Vimix-Doder";
     };
     font = {
-      name = "Noto Sans";
+      name = "sans";
       size = 9;
     };
   };

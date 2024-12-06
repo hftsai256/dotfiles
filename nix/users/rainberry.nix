@@ -1,34 +1,11 @@
-{ pkgs, ... }:
+{ ... }:
 {
-  programs.git = {
-    enable = true;
-    userName = "Halley Tsai";
-    userEmail = "hftsai256@gmail.com";
-  };
+  fullName = "Halley Tsai";
+  email = "hftsai256@gmail.com";
+  gfx = "native";
 
-  home.sessionVariables = {
-    EDITOR = "nvim";
-  };
-
-  home.sessionPath = [ "$HOME/.local/bin" ];
-
-  home.packages = with pkgs; [
-    brave
-    firefox
-    firefoxpwa
-    thunderbird
-    teams-for-linux
-    mpv
-    naps2
-
-    kicad
-    ngspice
-
-    gnome-network-displays
-
-    solaar
-    selectdefaultapplication
-  ];
+  guiApps.enable = true;
+  rime.enable = true;
 
   kanshiSettings = [
     { profile.name = "office";
@@ -67,14 +44,5 @@
         position = "0,0";
       }
     ]; }
-  ];
-
-  imports = [
-    ../modules/home/nixvim
-    ../modules/home/term.nix
-    ../modules/home/rime.nix
-    ../modules/home/hypr
-    ../modules/home/fonts
-    ../modules/home/zsh
   ];
 }

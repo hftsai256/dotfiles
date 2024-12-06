@@ -27,11 +27,9 @@
       systemPackages = with pkgs; [
         plasma5Packages.qt5.qtwayland
         plasma5Packages.qt5.qtsvg
-        plasma5Packages.qt5ct
 
         kdePackages.qtwayland
         kdePackages.qtsvg
-        kdePackages.qt6ct
 
         nwg-look
 

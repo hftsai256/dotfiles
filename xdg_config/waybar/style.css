@@ -8,14 +8,14 @@
 window#waybar {
   background: transparent; 
   font-weight: 600;
-  font-family: 'Fira Code', 'Symbols Nerd Font Mono';
+  font-family: 'monospace';
   font-size: 12px;
   color: @termFG;
 }
 
 tooltip {
   font-weight: 600;
-  font-family: 'Fira Code', 'Symbols Nerd Font Mono';
+  font-family: 'monospace';
   font-size: 12px;
   background: @termBG;
 }
@@ -112,7 +112,7 @@ tooltip label {
 #tray, #window {
   margin-left: 4px;
   margin-right: 4px;
-  font-family: 'Fira Sans', 'Symbols Nerd Font Mono';
+  font-family: 'monospace';
   color: @termBG;
   background-color: @termFG;
   box-shadow: @termBG 2px 1px 2px;
