@@ -6,6 +6,12 @@
     ../../modules/nixos
   ];
 
+  gpuType = "amd";
+
+  virtualization.enable = true;
+  virtualization.cpuType = "amd";
+  virtualization.lookingGlass = true;
+
   hypr.enable = true;
   hypr.ecoSystem = "gtk";
 
@@ -16,7 +22,6 @@
 
   fortinet.enable = true;
   gaming.enable = true;
-  gpuType = "amd";
 
   hostname = "rainberry";
 }

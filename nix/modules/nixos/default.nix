@@ -15,6 +15,11 @@
       default = "hftsai";
     };
 
+    userFullName = lib.options.mkOption {
+      type = lib.types.nonEmptyStr;
+      default = "Halley Tsai";
+    };
+
     email = lib.options.mkOption {
       type = lib.types.nonEmptyStr;
       default = "hftsai256@gmail.com";
@@ -35,6 +40,7 @@
     ./network.nix
     ./mfp.nix
     ./security.nix
+    ./virtualization.nix
     ./sddm.nix
     ./hypr
   ];
@@ -46,7 +52,7 @@
 
     users.users.${config.user} = {
       isNormalUser = true;
-      description = "Halley Tsai";
+      description = config.userFullName;
       initialHashedPassword = "$y$j9T$0nbU4IDxI6du0CtpiXVJn/$g2W7Pnf3/6l1zKzchsAkRe2Mgj8b1XhKhHTC7BWMpf9";
       extraGroups = [ "networkmanager" "wheel" "scanner" "lp" "dialout" ];
       shell = pkgs.zsh;

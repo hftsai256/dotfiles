@@ -22,6 +22,7 @@
       evince
       loupe
       gedit
+      baobab
 
       gsettings-desktop-schemas
 
