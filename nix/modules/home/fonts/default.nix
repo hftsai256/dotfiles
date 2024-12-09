@@ -9,19 +9,19 @@ in
 
     defaultFonts = {
       monospace = [
+        "Symbols Nerd Font"
         "Fira Code"
         "Source Han Sans"
-        "Symbols Nerd Font"
       ];
       serif = [
+        "Symbols Nerd Font"
         "Noto Serif"
         "Source Han Serif"
-        "Symbols Nerd Font"
       ];
       sansSerif = [
+        "Symbols Nerd Font"
         "Noto Sans"
         "Source Han Sans"
-        "Symbols Nerd Font"
       ];
       emoji = [
         "Noto Color Emoji"
@@ -29,7 +29,6 @@ in
       ];
     };
   };
-
 
   xdg.configFile = {
     "fontconfig/conf.d/99-aliases.conf".source =

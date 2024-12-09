@@ -32,13 +32,15 @@
     };
 
     decoration = {
-      blur.enabled = false;
-      shadow.enabled = false;
+      blur.enabled = !config.hypr.lowSpec;
+      shadow.enabled = !config.hypr.lowSpec;
+      shadow.color = "0xaa1d1f21";
+      shadow.offset = "2, 1";
       rounding = 8;
     };
 
     animations = {
-      enabled = if config.hypr.lowSpec then false else true;
+      enabled = !config.hypr.lowSpec;
       animation = [
         "windows, 1, 6, default, popin 80%"
         "border, 1, 6, default"

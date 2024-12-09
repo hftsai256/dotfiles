@@ -27,6 +27,7 @@
   };
 
   imports = [
+    ./cachix
     ./boot.nix
     ./impermanence.nix
     ./secure-boot.nix
@@ -74,7 +75,12 @@
     programs.zsh.enable = true;
 
     nixpkgs.config.allowUnfree = true;
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    
+    nix.settings = {
+      experimental-features = [ "nix-command" "flakes" ];
+      trusted-users = [ "root" "${config.user}" ];
+    };
+
     system.stateVersion = "24.11";
   };
 }
