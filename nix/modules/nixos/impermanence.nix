@@ -23,6 +23,7 @@
         "/etc/NetworkManager/system-connections"
         "/etc/nixos"
         "/etc/ssh"
+        "/etc/cups"
         "/etc/secureboot"
         "/etc/openfortivpn"
       ];
