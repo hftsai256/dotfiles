@@ -5,6 +5,7 @@
   gfx = "native";
 
   guiApps.enable = true;
+  guiApps.eeLab.enable = true;
   rime.enable = true;
 
   kanshiSettings = [

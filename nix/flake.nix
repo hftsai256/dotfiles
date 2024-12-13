@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
     flake-utils.url = "github:numtide/flake-utils";
@@ -29,12 +30,12 @@
     };
   };
 
-  outputs = { nixpkgs, flake-utils, ... } @ inputs:
+  outputs = { nixpkgs, nixpkgs-stable, flake-utils, ... } @ inputs:
   flake-utils.lib.eachDefaultSystem (system:
     let
       stateVersion = "24.11";
 
-      pkgs = import nixpkgs {
+      importPkgs = pkgSrc: import pkgSrc {
         inherit system;
         config.allowUnfree = true;
         overlays = [
@@ -45,11 +46,15 @@
         ];
       };
 
+      pkgs = importPkgs nixpkgs;
+      pkgsStable = importPkgs nixpkgs-stable;
+
       homeManagerConfiguration = { modules, username, homeDirectory, extraSpecialArgs ? {}, ... }:
         inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
 
           extraSpecialArgs = {
+            inherit pkgsStable;
             inherit (inputs) nixvim;
           } // extraSpecialArgs;
 

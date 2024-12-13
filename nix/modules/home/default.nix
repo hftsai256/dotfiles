@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, specialArgs, ... }:
 {
   options = {
     gfx = lib.options.mkOption {
@@ -13,6 +13,7 @@
     };
 
     guiApps.enable = lib.options.mkEnableOption "GUI apps";
+    guiApps.eeLab.enable = lib.options.mkEnableOption "EE Lab tools";
 
     fullName = lib.options.mkOption {
       type = lib.types.nonEmptyStr;
@@ -68,14 +69,16 @@
       teams-for-linux
       mpv
 
-      kicad
-      ngspice
-
       gnome-network-displays
       simple-scan
 
       solaar
       selectdefaultapplication
+    ] ++
+
+    lib.optionals (config.guiApps.enable && config.guiApps.eeLab.enable) [
+      specialArgs.pkgsStable.kicad
+      specialArgs.pkgsStable.ngspice
     ];
 
     home.file = {
