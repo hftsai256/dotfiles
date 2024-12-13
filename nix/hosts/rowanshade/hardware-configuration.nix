@@ -18,9 +18,16 @@
       fsType = "tmpfs";
     };
 
+  fileSystems."/boot" =
+    { device = "/dev/disk/by-uuid/08A8-534D";
+      fsType = "vfat";
+      options = [ "fmask=0022" "dmask=0022" ];
+    };
+
   fileSystems."/nix" =
     { device = "/dev/disk/by-uuid/3564aef8-10fa-450e-8c7e-84868dc506d4";
       fsType = "btrfs";
+      options = [ "subvol=@nix" ];
     };
 
   boot.initrd.luks.devices."rootfs".device = "/dev/disk/by-uuid/35d8ca1f-af12-4fb4-af76-791fec37ca99";
@@ -28,18 +35,14 @@
   fileSystems."/home" =
     { device = "/dev/disk/by-uuid/3564aef8-10fa-450e-8c7e-84868dc506d4";
       fsType = "btrfs";
+      options = [ "subvol=@home" ];
     };
 
   fileSystems."/persist" =
     { device = "/dev/disk/by-uuid/3564aef8-10fa-450e-8c7e-84868dc506d4";
       fsType = "btrfs";
+      options = [ "subvol=@persist" ];
       neededForBoot = true;
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/08A8-534D";
-      fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
     };
 
   swapDevices =
