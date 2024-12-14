@@ -19,12 +19,12 @@
         "/var/lib/cups/ppd"
         "/var/lib/cups/ssl"
         "/var/lib/systemd/coredump"
+        "/var/lib/sbctl"
         "/var/lib/flatpak"
         "/etc/NetworkManager/system-connections"
         "/etc/nixos"
         "/etc/ssh"
         "/etc/cups"
-        "/etc/secureboot"
         "/etc/openfortivpn"
       ];
 

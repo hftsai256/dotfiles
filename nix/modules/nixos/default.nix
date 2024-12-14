@@ -49,7 +49,7 @@
   config = {
     services.desktopManager.plasma6.enable = config.kde.enable;
     services.xserver.desktopManager.gnome.enable = config.gnome.enable;
-    services.flatpak.enable = true;
+    services.flatpak.enable = config.xdg.portal.enable;
 
     users.users.${config.user} = {
       isNormalUser = true;
