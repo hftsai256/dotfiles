@@ -74,6 +74,8 @@
 
       solaar
       selectdefaultapplication
+
+      specialArgs.pkgsStable.remmina
     ] ++
 
     lib.optionals (config.guiApps.enable && config.guiApps.eeLab.enable) [

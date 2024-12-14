@@ -10,8 +10,7 @@
 
   qt = {
     enable = true;
-    platformTheme.name = "qtct";
-    style.name = "adwaita";
+    platformTheme.name = "gtk";
   };
 
   gtk = {
