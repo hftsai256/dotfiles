@@ -6,6 +6,11 @@
     ../../modules/nixos
   ];
 
+  hardware.ipu6 = {
+    enable = true;
+    platform = "ipu6ep";
+  };
+
   hypr.enable = true;
   hypr.ecoSystem = "gtk";
 
