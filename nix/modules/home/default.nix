@@ -33,6 +33,7 @@
     ./zsh
     ./term.nix
     ./rime.nix
+    ./flatpak.nix
   ];
 
   config = {
@@ -76,6 +77,7 @@
       selectdefaultapplication
 
       specialArgs.pkgsStable.remmina
+      specialArgs.pkgsStable.libreoffice
     ] ++
 
     lib.optionals (config.guiApps.enable && config.guiApps.eeLab.enable) [

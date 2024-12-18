@@ -41,15 +41,18 @@
     ./network.nix
     ./mfp.nix
     ./security.nix
+    ./fonts.nix
     ./virtualization.nix
     ./sddm.nix
     ./hypr
   ];
 
   config = {
-    services.desktopManager.plasma6.enable = config.kde.enable;
-    services.xserver.desktopManager.gnome.enable = config.gnome.enable;
-    services.flatpak.enable = config.xdg.portal.enable;
+    services = {
+      desktopManager.plasma6.enable = config.kde.enable;
+      xserver.desktopManager.gnome.enable = config.gnome.enable;
+      flatpak.enable = true;
+    };
 
     users.users.${config.user} = {
       isNormalUser = true;

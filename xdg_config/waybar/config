@@ -70,7 +70,7 @@
       "tooltip-format": "{device_enumerate}",
       "tooltip-format-enumerate-connected": "{device_alias} [{device_address}]",
       "tooltip-format-enumerate-connected": "{device_alias} [{device_address}] 󱊢{device_battery_percentage}%",
-      "on-click-right": "blueman-manager"
+      "on-click-right": "blueberry"
     },
     "network": {
         "format-wifi": " {signalStrength}%",
