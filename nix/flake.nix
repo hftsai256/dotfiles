@@ -65,48 +65,28 @@
         };
 
     in {
-      packages.homeManagerConfigurations = {
-        work-xps13 = homeManagerConfiguration {
+      packages.homeConfigurations = {
+        "hftsai@rainberry" = homeManagerConfiguration {
           username = "hftsai";
           homeDirectory = "/home/hftsai";
-
-          modules = [ ./users/work-xps13.nix ];
+          modules = [ ./users/hftsai-rainberry.nix ];
         };
 
-        personal-xps13 = homeManagerConfiguration {
+        "hftsai@rowanshade" = homeManagerConfiguration {
           username = "hftsai";
           homeDirectory = "/home/hftsai";
-          modules = [ 
-            ./users/personal-xps13.nix
-          ];
+          modules = [ ./users/hftsai-rowanshade.nix ];
         };
 
-        rainberry = homeManagerConfiguration {
-          username = "hftsai";
-          homeDirectory = "/home/hftsai";
-          modules = [ 
-            ./users/rainberry.nix
-          ];
-        };
-
-        personal-steamdeck = homeManagerConfiguration {
+        "deck@steamdeck" = homeManagerConfiguration {
           username = "deck";
           homeDirectory = "/home/deck";
-
-          modules = [ ./users/personal-steamdeck.nix ];
+          modules = [ ./users/deck-steamdeck.nix ];
         };
       };
     }
   ) // {
     nixosConfigurations = {
-      hft-xps9370 = nixpkgs.lib.nixosSystem {
-        specialArgs = with inputs; { 
-          inherit nixos-hardware lanzaboote impermanence;
-        };
-        modules = [
-          ./hosts/hft-xps9370/configuration.nix
-        ];
-      };
       rainberry = nixpkgs.lib.nixosSystem {
         specialArgs = with inputs; { 
           inherit nixos-hardware lanzaboote impermanence;

@@ -2,11 +2,9 @@
 set -e
 
 ROOT=$HOME/.dotfiles/nix
-USER_FILE=$ROOT/ACTIVATED_USER
 
 update() {
         pushd "$ROOT" > /dev/null
-        nix run github:berberman/nvfetcher
         nix flake update
         popd > /dev/null
 }
@@ -19,38 +17,8 @@ refresh() {
 
 apply() {
         pushd "$ROOT" > /dev/null
-        nix build .#homeManagerConfigurations."$1".activationPackage \
-                --show-trace \
-                --impure \
-                --extra-experimental-features flakes \
-                --extra-experimental-features nix-command \
-        && ./result/activate
+        home-manager switch --flake $ROOT
         popd > /dev/null
-}
-
-user_menu() {
-        options=($(awk '/(.*)[[:space:]]*=[[:space:]]*homeManagerConfiguration/ {print $1}' "$ROOT/flake.nix"))
-        PS3="Select user profile: "
-        select opt in "${options[@]}" "quit"; do
-                case $opt in
-                "quit")
-                        echo user abort
-                        exit 0
-                        ;;
-                *)
-                        echo "${opt%.nix}"
-                        break
-                        ;;
-                esac
-        done
-}
-
-get_user() {
-        if [ -f "$USER_FILE" ]; then 
-                cat "$USER_FILE"
-        else
-                user_menu | tee "$USER_FILE"
-        fi
 }
 
 install_nix() {
@@ -79,7 +47,6 @@ $(basename "$0") [options] -- Helper script for updating packages and profiles m
 Options:
         -u  update flakes
         -f  refresh source hash
-        -r  reset user profile
         -s  apply new settings
         -n  upgrade system nix (requires privilege)
 
@@ -88,20 +55,16 @@ Example:
 EOF
 )
 
-active_user=$(get_user)
 command -v nix >/dev/null 2>&1 || install_nix
 
 declare actions=()
-while getopts ":nufrs" opt; do
+while getopts ":nufs" opt; do
         case "$opt" in
                 u)
                         actions+=(u)
                         ;;
                 f)
                         actions+=(f)
-                        ;;
-                r)
-                        actions+=(r)
                         ;;
                 s)
                         actions+=(s)
@@ -120,12 +83,6 @@ done
         echo "$USAGE"
         exit 1
 )
-
-has_element "${actions[@]}" r && {
-        echo "→ reset user profile"
-        rm "$USER_FILE"
-        get_user
-}
 
 has_element "${actions[@]}" f && {
         echo "→ refresh source hashes"

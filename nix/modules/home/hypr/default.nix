@@ -15,13 +15,17 @@ in
   ];
 
   options = {
+    hypr.enable = lib.mkEnableOption ''
+      Hyprland environment
+    '';
+
     hypr.lowSpec = lib.mkEnableOption ''
       Enable this option on HW limited/low spec machine to apply patches and
       reduce animation
     '';
   };
 
-  config = {
+  config = lib.mkIf config.hypr.enable {
     wayland.windowManager.hyprland = {
       enable = true;
       package = if (config.gfx == "native") then pkgs.hyprland else pkgs.null;

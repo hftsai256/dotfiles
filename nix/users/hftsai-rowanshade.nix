@@ -1,9 +1,10 @@
 { ... }:
 {
   fullName = "Halley Tsai";
-  email = "hftsai256@gmail.com";
+  email = "htsai@cytonome.com";
   gfx = "native";
 
+  hypr.enable = true;
   guiApps.enable = true;
   guiApps.eeLab.enable = true;
   rime.enable = true;
@@ -17,7 +18,7 @@
         position = "1280,0";
       }
       {
-        criteria = "AU Optronics 0x403D Unknown";
+        criteria = "Sharp Corporation 0x1548 Unknown";
         scale = 1.5;
         position = "0,0";
       }
@@ -31,7 +32,7 @@
         position = "0,0";
       }
       {
-        criteria = "AU Optronics 0x403D Unknown";
+        criteria = "Sharp Corporation 0x1548 Unknown";
         scale = 1.5;
         position = "560,1350";
       }
@@ -40,10 +41,11 @@
     { profile.name = "standalone";
       profile.outputs = [
       {
-        criteria = "AU Optronics 0x403D Unknown";
+        criteria = "Sharp Corporation 0x1548 Unknown";
         scale = 1.0;
         position = "0,0";
       }
     ]; }
   ];
 }
+
