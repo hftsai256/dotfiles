@@ -11,7 +11,6 @@
       yubikey-personalization
       yubikey-personalization-gui
       yubikey-manager
-      yubikey-manager-qt
     ]);
 
     programs.gnupg.agent = {
@@ -49,6 +48,12 @@
       enable = true;
       pkcs11.enable = true;
       tctiEnvironment.enable = true;
+    };
+
+    security.pam.yubico = {
+      enable = true;
+      mode = "challenge-response";
+      id = [ "24789592" ];
     };
   };
 }
