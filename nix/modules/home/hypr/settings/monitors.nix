@@ -2,12 +2,12 @@
 {
   wayland.windowManager.hyprland.settings = {
     exec = [
-      ''grep closed /proc/acpi/button/lid/LID0/state && hyprctl keyword monitor "eDP-1,disable"''
+      ''grep closed /proc/acpi/button/lid/LID0/state && kanshictl switch clamshell''
     ];
 
     bindl = [
-      '',switch:off:Lid Switch, execr, hyprctl keyword monitor "eDP-1,preferred"''
-      '',switch:on:Lid Switch, execr, hyprctl keyword monitor "eDP-1,disable"''
+      '',switch:off:Lid Switch, execr, kanshictl reload''
+      '',switch:on:Lid Switch, execr, kanshictl switch clamshell''
     ];
 
     workspace = [
