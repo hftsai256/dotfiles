@@ -7,11 +7,8 @@ in
   fonts.fontconfig.enable = true;
 
   home.packages = with pkgs; [
-    source-sans-pro
-    source-serif-pro
     source-han-sans
     source-han-serif
-    nerd-fonts.fira-code
   ];
 
   xdg.configFile = {

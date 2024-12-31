@@ -2,8 +2,8 @@
   description = "My Home Manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
     flake-utils.url = "github:numtide/flake-utils";
@@ -14,12 +14,12 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nixvim = {
-      url = "github:nix-community/nixvim";
+      url = "github:nix-community/nixvim/nixos-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -30,7 +30,7 @@
     };
   };
 
-  outputs = { nixpkgs, nixpkgs-stable, flake-utils, ... } @ inputs:
+  outputs = { nixpkgs, nixpkgs-unstable, flake-utils, ... } @ inputs:
   flake-utils.lib.eachDefaultSystem (system:
     let
       stateVersion = "24.11";
@@ -47,15 +47,13 @@
       };
 
       pkgs = importPkgs nixpkgs;
-      pkgsStable = importPkgs nixpkgs-stable;
 
       homeManagerConfiguration = { modules, username, homeDirectory, extraSpecialArgs ? {}, ... }:
         inputs.home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
 
           extraSpecialArgs = {
-            inherit pkgsStable;
-            inherit (inputs) nixvim;
+            inherit (inputs) pkgsUnstable nixvim;
           } // extraSpecialArgs;
 
           modules = [
@@ -89,7 +87,7 @@
     nixosConfigurations = {
       rainberry = nixpkgs.lib.nixosSystem {
         specialArgs = with inputs; { 
-          inherit nixos-hardware lanzaboote impermanence;
+          inherit nixpkgs-unstable nixos-hardware lanzaboote impermanence;
         };
         modules = [
           ./hosts/rainberry/configuration.nix
@@ -97,7 +95,7 @@
       };
       rowanshade = nixpkgs.lib.nixosSystem {
         specialArgs = with inputs; {
-          inherit nixos-hardware lanzaboote impermanence;
+          inherit nixpkgs-unstable nixos-hardware lanzaboote impermanence;
         };
         modules = [
           ./hosts/rowanshade/configuration.nix
