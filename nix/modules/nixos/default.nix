@@ -45,6 +45,7 @@
     ./virtualization.nix
     ./sddm.nix
     ./hypr
+    ./firefox.nix
   ];
 
   config = {
@@ -76,6 +77,8 @@
     ];
 
     programs.zsh.enable = true;
+
+    firefox.enable = true;
 
     nixpkgs.config.allowUnfree = true;
     

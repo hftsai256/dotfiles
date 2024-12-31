@@ -50,9 +50,6 @@
         cliphist
         grim
         slurp
-
-        noto-fonts
-        noto-fonts-cjk-sans
       ];
 
       sessionVariables = {

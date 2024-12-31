@@ -10,7 +10,7 @@
 
   virtualization.enable = true;
   virtualization.cpuType = "amd";
-  virtualization.lookingGlass = true;
+  virtualization.lookingGlass = false;
 
   hypr.enable = true;
   hypr.ecoSystem = "gtk";

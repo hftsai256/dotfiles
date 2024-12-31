@@ -4,7 +4,7 @@
     bind = [
       "SUPER+CTRL, t, exec, ${config.term.app}"
       "SUPER+CTRL, e, exec, nautilus $HOME"
-      "SUPER+CTRL, b, exec, brave"
+      "SUPER+CTRL, b, exec, firefox"
       "SUPER+CTRL, m, exec, thunderbird"
 
       "SUPER+SHIFT, v, exec, cliphist list | wofi -S dmenu | cliphist decode | wl-copy"

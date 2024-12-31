@@ -64,8 +64,6 @@
 
     lib.optionals config.guiApps.enable [
       brave
-      firefox
-      firefoxpwa
       thunderbird
       teams-for-linux
       mpv
@@ -76,13 +74,13 @@
       solaar
       selectdefaultapplication
 
-      specialArgs.pkgsStable.remmina
-      specialArgs.pkgsStable.libreoffice
+      remmina
+      libreoffice
     ] ++
 
     lib.optionals (config.guiApps.enable && config.guiApps.eeLab.enable) [
-      specialArgs.pkgsStable.kicad
-      specialArgs.pkgsStable.ngspice
+      kicad
+      ngspice
     ];
 
     home.file = {
