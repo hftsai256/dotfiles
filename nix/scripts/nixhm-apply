@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+set -e
+
+ROOT=$HOME/.dotfiles/nix
+USER=$(whoami)
+HOST=$(cat /proc/sys/kernel/hostname)
+
+update() {
+        pushd "$ROOT" > /dev/null
+        nix flake update
+        popd > /dev/null
+}
+
+refresh() {
+        pushd "$ROOT" > /dev/null
+        nix run github:berberman/nvfetcher
+        popd > /dev/null
+}
+
+apply() {
+        which home-manager 2>&1 >/dev/null && (
+                home-manager switch --flake $ROOT --impure
+        ) || (
+                echo "home-manager executable missing, fallback to nix build"
+                nix build $ROOT\#homeConfigurations."$USER@$HOST".activationPackage --impure && \
+                $ROOT/result/activate
+        )
+}
+
+install_nix() {
+        curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install 
+}
+
+upgrade_nix() {
+        sudo -i nix upgrade-nix
+}
+
+has_element () {
+        args=("$@")
+        nargs=${#args[@]}
+        target=${args[nargs - 1]}
+        unset "args[nargs - 1]"
+
+        for element in "${args[@]}"; do
+                [[ $element == "$target" ]] && return 0
+        done
+        return 1
+}
+
+USAGE=$(cat <<EOF
+$(basename "$0") [options] -- Helper script for updating packages and profiles managed by nix, flakes and home-manager
+
+Options:
+        -u  update flakes
+        -f  refresh source hash
+        -s  apply new settings
+        -n  upgrade system nix (requires privilege)
+
+Example:
+        $(basename "$0") -us
+EOF
+)
+
+command -v nix >/dev/null 2>&1 || install_nix
+
+declare actions=()
+while getopts ":nufs" opt; do
+        case "$opt" in
+                u)
+                        actions+=(u)
+                        ;;
+                f)
+                        actions+=(f)
+                        ;;
+                s)
+                        actions+=(s)
+                        ;;
+                n)
+                        actions+=(n)
+                        ;;
+                *)
+                        echo "unknown option $opt"
+                        exit 1
+                        ;;
+        esac
+done
+
+[[ ${#actions[@]} -eq 0 ]] && (
+        echo "$USAGE"
+        exit 1
+)
+
+has_element "${actions[@]}" f && {
+        echo "→ refresh source hashes"
+        refresh
+}
+
+has_element "${actions[@]}" u && {
+        echo "→ update flake"
+        update
+}
+
+has_element "${actions[@]}" s && {
+        echo "→ apply nix environment over home-manager on profile $USER@$HOST"
+        apply
+}
+
+has_element "${actions[@]}" n && {
+        echo "→ upgrade system nix"
+        upgrade_nix
+}

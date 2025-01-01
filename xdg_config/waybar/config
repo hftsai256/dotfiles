@@ -8,7 +8,7 @@
     "custom/power" : {
         "format": "",
         "tooltip": false,
-        "on-click": "$HOME/.config/sway/scripts/power",
+        "on-click": "$HOME/.config/waybar/scripts/power",
         "escape": true,
     },
     "hyprland/workspaces": { 
@@ -32,8 +32,8 @@
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "󰅶",
-            "deactivated": "󰸊"
+            "activated": "󰅶 ",
+            "deactivated": "󰸊 "
         }
     },
     "tray": {
@@ -70,23 +70,23 @@
       "tooltip-format": "{device_enumerate}",
       "tooltip-format-enumerate-connected": "{device_alias} [{device_address}]",
       "tooltip-format-enumerate-connected": "{device_alias} [{device_address}] 󱊢{device_battery_percentage}%",
-      "on-click-right": "blueman-manager"
+      "on-click-right": "blueberry"
     },
     "network": {
         "format-wifi": " {signalStrength}%",
-        "format-ethernet": " {ifname}",
+        "format-ethernet": "󰈀 {ifname}",
         "format-disconnected": "󰜺 No Network",
         "max-length": 8,
         "on-click-right": "nm-connection-editor",
         "tooltip": true,
-        "tooltip-format-wifi": "︁ {ipaddr}/{cidr}\n󰑩 {gwaddr}\n {essid} ({signalStrength}%)\n󰶣{bandwidthUpBytes} 󰶡{bandwidthDownBytes}",
-        "tooltip-format-ethernet": "︁ {ipaddr}/{cidr}\n󰑩 {gwaddr}\n󰾲 {ifname}\n󰶣{bandwidthUpBytes} 󰶡{bandwidthDownBytes}",
+        "tooltip-format-wifi": "󰒗 {ipaddr}/{cidr}\n󰑩 {gwaddr}\n {essid} ({signalStrength}%)\n󰶣{bandwidthUpBytes} 󰶡{bandwidthDownBytes}",
+        "tooltip-format-ethernet": "󰒗 {ipaddr}/{cidr}\n󰑩 {gwaddr}\n󰾲 {ifname}\n󰶣{bandwidthUpBytes} 󰶡{bandwidthDownBytes}",
         "tooltip-format-disconnected": "󰜺 No Network"
     },
     "pulseaudio": {
         "format": "{icon}{volume}%",
-        "format-bluetooth": "{icon}{volume}%",
-        "format-muted": "",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-muted": " ",
         "format-icons": {
             "headphone": ["  ", "  ", "  "],
             "default": [" ", " ", " "]
