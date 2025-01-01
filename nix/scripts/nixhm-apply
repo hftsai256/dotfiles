@@ -2,6 +2,8 @@
 set -e
 
 ROOT=$HOME/.dotfiles/nix
+USER=$(whoami)
+HOST=$(cat /proc/sys/kernel/hostname)
 
 update() {
         pushd "$ROOT" > /dev/null
@@ -16,9 +18,13 @@ refresh() {
 }
 
 apply() {
-        pushd "$ROOT" > /dev/null
-        home-manager switch --flake $ROOT
-        popd > /dev/null
+        which home-manager 2>&1 >/dev/null && (
+                home-manager switch --flake $ROOT --impure
+        ) || (
+                echo "home-manager executable missing, fallback to nix build"
+                nix build $ROOT\#homeConfigurations."$USER@$HOST".activationPackage --impure && \
+                $ROOT/result/activate
+        )
 }
 
 install_nix() {
@@ -95,8 +101,8 @@ has_element "${actions[@]}" u && {
 }
 
 has_element "${actions[@]}" s && {
-        echo "→ apply nix environment for user $active_user"
-        apply "$active_user"
+        echo "→ apply nix environment over home-manager on profile $USER@$HOST"
+        apply
 }
 
 has_element "${actions[@]}" n && {
