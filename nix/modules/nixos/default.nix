@@ -33,6 +33,7 @@
     ./secure-boot.nix
     ./thunderbolt.nix
     ./bluetooth.nix
+    ./sigrok.nix
     ./logitech.nix
     ./tablet.nix
     ./graphics.nix
