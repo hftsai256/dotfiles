@@ -28,78 +28,89 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+
+    jovian = {
+      url = "github:Jovian-Experiments/Jovian-NixOS";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = { nixpkgs, nixpkgs-unstable, flake-utils, ... } @ inputs:
-  flake-utils.lib.eachDefaultSystem (system:
-    let
-      stateVersion = "24.11";
+  let
+    stateVersion = "24.11";
 
-      importPkgs = pkgSrc: import pkgSrc {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = [
-          inputs.nixgl.overlay
-          (import ./overlays/gfx.nix)
-          (import ./overlays/nvfetcher.nix)
-          (import ./overlays/librime.nix)
-        ];
+    importPkgs = pkgSrc: system: import pkgSrc {
+      inherit system;
+      config.allowUnfree = true;
+      overlays = [
+        inputs.nixgl.overlay
+        (import ./overlays/gfx.nix)
+        (import ./overlays/nvfetcher.nix)
+        (import ./overlays/librime.nix)
+      ];
+    };
+
+    mkHomeConfiguration = pkgSrc: system: { username, modules, extraSpecialArgs ? {}, ... }:
+      inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = importPkgs pkgSrc system;
+
+        extraSpecialArgs = {
+          inherit (inputs) nixvim;
+        } // extraSpecialArgs;
+
+        modules = [
+          { home = { inherit username stateVersion; homeDirectory = "/home/${username}"; }; }
+          ./modules/home
+        ] ++ modules;
       };
 
-      pkgs = importPkgs nixpkgs;
-
-      homeManagerConfiguration = { modules, username, homeDirectory, extraSpecialArgs ? {}, ... }:
-        inputs.home-manager.lib.homeManagerConfiguration {
-          inherit pkgs;
-
-          extraSpecialArgs = {
-            inherit (inputs) pkgsUnstable nixvim;
-          } // extraSpecialArgs;
-
-          modules = [
-            { home = { inherit username homeDirectory stateVersion; }; }
-            ./modules/home
-          ] ++ modules;
+    mkNixOS = pkgSrc: { modules, specialArgs ? {}, ... }:
+      pkgSrc.lib.nixosSystem {
+        specialArgs = {
+          inherit (inputs) nixpkgs nixpkgs-unstable nixos-hardware lanzaboote impermanence;
         };
 
-    in {
-      packages.homeConfigurations = {
-        "hftsai@rainberry" = homeManagerConfiguration {
-          username = "hftsai";
-          homeDirectory = "/home/hftsai";
-          modules = [ ./users/hftsai-rainberry.nix ];
-        };
-
-        "hftsai@rowanshade" = homeManagerConfiguration {
-          username = "hftsai";
-          homeDirectory = "/home/hftsai";
-          modules = [ ./users/hftsai-rowanshade.nix ];
-        };
-
-        "deck@steamdeck" = homeManagerConfiguration {
-          username = "deck";
-          homeDirectory = "/home/deck";
-          modules = [ ./users/deck-steamdeck.nix ];
-        };
+        modules = [
+          { system.stateVersion = stateVersion; }
+          ./modules/nixos
+        ] ++ modules;
       };
-    }
-  ) // {
+
+  in
+  flake-utils.lib.eachDefaultSystem (system: {
+    packages.homeConfigurations = {
+      "hftsai@rainberry" = mkHomeConfiguration nixpkgs system {
+        username = "hftsai";
+        modules = [ ./users/hftsai-rainberry.nix ];
+      };
+
+      "hftsai@rowanshade" = mkHomeConfiguration nixpkgs system {
+        username = "hftsai";
+        modules = [ ./users/hftsai-rowanshade.nix ];
+      };
+
+      "hftsai@maplebright" = mkHomeConfiguration nixpkgs system {
+        username = "hftsai";
+        modules = [ ./users/hftsai-maplebright.nix ];
+      };
+
+      "deck@steamdeck" = mkHomeConfiguration nixpkgs system {
+        username = "deck";
+        modules = [ ./users/deck-steamdeck.nix ];
+      };
+    };
+  }) // {
     nixosConfigurations = {
-      rainberry = nixpkgs.lib.nixosSystem {
-        specialArgs = with inputs; { 
-          inherit nixpkgs-unstable nixos-hardware lanzaboote impermanence;
-        };
-        modules = [
-          ./hosts/rainberry/configuration.nix
-        ];
+      rainberry = mkNixOS nixpkgs {
+        modules = [ ./hosts/rainberry/configuration.nix ];
       };
-      rowanshade = nixpkgs.lib.nixosSystem {
-        specialArgs = with inputs; {
-          inherit nixpkgs-unstable nixos-hardware lanzaboote impermanence;
-        };
-        modules = [
-          ./hosts/rowanshade/configuration.nix
-        ];
+
+      rowanshade = mkNixOS nixpkgs {
+        modules = [ ./hosts/rowanshade/configuration.nix ];
+      };
+
+      maplebright = mkNixOS nixpkgs-unstable {
+        modules = [ ./hosts/maplebright/configuration.nix ];
       };
     };
   };

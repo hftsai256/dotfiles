@@ -21,7 +21,7 @@
   impermanence.enable = true;
 
   fortinet.enable = true;
-  gaming.enable = true;
+  gaming.enable = false;
 
   hostname = "rainberry";
 }

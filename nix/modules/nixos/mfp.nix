@@ -1,10 +1,16 @@
-{ pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
-  hardware.sane = {
-    enable = true;
-    extraBackends = [ pkgs.sane-airscan ];
-    disabledDefaultBackends = [ "v4l" "escl" ];
+  options = {
+    sane.enable = lib.options.mkEnableOption "scanner module";
   };
 
-  services.printing.enable = true;
+  config = lib.mkIf config.sane.enable {
+    hardware.sane = {
+      enable = true;
+      extraBackends = [ pkgs.sane-airscan ];
+      disabledDefaultBackends = [ "v4l" "escl" ];
+    };
+
+    services.printing.enable = true;
+  };
 }

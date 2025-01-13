@@ -10,15 +10,11 @@
   };
 
   fonts.packages = with pkgs; [
-    fira-code
     noto-fonts
     source-sans-pro
     source-serif-pro
     source-han-sans
     source-han-serif
-    (pkgs.nerdfonts.override { 
-      fonts = [ "NerdFontsSymbolsOnly" "FiraCode" ];
-    })
   ];
 
   environment.systemPackages = with pkgs; [

@@ -4,6 +4,8 @@
     kde.enable = lib.options.mkEnableOption "KDE Plasma desktop";
     gnome.enable = lib.options.mkEnableOption "Gnome desktop";
     opengl.enable = lib.options.mkEnableOption "GPU acceleration";
+    nixpkgs.unstable.enable = lib.options.mkEnableOption
+      "use unstable branch of nixpkgs on system-level";
 
     hostname = lib.options.mkOption {
       type = lib.types.nonEmptyStr;
@@ -73,8 +75,6 @@
       pciutils
       lm_sensors
       efibootmgr
-      v4l-utils
-      libcamera
     ];
 
     programs.zsh.enable = true;
@@ -87,7 +87,5 @@
       experimental-features = [ "nix-command" "flakes" ];
       trusted-users = [ "root" "${config.user}" ];
     };
-
-    system.stateVersion = "24.11";
   };
 }

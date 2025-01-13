@@ -2,6 +2,7 @@
 {
   options = {
     gaming.enable = lib.options.mkEnableOption "Graphical stack for gaming";
+    gaming.console.enable = lib.options.mkEnableOption "Console mode";
 
     gpuType = lib.options.mkOption {
       type = lib.types.enum [ "amd" "nvidia" "intel" "virgl" "headless" ];
@@ -48,8 +49,6 @@
       gamescopeSession.enable = true;
       protontricks.enable = true;
     };
-
-    programs.gamemode.enable = config.gaming.enable;
 
     programs.corectrl.enable = (config.gpuType == "amd");
     boot.kernelParams = lib.mkIf (config.gpuType == "amd") [
