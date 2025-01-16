@@ -68,11 +68,10 @@
       pkgSrc.lib.nixosSystem {
         specialArgs = {
           inherit (inputs) nixpkgs nixpkgs-unstable nixos-hardware lanzaboote impermanence;
-        };
+        } // specialArgs;
 
         modules = [
           { system.stateVersion = stateVersion; }
-          ./modules/nixos
         ] ++ modules;
       };
 
@@ -110,7 +109,10 @@
       };
 
       maplebright = mkNixOS nixpkgs-unstable {
-        modules = [ ./hosts/maplebright/configuration.nix ];
+        modules = [
+          inputs.jovian.nixosModules.default
+          ./hosts/maplebright/configuration.nix
+	      ];
       };
     };
   };

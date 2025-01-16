@@ -30,7 +30,7 @@
       adwaita-qt6
     ];
 
-    qt.platformTheme = "qtct";
+    qt.platformTheme = "qt5ct";
 
     security = {
       polkit.enable = true;
