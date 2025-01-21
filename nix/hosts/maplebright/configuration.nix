@@ -11,11 +11,13 @@ in
     ../../modules/nixos/boot.nix
     ../../modules/nixos/geographics.nix
     ../../modules/nixos/hydra.nix
+    ../../modules/nixos/hypr
     ../../modules/nixos/firefox.nix
   ];
 
   hydra.enable = true;
 
+  hypr.enable = false;
   services.xserver.desktopManager.gnome.enable = true;
 
   jovian = {
@@ -26,9 +28,13 @@ in
       enable = true;
       autoStart = true;
       desktopSession = "gnome";
+      # desktopSession = "hyprland-uwsm";
     };
 
-    decky-loader.enable = true;
+    decky-loader = {
+      enable = true;
+      user = user;
+    };
   };
 
   hardware.xone.enable = true;
