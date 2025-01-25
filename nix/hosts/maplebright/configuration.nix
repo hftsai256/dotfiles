@@ -57,6 +57,11 @@ in
 
   programs.zsh.enable = true;
 
+  programs.steam = {
+    enable = true;
+    protontriks.enable = true;
+  };
+
   firefox.enable = true;
 
   nixpkgs.config.allowUnfree = true;
