@@ -6,6 +6,8 @@
     ../../modules/nixos
   ];
 
+  hydra.enable = true;
+
   gpuType = "amd";
 
   virtualization.enable = true;

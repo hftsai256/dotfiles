@@ -30,6 +30,7 @@
 
   imports = [
     ./cachix
+    ./hydra.nix
     ./boot.nix
     ./impermanence.nix
     ./secure-boot.nix
@@ -77,7 +78,16 @@
       efibootmgr
     ];
 
-    programs.zsh.enable = true;
+    programs = {
+      dconf.enable = true;
+      zsh.enable = true;
+      nh = {
+        enable = true;
+        clean.enable = true;
+        clean.extraArgs = "--keep-since 3d --keep 3";
+        flake = "/home/${config.user}/.dotfiles/nix";
+      };
+    };
 
     firefox.enable = true;
 

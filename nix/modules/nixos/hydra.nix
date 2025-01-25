@@ -12,13 +12,10 @@
       maxJobs = 24;
       speedFactor = 2;
       supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
-      mandatoryFeatures = [ ];
+      mandatoryFeatures = [];
     } ];
 
     distributedBuilds = true;
-
-    extraOptions = ''
-      builders-use-substitutes = true
-    '';
+    settings.builders-use-substitutes = true;
   };
 }
