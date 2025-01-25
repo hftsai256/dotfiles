@@ -8,28 +8,32 @@ let
 in
 {
   imports = [
-    ./themes.nix
     ./kanshi.nix
     ./notifier.nix
     ./settings
   ];
 
   options = {
-    hypr.enable = lib.mkEnableOption ''
+    hypr.enable = lib.options.mkEnableOption ''
       Hyprland environment
     '';
 
-    hypr.lowSpec = lib.mkEnableOption ''
+    hypr.lowSpec = lib.options.mkEnableOption ''
       Enable this option on HW limited/low spec machine to apply patches and
       reduce animation
     '';
+
+    hypr.ecoSystem = lib.mkOption {
+      type = lib.types.enum [ "kde" "gtk" ];
+      default = "gtk";
+      description = ''
+        Use either KDE or Gtk for system service backend
+      '';
+    };
   };
 
   config = lib.mkIf config.hypr.enable {
-    wayland.windowManager.hyprland = {
-      enable = true;
-      package = if (config.gfx == "native") then pkgs.hyprland else pkgs.null;
-    };
+    wayland.windowManager.hyprland.enable = true;
 
     xdg = {
       configFile = {

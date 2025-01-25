@@ -1,10 +1,10 @@
 { config, pkgs, lib, ... }:
 {
   options = {
-    sane.enable = lib.options.mkEnableOption "scanner module";
+    mfp.enable = lib.options.mkEnableOption "scanner module";
   };
 
-  config = lib.mkIf config.sane.enable {
+  config = lib.mkIf config.mfp.enable {
     hardware.sane = {
       enable = true;
       extraBackends = [ pkgs.sane-airscan ];

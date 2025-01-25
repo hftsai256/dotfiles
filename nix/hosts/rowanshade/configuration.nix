@@ -3,7 +3,6 @@
   imports = [
     nixos-hardware.nixosModules.dell-xps-13-9315
     ./hardware-configuration.nix
-    ../../modules/nixos
   ];
 
   hardware.ipu6 = {
@@ -22,7 +21,7 @@
 
   fortinet.enable = true;
   gaming.enable = false;
-  gpuType = "intel";
+  gpu.type = "intel";
 
   hostname = "rowanshade";
 }

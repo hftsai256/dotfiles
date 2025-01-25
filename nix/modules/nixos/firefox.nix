@@ -7,7 +7,7 @@ let
 
 in {
   options = {
-    firefox.enable = lib.mkEnableOption "Firefox";
+    firefox.enable = lib.options.mkEnableOption "Firefox";
   };
 
   config = {

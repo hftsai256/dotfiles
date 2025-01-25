@@ -26,6 +26,7 @@
         "/etc/ssh"
         "/etc/cups"
         "/etc/openfortivpn"
+        "/root/.ssh"
       ];
 
       files = [

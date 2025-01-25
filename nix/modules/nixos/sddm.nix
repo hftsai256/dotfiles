@@ -1,17 +1,29 @@
 { config, pkgs, lib, ... }:
 {
-  environment.systemPackages = with pkgs; [
-    sddm-sugar-dark
-  ];
+  options = {
+    sddm.enable = lib.options.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = ''
+        SDDM display manager
+      '';
+    };
+  };
 
-  services.displayManager.defaultSession = lib.mkIf config.hypr.enable "hyprland-uwsm";
+  config = {
+    environment.systemPackages = with pkgs; [
+      sddm-sugar-dark
+    ];
 
-  services.displayManager.sddm = {
-    enable = true;
-    package = lib.mkForce pkgs.libsForQt5.sddm;
-    wayland.enable = true;
-    wayland.compositor = "kwin";
-    theme = "sugar-dark";
-    extraPackages = lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
+    services.displayManager.defaultSession = lib.mkIf config.hypr.enable "hyprland-uwsm";
+
+    services.displayManager.sddm = {
+      enable = true;
+      package = lib.mkForce pkgs.libsForQt5.sddm;
+      wayland.enable = true;
+      wayland.compositor = "kwin";
+      theme = "sugar-dark";
+      extraPackages = lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
+    };
   };
 }

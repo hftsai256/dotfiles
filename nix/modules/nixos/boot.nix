@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 {
   options = {
-    kernel.type = lib.mkOption {
+    kernel.type = lib.options.mkOption {
       type = lib.types.enum [ "lts" "mainline" "rt" ];
       default = "lts";
       description = "Linux kernel variants";

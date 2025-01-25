@@ -33,7 +33,6 @@
     ./zsh
     ./term.nix
     ./rime.nix
-    ./flatpak.nix
   ];
 
   config = {
@@ -76,6 +75,7 @@
 
       remmina
       libreoffice
+      drawio
     ] ++
 
     lib.optionals (config.guiApps.enable && config.guiApps.eeLab.enable) [

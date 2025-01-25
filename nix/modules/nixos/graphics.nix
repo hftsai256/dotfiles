@@ -4,7 +4,7 @@
     gaming.enable = lib.options.mkEnableOption "Graphical stack for gaming";
     gaming.console.enable = lib.options.mkEnableOption "Console mode";
 
-    gpuType = lib.options.mkOption {
+    gpu.type = lib.options.mkOption {
       type = lib.types.enum [ "amd" "nvidia" "intel" "virgl" "headless" ];
       default = "intel";
       description = ''
@@ -37,9 +37,9 @@
     };
 
   in {
-    hardware.graphics = graphics.${config.gpuType};
+    hardware.graphics = graphics.${config.gpu.type};
 
-    environment.systemPackages = lib.mkIf (config.gpuType != "headless") [
+    environment.systemPackages = lib.mkIf (config.gpu.type != "headless") [
       pkgs.glxinfo
       pkgs.vulkan-tools
     ];
@@ -50,8 +50,8 @@
       protontricks.enable = true;
     };
 
-    programs.corectrl.enable = (config.gpuType == "amd");
-    boot.kernelParams = lib.mkIf (config.gpuType == "amd") [
+    programs.corectrl.enable = (config.gpu.type == "amd");
+    boot.kernelParams = lib.mkIf (config.gpu.type == "amd") [
       "amdgpu.ppfeaturemask=0xffffffff"
     ];
   };

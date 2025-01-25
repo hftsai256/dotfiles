@@ -40,7 +40,6 @@
     ./logitech.nix
     ./tablet.nix
     ./graphics.nix
-    ./fwupd.nix
     ./geographics.nix
     ./network.nix
     ./mfp.nix
@@ -57,6 +56,7 @@
       desktopManager.plasma6.enable = config.kde.enable;
       xserver.desktopManager.gnome.enable = config.gnome.enable;
       flatpak.enable = true;
+      fwupd.enable = true;
     };
 
     users.users.${config.user} = {

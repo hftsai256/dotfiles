@@ -3,12 +3,11 @@
   imports = [
     nixos-hardware.nixosModules.lenovo-thinkpad-t14s-amd-gen1
     ./hardware-configuration.nix
-    ../../modules/nixos
   ];
 
   hydra.enable = true;
 
-  gpuType = "amd";
+  gpu.type = "amd";
 
   virtualization.enable = true;
   virtualization.cpuType = "amd";
@@ -21,6 +20,7 @@
   secureBoot.enable = true;
   yubikey.enable = true;
   impermanence.enable = true;
+  mfp.enable = true;
 
   fortinet.enable = true;
   gaming.enable = false;
