@@ -23,6 +23,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixgl = {
       url = "github:guibou/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -44,6 +49,7 @@
       config.allowUnfree = true;
       overlays = [
         inputs.nixgl.overlay
+        (import inputs.rust-overlay)
         (import ./overlays/gfx.nix)
         (import ./overlays/nvfetcher.nix)
         (import ./overlays/librime.nix)
@@ -55,7 +61,7 @@
         pkgs = importPkgs pkgSrc system;
 
         extraSpecialArgs = {
-          inherit (inputs) nixvim;
+          inherit (inputs) nixvim nixpkgs nixpkgs-unstable;
         } // extraSpecialArgs;
 
         modules = [

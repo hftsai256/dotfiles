@@ -1,4 +1,4 @@
-{ specialArgs, ... }:
+{ pkgs, specialArgs, ... }:
 let
   inherit (specialArgs) nixvim;
 
@@ -12,7 +12,7 @@ in {
     defaultEditor = true;
 
     imports = [
-      ./plugins
+      (import ./plugins { inherit pkgs; })
       ./options.nix
       ./keymaps.nix
     ];

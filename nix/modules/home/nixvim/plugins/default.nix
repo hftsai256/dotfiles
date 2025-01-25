@@ -23,6 +23,7 @@
 
         rust_analyzer = {
           enable = true;
+          package = pkgs.rust-bin.selectLatestNightlyWith (toolchain: toolchain.default);
           installCargo = true;
           installRustc = true;
         };
