@@ -23,9 +23,13 @@
       package = pkgs.vimix-icon-theme;
       name = "Vimix-Doder";
     };
-    font = {
-      name = "sans";
-      size = 10;
+  };
+
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      font-name = "Source Sans Pro 10, Source Han Sans 9";
+      monospace-font-name = "Fira Code 10, Symbols Nerd Font 9";
     };
   };
+
 }

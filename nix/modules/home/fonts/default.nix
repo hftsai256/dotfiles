@@ -8,11 +8,9 @@ in
     fonts.fontconfig.enable = true;
 
     home.packages = with pkgs; [
-      noto-fonts
-      source-han-sans
       fira-code
       (pkgs.nerdfonts.override {
-        fonts = [ "NerdFontsSymbolsOnly" "FiraCode" ];
+        fonts = [ "FiraCode" ];
       })
     ];
 

@@ -15,6 +15,9 @@
     source-serif-pro
     source-han-sans
     source-han-serif
+    (pkgs.nerdfonts.override {
+      fonts = [ "NerdFontsSymbolsOnly" ];
+    })
   ];
 
   environment.systemPackages = with pkgs; [
