@@ -50,6 +50,7 @@ in
       export XDG_CURRENT_DESKTOP=Hyprland
       export XDG_SESSION_TYPE=wayland
       exoprt XDG_SESSION_DESKTOP=Hyprland
+      export TERM=${config.term.app}
     '';
   };
 
@@ -72,6 +73,7 @@ in
     "org/gnome/desktop/interface" = {
       font-name = "Source Sans Pro 10, Source Han Sans 9";
       monospace-font-name = "Fira Code 10, Symbols Nerd Font 9";
+      font-antialiasing = "rgba";
       gtk-theme = theme.${cfg.ecoSystem}.gtk;
       icon-theme = theme.${cfg.ecoSystem}.icon;
     };

@@ -1,25 +1,44 @@
-{ config, ... }:
+# HACK: temporary workaround for flatpak
+{ config, pkgs, lib, ...}:
 let
-  xdgConf = config.xdg.configHome;
-  xdgData = config.xdg.dataHome;
-  homeDir = config.home.homeDirectory;
-  nixHmXdgData = "${homeDir}/.nix-profile/share";
+  cfg = config.workarounds.flatpak;
 
-  gtkTheme = config.gtk.theme.name;
-  cursorTheme = config.home.pointerCursor.name;
-  cursorSize = toString config.home.pointerCursor.size;
+  aggregated = pkgs.buildEnv {
+    name = "system-fonts-and-icons";
+    paths = builtins.attrValues {
+      inherit (pkgs)
+        simp1e-cursors
+        vimix-gtk-themes
+        vimix-icon-theme
+        noto-fonts
+        noto-fonts-emoji
+        source-sans-pro
+        source-serif-pro
+        source-han-sans;
 
-in
-{
-  home.file."${xdgData}/flatpak/overrides/global".text = ''
-    [Context]
-    filesystems=${homeDir}/.config:ro;${homeDir}/.local/share:ro;${homeDir}/.nix-profile/share:ro;${homeDir}/.local/state/nix/profiles:ro;/run/current-system/sw/share:ro;/nix/store:ro
+      inherit (pkgs.kdePackages)
+        breeze-gtk
+        breeze-icons;
+    };
+  };
 
-    [Environment]
-    GTK_THEME=${gtkTheme}
-    XCURSOR_THEME=${cursorTheme}
-    XCURSOR_SIZE=${cursorSize}
-    XDG_DATA_DIRS=/app/share:/usr/share:/usr/share/runtime/share:/run/host/user-share:/run/host/share:/run/current-system/sw/share:${nixHmXdgData}:${xdgData}
-    FONTCONFIG_PATH=${xdgConf}/fontconfig
-  '';
+in {
+  options = {
+    workarounds.flatpak.enable = lib.mkEnableOption "flatpak workaround";
+  };
+
+  config = lib.mkIf cfg.enable {
+    xdg.dataFile."icons" = {
+      source = "${aggregated}/share/icons";
+      recursive = true;
+    };
+    xdg.dataFile."fonts" = {
+      source = "${aggregated}/share/fonts";
+      recursive = true;
+    };
+    xdg.dataFile."themes" = {
+      source = "${aggregated}/share/themes";
+      recursive = true;
+    };
+  };
 }

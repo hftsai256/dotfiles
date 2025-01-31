@@ -33,6 +33,7 @@
     ./zsh
     ./term.nix
     ./rime.nix
+    ./flatpak.nix
   ];
 
   config = {
@@ -72,6 +73,7 @@
 
       solaar
       selectdefaultapplication
+      dconf-editor
 
       remmina
       libreoffice
@@ -91,6 +93,7 @@
     };
 
     home.sessionPath = [ "$HOME/.local/bin" ];
+    workarounds.flatpak.enable = true;
 
     services.mpris-proxy.enable = true;
   };

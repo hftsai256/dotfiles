@@ -31,8 +31,6 @@
         kdePackages.qtwayland
         kdePackages.qtsvg
 
-        nwg-look
-
         hypridle
         hyprlock
         hyprcursor

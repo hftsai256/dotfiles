@@ -5,7 +5,6 @@
     defaultFonts = {
       serif = [  "Source Serif Pro" ];
       sansSerif = [ "Source Sans Pro" ];
-      monospace = [ "FiraCode Nerd Font" ];
     };
   };
 
