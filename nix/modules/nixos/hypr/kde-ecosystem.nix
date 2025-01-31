@@ -1,6 +1,10 @@
 { config, pkgs, lib, ... }:
+let
+  cfg = config.hypr;
+
+in
 {
-  config = lib.mkIf (config.hypr.ecoSystem == "kde") {
+  config = lib.mkIf (cfg.enable && cfg.ecoSystem == "kde") {
     environment.systemPackages = with pkgs.kdePackages; [
       frameworkintegration # provides Qt plugin
       kauth # provides helper service
@@ -61,9 +65,9 @@
     systemd.user.services.polkit-kde-authentication-agent-1 = {
       enable = true;
       description = "The KDE's Implementation of Policy Kit Authentication Agent";
-      after = [ "graphical-session.target" ];
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
+      wantedBy = [ "hyprland-session.target" ];
+      wants = [ "hyprland-session.target" ];
+      after = [ "hyprland-session.target" ];
       serviceConfig = {
         Type = "simple";
         ExecStart = "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1";

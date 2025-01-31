@@ -1,6 +1,10 @@
 { config, pkgs, lib, ... }:
+let
+  cfg = config.hypr;
+
+in
 {
-  config = lib.mkIf (config.hypr.ecoSystem == "gtk") {
+  config = lib.mkIf (cfg.enable && cfg.ecoSystem == "gtk") {
     environment.systemPackages = with pkgs; [
       polkit
       polkit_gnome
@@ -53,5 +57,20 @@
     services.gnome.gnome-keyring.enable = true;
 
     services.gvfs.enable = true;
+
+    systemd.user.services.polkit-gnome-authentication-agent-1 = {
+      enable = true;
+      description = "The Gnome's Implementation of Policy Kit Authentication Agent";
+      wantedBy = [ "hyprland-session.target" ];
+      wants = [ "hyprland-session.target" ];
+      after = [ "hyprland-session.target" ];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+    };
   };
 }
