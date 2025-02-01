@@ -5,11 +5,13 @@
     defaultFonts = {
       serif = [  "Source Serif Pro" ];
       sansSerif = [ "Source Sans Pro" ];
+      monospace = [ "Fira Code" ];
     };
   };
 
   fonts.packages = with pkgs; [
     noto-fonts
+    fira-code
     source-sans-pro
     source-serif-pro
     source-han-sans

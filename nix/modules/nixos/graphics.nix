@@ -1,4 +1,9 @@
 { config, pkgs, lib, ... }:
+let
+  cfg = config.gaming;
+  gpu = config.gpu;
+
+in
 {
   options = {
     gaming.enable = lib.options.mkEnableOption "Graphical stack for gaming";
@@ -37,21 +42,21 @@
     };
 
   in {
-    hardware.graphics = graphics.${config.gpu.type};
+    hardware.graphics = lib.mkIf cfg.enable graphics.${gpu.type};
 
-    environment.systemPackages = lib.mkIf (config.gpu.type != "headless") [
+    environment.systemPackages = lib.mkIf (gpu.type != "headless") [
       pkgs.glxinfo
       pkgs.vulkan-tools
     ];
 
-    programs.steam = lib.mkIf config.gaming.enable {
+    programs.steam = lib.mkIf cfg.enable {
       enable = true;
       gamescopeSession.enable = true;
       protontricks.enable = true;
     };
 
-    programs.corectrl.enable = (config.gpu.type == "amd");
-    boot.kernelParams = lib.mkIf (config.gpu.type == "amd") [
+    programs.corectrl.enable = (gpu.type == "amd");
+    boot.kernelParams = lib.mkIf (gpu.type == "amd") [
       "amdgpu.ppfeaturemask=0xffffffff"
     ];
   };

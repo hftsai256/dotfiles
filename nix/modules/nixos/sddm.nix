@@ -1,4 +1,8 @@
 { config, pkgs, lib, ... }:
+let
+  cfg = config.sddm;
+
+in
 {
   options = {
     sddm.enable = lib.options.mkOption {
@@ -10,7 +14,7 @@
     };
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       sddm-sugar-dark
     ];

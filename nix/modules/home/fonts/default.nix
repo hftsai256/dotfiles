@@ -9,9 +9,6 @@ in
 
     home.packages = with pkgs; [
       fira-code
-      (pkgs.nerdfonts.override {
-        fonts = [ "FiraCode" ];
-      })
     ];
 
     xdg.configFile = {

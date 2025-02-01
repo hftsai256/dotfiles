@@ -1,12 +1,21 @@
-{ ... }:
+{ pkgs, ... }:
 {
   fullName = "Halley Tsai";
   email = "hftsai256@gmail.com";
   gfx = "native";
 
-  hypr.enable = true;
+  hypr = {
+    enable = false;
+    ecoSystem = "kde";
+  };
+
   guiApps.enable = true;
   rime.enable = true;
+
+  # Steam Gamescope requires fonts to be linked under user's XDG path
+  home.packages = [
+    pkgs.source-han-sans
+  ];
 
   kanshiSettings = [
     { profile.name = "home-desk";

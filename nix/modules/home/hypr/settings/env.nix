@@ -26,12 +26,12 @@ in
 
   xdg.configFile = {
     "uwsm/env".text = ''
-      export QT_QPA_PLATFORM=wayland;xcb
+      export QT_QPA_PLATFORM=wayland
       export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
       export QT_AUTO_SCREEN_SCALE_FACTOR=1
       export QT_SCALE_FACTOR_ROUNDING_POLICY=RoundPreferFloor
 
-      export GDK_BACKEND=wayland,x11
+      export GDK_BACKEND=wayland
       export GTK_USE_PORTAL=1
 
       export SDL_VIDEODRIVER=wayland
@@ -47,9 +47,10 @@ in
     '';
 
     "uwsm/env-hyprland".text = ''
+      export XDG_MENU_PREFIX=plasma-
       export XDG_CURRENT_DESKTOP=Hyprland
       export XDG_SESSION_TYPE=wayland
-      exoprt XDG_SESSION_DESKTOP=Hyprland
+      export XDG_SESSION_DESKTOP=Hyprland
       export TERM=${config.term.app}
     '';
   };

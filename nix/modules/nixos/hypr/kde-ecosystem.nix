@@ -21,6 +21,7 @@ in
       kio-fuse # fuse interface for KIO
       kpackage # provides kpackagetool tool
       kservice # provides kbuildsycoca6 tool
+      plasma-workspace
 
       pkgs.polkit
       polkit-kde-agent-1
@@ -52,12 +53,13 @@ in
     };
 
     xdg.portal = {
-      extraPortals = [ pkgs.xdg-desktop-portal-kde ];
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-kde
+        xdg-desktop-portal-gtk
+      ];
       config = {
         common = {
-          default = [ "hyprland" "kde" ];
-          "org.freedesktop.impl.portal.Lockdown" = "gtk";
-          "org.freedesktop.impl.portal.Settings" = "gtk";
+          default = [ "hyprland" "kde" "gtk" ];
         };
       };
     };
