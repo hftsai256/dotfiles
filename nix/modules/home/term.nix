@@ -49,6 +49,10 @@ in {
   };
 
   config = {
+    home.packages = [
+      pkgs.xdg-terminal-exec
+    ];
+
     programs.kitty = {
       enable = if config.term.app == "kitty" then true else false;
       package = kitty-pkg."${config.gfx}";

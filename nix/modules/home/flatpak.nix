@@ -31,14 +31,17 @@ in {
     xdg.dataFile."icons" = {
       source = "${aggregated}/share/icons";
       recursive = true;
+      force = true;
     };
     xdg.dataFile."fonts" = {
       source = "${aggregated}/share/fonts";
       recursive = true;
+      force = true;
     };
     xdg.dataFile."themes" = {
       source = "${aggregated}/share/themes";
       recursive = true;
+      force = true;
     };
   };
 }
