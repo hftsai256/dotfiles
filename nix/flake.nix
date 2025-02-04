@@ -111,9 +111,9 @@
         modules = [ ./users/hftsai-rainberry.nix ];
       };
 
-      "hftsai@rowanshade" = mkHomeConfiguration pkgSrc.unstable system {
+      "hftsai@whiteforest" = mkHomeConfiguration pkgSrc.unstable system {
         username = "hftsai";
-        modules = [ ./users/hftsai-rowanshade.nix ];
+        modules = [ ./users/hftsai-whiteforest.nix ];
       };
 
       "hftsai@maplebright" = mkHomeConfiguration pkgSrc.unstable system {
@@ -132,8 +132,8 @@
         modules = [ ./hosts/rainberry/configuration.nix ];
       };
 
-      rowanshade = mkNixOS pkgSrc.unstable {
-        modules = [ ./hosts/rowanshade/configuration.nix ];
+      whiteforest = mkNixOS pkgSrc.unstable {
+        modules = [ ./hosts/whiteforest/configuration.nix ];
       };
 
       maplebright = mkNixOS pkgSrc.unstable {

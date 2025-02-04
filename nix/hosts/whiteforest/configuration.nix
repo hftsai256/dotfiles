@@ -5,13 +5,15 @@
     ./hardware-configuration.nix
   ];
 
-  hardware.ipu6 = {
+  ipu6 = {
     enable = true;
     platform = "ipu6ep";
   };
 
-  hypr.enable = true;
-  hypr.ecoSystem = "gtk";
+  hypr = {
+    enable = true;
+    ecoSystem = "kde";
+  };
 
   thunderbolt.enable = true;
   yubikey.enable = true;
@@ -23,5 +25,5 @@
   gaming.enable = false;
   gpu.type = "intel";
 
-  hostname = "rowanshade";
+  hostname = "whiteforest";
 }

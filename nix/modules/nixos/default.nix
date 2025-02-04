@@ -42,6 +42,7 @@
     ./graphics.nix
     ./geographics.nix
     ./network.nix
+    ./ipu6.nix
     ./mfp.nix
     ./security.nix
     ./fonts.nix
