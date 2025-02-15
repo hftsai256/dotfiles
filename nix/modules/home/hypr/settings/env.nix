@@ -18,8 +18,10 @@ in
 {
   home.packages = with pkgs; [
     simp1e-cursors
+  ] ++ lib.optionals (cfg.ecoSystem == "gtk") [
     vimix-gtk-themes
     vimix-icon-theme
+  ] ++ lib.optionals (cfg.ecoSystem == "kde") [
     kdePackages.breeze-gtk
     kdePackages.breeze-icons
   ];

@@ -1,7 +1,6 @@
 { config, pkgs, lib, ... }:
 let
   cfg = config.ipu6;
-  icamerasrcPackage = pkgs.gst_all_1."icamerasrc-${cfg.platform}";
 
 in
 {
@@ -15,7 +14,7 @@ in
         * ipu6: Tiger Lake
         * ipu6ep: Alder Lake
         * ipu6epmtl:
-      '';
+        '';
     };
   };
 
@@ -26,14 +25,25 @@ in
     };
 
     environment.systemPackages = with pkgs.gst_all_1; [
-      config.boot.kernelPackages.v4l2loopback.bin
       pkgs.libcamera
-      icamerasrcPackage
-
       gstreamer
       gst-plugins-bad
       gst-plugins-base
       gst-plugins-good
     ];
+
+    services.pipewire.wireplumber = {
+      enable = true;
+
+      extraConfig = {
+        "wireplumber.profiles" = {
+          "main" = {
+            "monitor.v4l2" = "disabled";
+            "monitor.libcamera" = "optional";
+          };
+        };
+      };
+    };
   };
+
 }

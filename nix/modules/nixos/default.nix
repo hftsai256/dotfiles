@@ -50,6 +50,7 @@
     ./sddm.nix
     ./hypr
     ./firefox.nix
+    ./workarounds.nix
   ];
 
   config = {

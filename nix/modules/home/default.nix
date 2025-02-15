@@ -14,6 +14,7 @@
 
     guiApps.enable = lib.options.mkEnableOption "GUI apps";
     guiApps.eeLab.enable = lib.options.mkEnableOption "EE Lab tools";
+    guiApps.cadLab.enable = lib.options.mkEnableOption "CAD tools";
 
     fullName = lib.options.mkOption {
       type = lib.types.nonEmptyStr;
@@ -33,7 +34,6 @@
     ./zsh
     ./term.nix
     ./rime.nix
-    ./flatpak.nix
   ];
 
   config = {
@@ -83,6 +83,10 @@
     lib.optionals (config.guiApps.enable && config.guiApps.eeLab.enable) [
       kicad
       ngspice
+    ] ++
+
+    lib.optionals (config.guiApps.enable && config.guiApps.cadLab.enable) [
+      openscad
     ];
 
     home.file = {
@@ -93,7 +97,6 @@
     };
 
     home.sessionPath = [ "$HOME/.local/bin" ];
-    workarounds.flatpak.enable = true;
 
     services.mpris-proxy.enable = true;
   };

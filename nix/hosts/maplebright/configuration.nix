@@ -6,8 +6,6 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/nixos
-    ../../modules/nixos-unstable
   ];
 
   hydra.enable = true;
@@ -47,6 +45,7 @@ in
   };
 
   hardware.xone.enable = true;
+  workarounds.flatpak.enable = true;
 
   hostname = "maplebright";
 }

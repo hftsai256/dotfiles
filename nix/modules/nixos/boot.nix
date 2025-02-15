@@ -10,7 +10,7 @@
 
   config.boot = let
     kernel = with pkgs; {
-      lts = linuxPackages;
+      lts = linuxPackages_6_12;
       mainline = linuxPackages_latest;
       rt = linuxPackages-rt;
     };

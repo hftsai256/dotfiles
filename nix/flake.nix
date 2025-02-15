@@ -132,7 +132,7 @@
         modules = [ ./hosts/rainberry/configuration.nix ];
       };
 
-      whiteforest = mkNixOS pkgSrc.unstable {
+      whiteforest = mkNixOS pkgSrc.stable {
         modules = [ ./hosts/whiteforest/configuration.nix ];
       };
 

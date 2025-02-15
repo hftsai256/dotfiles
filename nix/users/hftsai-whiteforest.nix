@@ -10,6 +10,7 @@
   };
   guiApps.enable = true;
   guiApps.eeLab.enable = true;
+  guiApps.cadLab.enable = true;
   rime.enable = true;
 
   kanshiSettings = [
