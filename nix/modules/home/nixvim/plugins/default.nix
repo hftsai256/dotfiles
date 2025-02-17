@@ -21,10 +21,12 @@
           };
         };
 
-        rust_analyzer = {
+        rust_analyzer = with pkgs.rust-bin.stable.latest; {
           enable = true;
-          installCargo = true;
-          installRustc = true;
+          installCargo = false;
+          installRustc = false;
+          installRustfmt = false;
+          package = rust-analyzer;
         };
       };
     };
