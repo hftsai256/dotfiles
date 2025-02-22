@@ -71,7 +71,6 @@
       gnome-network-displays
       simple-scan
 
-      solaar
       selectdefaultapplication
       dconf-editor
 

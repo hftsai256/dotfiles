@@ -28,6 +28,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    solaar = {
+      url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -100,6 +105,7 @@
         modules = [
           { system.stateVersion = stateVersion; }
           selectedPkgSrc.os-module
+          inputs.solaar.nixosModules.default
         ] ++ modules;
       };
 

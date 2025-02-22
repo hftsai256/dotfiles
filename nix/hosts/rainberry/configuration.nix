@@ -19,11 +19,13 @@
   tablet.enable = true;
   secureBoot.enable = true;
   yubikey.enable = true;
+  logitech.enable = true;
   impermanence.enable = true;
   mfp.enable = true;
 
   fortinet.enable = true;
   gaming.enable = false;
+  workarounds.flatpak.enable = true;
 
   hostname = "rainberry";
 }
