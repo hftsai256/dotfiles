@@ -58,6 +58,7 @@ in
     programs.corectrl.enable = (gpu.type == "amd");
     boot.kernelParams = lib.mkIf (gpu.type == "amd") [
       "amdgpu.ppfeaturemask=0xffffffff"
+      "amdgpu.mcbp=0"
     ];
   };
 }

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 let
   user = "hftsai";
 
@@ -9,18 +9,15 @@ in
   ];
 
   hydra.enable = true;
-
   gpu.type = "amd";
-
   sddm.enable = false;
   kde.enable = true;
+  mfp.enable = true;
 
   hypr = {
     enable = false;
     ecoSystem = "kde";
   };
-
-  mfp.enable = true;
 
   jovian = {
     hardware.has.amd.gpu = true;
@@ -38,6 +35,10 @@ in
       enable = true;
     };
   };
+
+  environment.systemPackages = with pkgs; [
+    steam-run
+  ];
 
   programs.steam = {
     enable = true;
