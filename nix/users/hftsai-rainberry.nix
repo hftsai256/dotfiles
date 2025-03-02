@@ -4,7 +4,10 @@
   email = "hftsai256@gmail.com";
   gfx = "native";
 
-  hypr.enable = true;
+  hypr = {
+    enable = true;
+    ecoSystem = "kde";
+  };
   guiApps.enable = true;
   guiApps.eeLab.enable = true;
   rime.enable = true;
@@ -37,8 +40,8 @@
       {
         criteria = "AU Optronics 0x403D Unknown";
         status = "enable";
-        scale = 1.5;
-        position = "560,1350";
+        scale = 1.2;
+        position = "400,1350";
       }
     ]; }
 

@@ -14,7 +14,7 @@
   virtualization.lookingGlass = false;
 
   hypr.enable = true;
-  hypr.ecoSystem = "gtk";
+  hypr.ecoSystem = "kde";
 
   tablet.enable = true;
   secureBoot.enable = true;
