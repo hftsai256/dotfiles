@@ -1,5 +1,7 @@
 { ... }:
 {
+  imports = [ ../modules/home ];
+
   fullName = "Halley Tsai";
   email = "htsai@cytonome.com";
   gfx = "native";

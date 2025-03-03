@@ -5,8 +5,6 @@
     ./hardware-configuration.nix
   ];
 
-  kernel.type = "mainline";
-
   ipu6 = {
     enable = true;
     platform = "ipu6ep";

@@ -82,7 +82,18 @@
       ];
     };
 
-    mkHomeConfiguration = selectedPkgSrc: system: { username, modules, extraSpecialArgs ? {}, ... }:
+    mkHomeConfiguration = {
+      selectedPkgSrc ? pkgSrc.stable,
+      system ? "x86_64-linux",
+      username,
+      modules,
+      extraSpecialArgs ? {},
+      ...
+    }:
+    let
+      homeDirectory = "/home/${username}";
+
+    in
       selectedPkgSrc.home-manager.lib.homeManagerConfiguration {
         pkgs = importPkgs selectedPkgSrc.nixpkgs system;
 
@@ -91,61 +102,110 @@
         } // extraSpecialArgs;
 
         modules = [
-          { home = { inherit username stateVersion; homeDirectory = "/home/${username}"; }; }
+          { home = { inherit username homeDirectory stateVersion; }; }
           selectedPkgSrc.home-module
         ] ++ modules;
       };
 
-    mkNixOS = selectedPkgSrc: { modules, specialArgs ? {}, ... }:
+    mkHomeModule = {
+      username,
+      host,
+      modules ? [],
+      extraSpecialArgs ? {},
+      ...
+    }:
+    let
+      homeDirectory = "/home/${username}";
+
+    in
+      {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+
+          users.${username}.imports = [ 
+            ./modules/home
+            ./users/${username}-${host}.nix
+            { home = { inherit stateVersion username homeDirectory; };}
+          ] ++ modules;
+
+          extraSpecialArgs = { inherit (inputs) nixvim; } // extraSpecialArgs;
+        };
+      };
+
+    mkNixOS = {
+      selectedPkgSrc ? pkgSrc.stable,
+      system ? "x86_64-linux",
+      modules ? [],
+      specialArgs ? {},
+      ...
+    }:
       selectedPkgSrc.nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit (inputs) nixpkgs nixpkgs-unstable nixos-hardware lanzaboote impermanence;
+          pkgs = importPkgs selectedPkgSrc.nixpkgs system;
         } // specialArgs;
 
         modules = [
-          { system.stateVersion = stateVersion; }
+          { system.stateVersion = stateVersion; nixpkgs.hostPlatform = system; }
           selectedPkgSrc.os-module
           inputs.solaar.nixosModules.default
         ] ++ modules;
       };
 
   in
-  flake-utils.lib.eachDefaultSystem (system: {
-    packages.homeConfigurations = {
-      "hftsai@rainberry" = mkHomeConfiguration pkgSrc.stable system {
+  {
+    packages."x86_64-linux".homeConfigurations = {
+      "hftsai@rainberry" = mkHomeConfiguration {
         username = "hftsai";
         modules = [ ./users/hftsai-rainberry.nix ];
       };
 
-      "hftsai@whiteforest" = mkHomeConfiguration pkgSrc.unstable system {
+      "hftsai@whiteforest" = mkHomeConfiguration {
         username = "hftsai";
         modules = [ ./users/hftsai-whiteforest.nix ];
       };
 
-      "hftsai@maplebright" = mkHomeConfiguration pkgSrc.unstable system {
+      "hftsai@maplebright" = mkHomeConfiguration {
+        selectedPkgSrc = pkgSrc.unstable;
         username = "hftsai";
         modules = [ ./users/hftsai-maplebright.nix ];
       };
 
-      "deck@steamdeck" = mkHomeConfiguration pkgSrc.unstable system {
+      "deck@steamdeck" = mkHomeConfiguration {
         username = "deck";
         modules = [ ./users/deck-steamdeck.nix ];
       };
     };
-  }) // {
+
     nixosConfigurations = {
-      rainberry = mkNixOS pkgSrc.stable {
-        modules = [ ./hosts/rainberry/configuration.nix ];
+      rainberry = mkNixOS {
+        modules = [ 
+          ./hosts/rainberry/configuration.nix
+
+          inputs.home-manager.nixosModules.home-manager (
+            mkHomeModule { username = "hftsai"; host = "rainberry"; })
+        ];
       };
 
-      whiteforest = mkNixOS pkgSrc.stable {
-        modules = [ ./hosts/whiteforest/configuration.nix ];
+      whiteforest = mkNixOS {
+        modules = [ 
+          ./hosts/whiteforest/configuration.nix
+
+          inputs.home-manager.nixosModules.home-manager (
+            mkHomeModule { username = "hftsai"; host = "whiteforest"; })
+        ];
       };
 
-      maplebright = mkNixOS pkgSrc.unstable {
+      maplebright = mkNixOS {
+        selectedPkgSrc = pkgSrc.unstable;
+
         modules = [
           inputs.jovian.nixosModules.default
           ./hosts/maplebright/configuration.nix
+
+          inputs.home-manager.nixosModules.home-manager (
+            mkHomeModule { username = "hftsai"; host = "maplebright"; })
 	      ];
       };
     };

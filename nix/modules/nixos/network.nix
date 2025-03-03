@@ -25,6 +25,7 @@
 
     networking = {
       hostName = config.hostname;
+      useDHCP = true;
       networkmanager.enable = true;
       nftables.enable = true;
 
