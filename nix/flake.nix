@@ -6,7 +6,6 @@
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
-    flake-utils.url = "github:numtide/flake-utils";
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
@@ -41,7 +40,6 @@
     nixgl = {
       url = "github:guibou/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
     };
 
     jovian = {
@@ -50,7 +48,7 @@
     };
   };
 
-  outputs = { flake-utils, ... } @ inputs:
+  outputs = { ... } @ inputs:
   let
     stateVersion = "24.11";
 
