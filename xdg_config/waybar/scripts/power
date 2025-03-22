@@ -14,7 +14,7 @@ case $(menu "$entries") in
     ;;
 
   logout)
-    hyprctl dispatch exit
+    uwsm stop || hyprctl dispatch exit
     ;;
 
   suspend)
