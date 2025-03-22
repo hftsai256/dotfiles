@@ -68,16 +68,17 @@
       };
     };
 
+    overlays = [
+      inputs.nixgl.overlay
+      (import inputs.rust-overlay)
+      (import ./overlays/gfx.nix)
+      (import ./overlays/nvfetcher.nix)
+      (import ./overlays/librime.nix)
+    ];
+
     importPkgs = nixpkgs: system: import nixpkgs {
-      inherit system;
+      inherit system overlays;
       config.allowUnfree = true;
-      overlays = [
-        inputs.nixgl.overlay
-        (import inputs.rust-overlay)
-        (import ./overlays/gfx.nix)
-        (import ./overlays/nvfetcher.nix)
-        (import ./overlays/librime.nix)
-      ];
     };
 
     mkHomeConfiguration = {
@@ -141,11 +142,15 @@
       selectedPkgSrc.nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit (inputs) nixpkgs nixpkgs-unstable nixos-hardware lanzaboote impermanence;
-          pkgs = importPkgs selectedPkgSrc.nixpkgs system;
         } // specialArgs;
 
         modules = [
-          { system.stateVersion = stateVersion; nixpkgs.hostPlatform = system; }
+          {
+            system.stateVersion = stateVersion;
+            nixpkgs.hostPlatform = system;
+            nixpkgs.overlays = overlays;
+          }
+
           selectedPkgSrc.os-module
           inputs.solaar.nixosModules.default
         ] ++ modules;
@@ -177,32 +182,36 @@
     };
 
     nixosConfigurations = {
-      rainberry = mkNixOS {
+      rainberry = mkNixOS rec {
+        selectedPkgSrc = pkgSrc.stable;
+
         modules = [ 
           ./hosts/rainberry/configuration.nix
 
-          inputs.home-manager.nixosModules.home-manager (
+          selectedPkgSrc.home-manager.nixosModules.home-manager (
             mkHomeModule { username = "hftsai"; host = "rainberry"; })
         ];
       };
 
-      whiteforest = mkNixOS {
+      whiteforest = mkNixOS rec {
+        selectedPkgSrc = pkgSrc.stable;
+
         modules = [ 
           ./hosts/whiteforest/configuration.nix
 
-          inputs.home-manager.nixosModules.home-manager (
+          selectedPkgSrc.home-manager.nixosModules.home-manager (
             mkHomeModule { username = "hftsai"; host = "whiteforest"; })
         ];
       };
 
-      maplebright = mkNixOS {
+      maplebright = mkNixOS rec {
         selectedPkgSrc = pkgSrc.unstable;
 
         modules = [
           inputs.jovian.nixosModules.default
           ./hosts/maplebright/configuration.nix
 
-          inputs.home-manager.nixosModules.home-manager (
+          selectedPkgSrc.home-manager.nixosModules.home-manager (
             mkHomeModule { username = "hftsai"; host = "maplebright"; })
 	      ];
       };

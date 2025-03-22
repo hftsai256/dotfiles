@@ -13,6 +13,7 @@ in
   sddm.enable = false;
   kde.enable = true;
   mfp.enable = true;
+  logitech.enable = true;
 
   hypr = {
     enable = false;
