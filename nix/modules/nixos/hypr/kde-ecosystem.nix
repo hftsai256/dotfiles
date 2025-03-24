@@ -46,15 +46,12 @@ in
 
     security = {
       polkit.enable = true;
-      pam.services.login.kwallet = {
-        enable = true;
-        package = pkgs.kdePackages.kwallet-pam;
-      };
+      pam.services.login.kwallet.enable = true;
     };
 
     xdg.portal = {
       extraPortals = with pkgs; [
-        xdg-desktop-portal-kde
+        kdePackages.xdg-desktop-portal-kde
         xdg-desktop-portal-gtk
       ];
       config = {

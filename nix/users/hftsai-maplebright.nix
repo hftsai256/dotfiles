@@ -5,7 +5,7 @@
   gfx = "native";
 
   hypr = {
-    enable = false;
+    enable = true;
     ecoSystem = "kde";
   };
 

@@ -16,7 +16,7 @@ in
   logitech.enable = true;
 
   hypr = {
-    enable = false;
+    enable = true;
     ecoSystem = "kde";
   };
 
@@ -27,8 +27,8 @@ in
       inherit user;
       enable = true;
       autoStart = true;
-      desktopSession = "plasma";
-      # desktopSession = "hyprland-uwsm";
+      # desktopSession = "plasma";
+      desktopSession = "hyprland-uwsm";
     };
 
     decky-loader = {
