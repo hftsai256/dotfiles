@@ -183,7 +183,7 @@
 
     nixosConfigurations = {
       rainberry = mkNixOS rec {
-        selectedPkgSrc = pkgSrc.stable;
+        selectedPkgSrc = pkgSrc.unstable;
 
         modules = [ 
           ./hosts/rainberry/configuration.nix
