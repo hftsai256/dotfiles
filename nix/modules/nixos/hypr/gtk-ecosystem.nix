@@ -54,6 +54,7 @@ in
     };
 
     programs.seahorse.enable = true;
+    programs.kdeconnect.package = pkgs.gnomeExtensions.gsconnect;
     services.gnome.gnome-keyring.enable = true;
 
     services.gvfs.enable = true;

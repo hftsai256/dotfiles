@@ -98,5 +98,9 @@
     home.sessionPath = [ "$HOME/.local/bin" ];
 
     services.mpris-proxy.enable = true;
+    services.kdeconnect = {
+      enable = true;
+      indicator = true;
+    };
   };
 }
