@@ -62,15 +62,9 @@
       xdgOpenUsePortal = true;
     };
 
-    programs.hyprland.enable = true;
-
-    programs.uwsm = {
+    programs.hyprland = {
       enable = true;
-      waylandCompositors.hyprland = {
-        binPath = "/run/current-system/sw/bin/Hyprland";
-        comment = "Hyprland session managed by uwsm";
-        prettyName = "Hyprland";
-      };
+      withUWSM = true;
     };
   };
 }

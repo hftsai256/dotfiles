@@ -33,7 +33,10 @@ in
   };
 
   config = lib.mkIf config.hypr.enable {
-    wayland.windowManager.hyprland.enable = true;
+    wayland.windowManager.hyprland = {
+      enable = true;
+      systemd.enable = false;
+    };
 
     xdg = {
       configFile = {

@@ -11,7 +11,7 @@ in
   hydra.enable = true;
   gpu.type = "amd";
   sddm.enable = false;
-  kde.enable = true;
+  kde.enable = false;
   mfp.enable = true;
   logitech.enable = true;
 
@@ -27,7 +27,7 @@ in
       inherit user;
       enable = true;
       autoStart = true;
-      # desktopSession = "plasma";
+      #desktopSession = "plasma";
       desktopSession = "hyprland-uwsm";
     };
 
