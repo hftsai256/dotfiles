@@ -4,11 +4,6 @@
   email = "hftsai256@gmail.com";
   gfx = "native";
 
-  hypr = {
-    enable = true;
-    ecoSystem = "kde";
-  };
-
   guiApps.enable = true;
   rime.enable = true;
 

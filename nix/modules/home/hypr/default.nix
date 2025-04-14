@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, lib, ... }:
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
   inherit (config.home) homeDirectory;

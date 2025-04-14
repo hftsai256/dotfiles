@@ -48,7 +48,7 @@
     };
   };
 
-  outputs = { ... } @ inputs:
+  outputs = { self, ... } @ inputs:
   let
     stateVersion = "24.11";
 
@@ -81,40 +81,45 @@
       config.allowUnfree = true;
     };
 
-    mkHomeConfiguration = {
+    mkStandaloneHome = {
+      user,
+      host,
       selectedPkgSrc ? pkgSrc.stable,
       system ? "x86_64-linux",
-      username,
-      modules,
+      homeModules ? [],
       extraSpecialArgs ? {},
       ...
     }:
     let
-      homeDirectory = "/home/${username}";
+      username = user;
+      homeDirectory = "/home/${user}";
 
     in
       selectedPkgSrc.home-manager.lib.homeManagerConfiguration {
         pkgs = importPkgs selectedPkgSrc.nixpkgs system;
 
         extraSpecialArgs = {
-          inherit (inputs) nixvim nixpkgs nixpkgs-unstable;
+          inherit (inputs) nixvim;
         } // extraSpecialArgs;
 
         modules = [
-          { home = { inherit username homeDirectory stateVersion; }; }
           selectedPkgSrc.home-module
-        ] ++ modules;
+          ./users/${user}-${host}.nix
+          { home = { inherit username homeDirectory stateVersion; }; }
+        ] ++ homeModules;
       };
 
-    mkHomeModule = {
-      username,
+    mkNixosHomeModule = {
+      user,
       host,
-      modules ? [],
+      homeModules ? [],
       extraSpecialArgs ? {},
       ...
     }:
     let
-      homeDirectory = "/home/${username}";
+      username = user;
+      homeDirectory = "/home/${user}";
+      nixosConfig = self.nixosConfigurations.${host}.config;
 
     in
       {
@@ -122,21 +127,30 @@
           useGlobalPkgs = true;
           useUserPackages = true;
 
-          users.${username}.imports = [ 
+          users.${user}.imports = [ 
             ./modules/home
-            ./users/${username}-${host}.nix
-            { home = { inherit stateVersion username homeDirectory; };}
-          ] ++ modules;
+            ./users/${user}-${host}.nix
+
+            { config = with nixosConfig; {
+                inherit hypr;
+                home = { inherit username homeDirectory stateVersion; };
+                fonts.fontconfig = { inherit (fonts.fontconfig) enable defaultFonts; };
+            }; }
+          ] ++ homeModules;
 
           extraSpecialArgs = { inherit (inputs) nixvim; } // extraSpecialArgs;
         };
       };
 
     mkNixOS = {
+      host,
+      regularUsers,
       selectedPkgSrc ? pkgSrc.stable,
       system ? "x86_64-linux",
-      modules ? [],
+      osModules ? [],
+      homeModules ? [],
       specialArgs ? {},
+      extraSpecialArgs ? {},
       ...
     }:
       selectedPkgSrc.nixpkgs.lib.nixosSystem {
@@ -145,76 +159,61 @@
         } // specialArgs;
 
         modules = [
-          {
-            system.stateVersion = stateVersion;
+          { system.stateVersion = stateVersion;
             nixpkgs.hostPlatform = system;
             nixpkgs.overlays = overlays;
           }
 
           selectedPkgSrc.os-module
           inputs.solaar.nixosModules.default
-        ] ++ modules;
+          ./hosts/${host}/configuration.nix
+
+          selectedPkgSrc.home-manager.nixosModules.home-manager
+        ] ++ (
+          map (user: mkNixosHomeModule { inherit host user homeModules extraSpecialArgs; }) regularUsers
+        ) ++ osModules;
       };
 
   in
   {
-    packages."x86_64-linux".homeConfigurations = {
-      "hftsai@rainberry" = mkHomeConfiguration {
-        username = "hftsai";
-        modules = [ ./users/hftsai-rainberry.nix ];
+    nixosConfigurations = let
+      defaultRegularUsers = [ "hftsai" ];
+
+      machines = {
+        rainberry = {
+          regularUsers = defaultRegularUsers;
+          selectedPkgSrc = pkgSrc.unstable;
+        };
+
+        whiteforest = {
+          regularUsers = defaultRegularUsers;
+        };
+
+        maplebright = {
+          regularUsers = defaultRegularUsers;
+          selectedPkgSrc = pkgSrc.unstable;
+          osModules = [ inputs.jovian.nixosModules.default ];
+        };
       };
 
-      "hftsai@whiteforest" = mkHomeConfiguration {
-        username = "hftsai";
-        modules = [ ./users/hftsai-whiteforest.nix ];
-      };
+    in
+      machines
+      |> builtins.mapAttrs (host: attrs:
+          mkNixOS ({ inherit host; } // attrs));
 
-      "hftsai@maplebright" = mkHomeConfiguration {
+
+    homeConfigurations = let
+      homes.deck = {
+        host = "steamdeck";
         selectedPkgSrc = pkgSrc.unstable;
-        username = "hftsai";
-        modules = [ ./users/hftsai-maplebright.nix ];
       };
 
-      "deck@steamdeck" = mkHomeConfiguration {
-        username = "deck";
-        modules = [ ./users/deck-steamdeck.nix ];
-      };
-    };
-
-    nixosConfigurations = {
-      rainberry = mkNixOS rec {
-        selectedPkgSrc = pkgSrc.unstable;
-
-        modules = [ 
-          ./hosts/rainberry/configuration.nix
-
-          selectedPkgSrc.home-manager.nixosModules.home-manager (
-            mkHomeModule { username = "hftsai"; host = "rainberry"; })
-        ];
-      };
-
-      whiteforest = mkNixOS rec {
-        selectedPkgSrc = pkgSrc.stable;
-
-        modules = [ 
-          ./hosts/whiteforest/configuration.nix
-
-          selectedPkgSrc.home-manager.nixosModules.home-manager (
-            mkHomeModule { username = "hftsai"; host = "whiteforest"; })
-        ];
-      };
-
-      maplebright = mkNixOS rec {
-        selectedPkgSrc = pkgSrc.unstable;
-
-        modules = [
-          inputs.jovian.nixosModules.default
-          ./hosts/maplebright/configuration.nix
-
-          selectedPkgSrc.home-manager.nixosModules.home-manager (
-            mkHomeModule { username = "hftsai"; host = "maplebright"; })
-	      ];
-      };
-    };
+    in
+      homes
+      |> builtins.mapAttrs (user: cfg: {
+          name = "${user}@${cfg.host}";
+          value = mkStandaloneHome ({ inherit user; } // cfg ); })
+      |> builtins.attrValues
+      |> builtins.listToAttrs;
   };
 }
