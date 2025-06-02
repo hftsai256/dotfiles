@@ -12,12 +12,35 @@
         ts_ls.enable = true;
         nixd.enable = true;
         clangd.enable = true;
+        html.enable = true;
+        eslint.enable = true;
+        svelte.enable = true;
 
         pylsp = {
           enable = true;
           settings.plugins = {
-            autopep8.enabled = false;
+            jedi_completion.enabled = true;
+            jedi_hover.enabled = true;
+            jedi_references.enabled = true;
+            jedi_signature_help.enabled = true;
+            jedi_symbols.enabled = true;
+
+            # Type checking
+            pylsp_mypy.enabled = true;
+            pylsp_mypy.live_mode = false;
+
+            # Formatting
+            black.enabled = true;
+
+            # Linting
             ruff.enabled = true;
+
+            # Import sorting
+            isort.enabled = true;
+
+            # Refactoring
+            rope_autoimport.enabled = true;
+            rope_completion.enabled = true;
           };
         };
 
