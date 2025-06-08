@@ -72,8 +72,6 @@
       inputs.nixgl.overlay
       (import inputs.rust-overlay)
       (import ./overlays/gfx.nix)
-      (import ./overlays/nvfetcher.nix)
-      (import ./overlays/librime.nix)
     ];
 
     importPkgs = nixpkgs: system: import nixpkgs {
