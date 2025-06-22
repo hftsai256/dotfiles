@@ -18,7 +18,9 @@ in
     enableZshIntegration = true;
   };
 
-  programs.fzf = {
+  programs.fzf.enable = true;
+
+  programs.atuin = {
     enable = true;
     enableZshIntegration = true;
   };

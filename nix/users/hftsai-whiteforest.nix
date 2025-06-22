@@ -6,10 +6,6 @@
   email = "htsai@cytonome.com";
   gfx = "native";
 
-  hypr = {
-    enable = true;
-    ecoSystem = "kde";
-  };
   guiApps.enable = true;
   guiApps.eeLab.enable = true;
   guiApps.cadLab.enable = true;

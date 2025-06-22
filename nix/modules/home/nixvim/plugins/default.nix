@@ -13,6 +13,7 @@
         nixd.enable = true;
         clangd.enable = true;
         html.enable = true;
+        cssls.enable = true;
         eslint.enable = true;
         svelte.enable = true;
 
@@ -67,9 +68,16 @@
       };
     };
 
-    treesitter.enable = true;
-    web-devicons.enable = true;
-    lualine.enable = true;
+    treesitter = {
+      enable = true;
+      settings = {
+        highlight = {
+          enable = true;
+          disable = [ "rust" ];
+        };
+        indent.enable = true;
+      };
+    };
 
     nvim-tree = {
       enable = true;
@@ -80,9 +88,13 @@
       renderer.groupEmpty = true;
     };
 
+    web-devicons.enable = true;
+    lualine.enable = true;
     indent-o-matic.enable = true;
     indent-blankline.enable = true;
+    ts-autotag.enable = true;
     nvim-surround.enable = true;
+    nvim-autopairs.enable = true;
     which-key.enable = true;
   };
 }

@@ -42,6 +42,7 @@ in
       ark
       okular
       gwenview
+      partitionmanager
     ];
 
     security = {
@@ -56,7 +57,7 @@ in
       ];
       config = {
         common = {
-          default = [ "hyprland" "kde" "gtk" ];
+          default = [ "hyprland" "kde" ];
         };
       };
     };

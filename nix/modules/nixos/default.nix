@@ -59,6 +59,11 @@
       xserver.desktopManager.gnome.enable = config.gnome.enable;
       flatpak.enable = true;
       fwupd.enable = true;
+
+      pipewire = {
+        enable = true;
+        alsa.enable = true;
+      };
     };
 
     users.users.${config.user} = {
@@ -74,8 +79,12 @@
       git
       dig
       wget
+      curl
       usbutils
       pciutils
+      ethtool
+      alsa-utils
+      picocom
       lm_sensors
       efibootmgr
     ];
