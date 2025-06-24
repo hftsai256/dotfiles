@@ -1,0 +1,42 @@
+# Appearance
+screenshots
+clock
+indicator
+indicator-idle-visible
+ignore-empty-password
+grace=5
+fade-in=0.5
+font=system_ui
+
+# Effects
+effect-scale=0.9
+effect-vignette=0.15:0.85
+effect-pixelate=16
+
+# Indicator
+indicator-radius=100
+indicator-thickness=6
+
+line-color=00000000
+line-ver-color=00000000
+line-wrong-color=00000000
+line-clear-color=00000000
+line-caps-lock-color=00000000
+
+# Colors - Dark Glass
+color=0d1117ee
+text-color=e6edf3ff
+text-ver-color=e6edf3ff
+text-clear-color=e6edf3ff
+text-wrong-color=f5a3adff
+ring-color=21262d88
+key-hl-color=58a6ffff
+inside-color=21262d66
+line-color=00000000
+separator-color=00000000
+
+# State colors
+ring-ver-color=3fb95088
+ring-wrong-color=f85149aa
+inside-ver-color=3fb95033
+inside-wrong-color=f8514933

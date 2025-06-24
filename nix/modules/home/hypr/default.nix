@@ -8,8 +8,8 @@ let
 in
 {
   imports = [
-    ./kanshi.nix
-    ./notifier.nix
+    ../kanshi.nix
+    ../notifier.nix
     ./settings
   ];
 
@@ -46,7 +46,7 @@ in
         "hypr/hypridle.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hypridle.conf";
         "hypr/hyprlock.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprlock.conf";
         wofi.source = mkOutOfStoreSymlink "${xdgPath}/wofi";
-        waybar.source = mkOutOfStoreSymlink "${xdgPath}/waybar";
+        waybar.source = mkOutOfStoreSymlink "${xdgPath}/waybar-hypr";
       };
     };
 

@@ -9,7 +9,7 @@
 
     environment.systemPackages = lib.optionals config.yubikey.enable (with pkgs; [
       yubikey-personalization
-      yubikey-personalization-gui
+      yubioath-flutter
       yubikey-manager
     ]);
 

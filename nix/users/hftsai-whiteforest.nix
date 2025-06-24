@@ -6,6 +6,7 @@
   email = "htsai@cytonome.com";
   gfx = "native";
 
+  term.app = "kitty";
   guiApps.enable = true;
   guiApps.eeLab.enable = true;
   guiApps.cadLab.enable = true;
@@ -17,13 +18,13 @@
       { 
         criteria = "Dell Inc. DELL P2723QE 24QVXV3";
         status = "enable";
-        scale = 1.6;
-        position = "1280,0";
+        scale = 1.5;
+        position = "1600,0";
       }
       {
         criteria = "Sharp Corporation 0x1548 Unknown";
         status = "enable";
-        scale = 1.5;
+        scale = 1.2;
         position = "0,0";
       }
     ]; }
@@ -33,14 +34,14 @@
       { 
         criteria = "Dell Inc. DELL S2721QS FYCXM43";
         status = "enable";
-        scale = 1.6;
+        scale = 1.5;
         position = "0,0";
       }
       {
         criteria = "Sharp Corporation 0x1548 Unknown";
         status = "enable";
-        scale = 1.5;
-        position = "560,1350";
+        scale = 1.2;
+        position = "400,1440";
       }
     ]; }
 

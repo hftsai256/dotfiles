@@ -1,0 +1,128 @@
+@import "base16-hybrid.css";
+
+* {
+  box-shadow: none;
+}
+
+window#waybar {
+  background: transparent;
+  font-weight: 600;
+  font-family: 'monospace';
+  font-size: 12px;
+  color: @termFG;
+}
+
+tooltip label {
+  font-family: 'monospace';
+  font-size: 12px;
+}
+
+#backlight,
+#battery,
+#bluetooth,
+#network,
+#pulseaudio,
+#custom-power,
+#idle_inhibitor,
+#workspaces,
+#clock {
+  background: @term00;
+  min-width: 20px;
+  padding: 6px 8px 6px 8px;
+  margin: 0px 4px 0px 16px;
+  border-left: 2px;
+  border-right: 2px;
+  border-color: @term12;
+  border-style: solid;
+}
+
+#backlight,
+#battery,
+#bluetooth,
+#network,
+#pulseaudio,
+#custom-power,
+#idle_inhibitor {
+  font-size: 16px;
+}
+
+
+#workspaces {
+  padding: 8px 0px 8px 0px;
+  border: 2px solid;
+  border-color: @term12;
+  border-radius: 8px;
+}
+
+#workspaces button {
+  color: @term07;
+  padding: 2px 0px 2px 0px;
+}
+
+#workspaces button.visible {
+  color: @term12hl;
+  text-shadow: @term12 0 0 4px;
+}
+
+#workspaces button.active {
+  color: @term14hl;
+  text-shadow: @term14 0 0 4px;
+}
+
+#workspaces button.urgent {
+  color: @term11hl;
+  text-shadow: @term11 0 0 4px;
+}
+
+#idle_inhibitor {
+  color: @term12hl;
+}
+
+#battery {
+  color: @term10hl;
+}
+
+#clock {
+  padding-top: 8px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid;
+  border-color: @term12;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+#network {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid;
+  border-color: @term12;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+#custom-power {
+  color: @term09hl;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 2px solid;
+  border-color: @term12;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+#pulseaudio {
+  padding-top: 12px;
+  border-top: 2px solid;
+  border-color: @term12;
+  border-top-right-radius: 8px;
+  border-top-left-radius: 8px;
+}
+
+#tray {
+  padding: 8px 0px 8px 0px;
+  margin: 16px 7px 24px 19px;
+  color: @termBG;
+  background-color: @termFG;
+  box-shadow: @termBG 2px 1px 2px;
+  border-radius: 8px;
+}

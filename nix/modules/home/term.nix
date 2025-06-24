@@ -91,32 +91,32 @@ in {
 
       settings = {
         main = {
-          font = "monospace:${(toString config.term.fontsize)}";
+          font = "monospace:size=${(toString config.term.fontsize)}";
           dpi-aware = "no";
         };
 
         colors = {
           alpha = config.term.opacity;
-          foreground = "c5c8c6";
-          background = "1d1f21";
+          foreground = "b7bcb9";
+          background = "161718";
 
-          regular0 = "282a2e";
-          regular1 = "a54242";
-          regular2 = "8c9440";
-          regular3 = "de935f";
-          regular4 = "5f819d";
-          regular5 = "85678f";
-          regular6 = "5e8d87";
-          regular7 = "707880";
+          regular0 = "1d1e21";
+          regular1 = "8c2d32";
+          regular2 = "788331";
+          regular3 = "e5894f";
+          regular4 = "4b6b88";
+          regular5 = "6e4f79";
+          regular6 = "4d7b73";
+          regular7 = "5a6169";
 
-          bright0 = "373b41";
-          bright1 = "cc6666";
-          bright2 = "b5bd68";
-          bright3 = "f0c674";
-          bright4 = "81a2be";
-          bright5 = "b294bb";
-          bright6 = "8abeb7";
-          bright7 = "c5c8c6";
+          bright0 = "2a2e33";
+          bright1 = "b74d50";
+          bright2 = "b3be5a";
+          bright3 = "e3b55e";
+          bright4 = "6d90b0";
+          bright5 = "a07eab";
+          bright6 = "7fbeb3";
+          bright7 = "b5b8b6";
         };
       };
     };

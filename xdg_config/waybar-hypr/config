@@ -1,0 +1,100 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 24,
+    "modules-left": ["niri/workspaces", "niri/window"],
+    "modules-center": ["clock"],
+    "modules-right": ["tray", "pulseaudio", "backlight", "bluetooth", "network", "battery", "custom/ac", "idle_inhibitor", "custom/power"],
+    "custom/power" : {
+        "format": "",
+        "tooltip": false,
+        "on-click": "$HOME/.local/bin/power-fuzzel",
+        "escape": true,
+    },
+    "niri/workspaces": { 
+        "format": "{icon}",
+        "on-click": "activate",
+        "sort-by-number": true
+    },
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": "󰅶 ",
+            "deactivated": "󰸊 "
+        }
+    },
+    "tray": {
+        "icon-size": 20,
+        "spacing": 8
+    },
+    "clock": {
+        "format": "  {:%H:%M}",
+        "tooltip-format": "{calendar}",
+        "calendar": {
+            "format": {
+                "months":     "<span color='#ffead3'><b>{}</b></span>",
+                "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+                "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+                "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+                "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+            }
+        },
+    },
+    "custom/ac": {
+            "format": "󰚥",
+            "tooltip": true,
+            "tooltip-format": "AC Power Connected",
+            "exec": "test -d /sys/class/power_supply/ADP* && echo 'connected' || echo 'disconnected'",
+            "exec-if": "test ! -d /sys/class/power_supply/BAT*",
+            "interval": 30
+        },
+    "battery": {
+        "format": "{icon}{capacity}%",
+        "format-icons": {
+            "charging": ["󰢟 ", "󰢜 ", "󰂆 ", "󰂇 ", "󰂈 ", "󰢝 ", "󰂉 ", "󰢞 ", "󰂊 ", "󰂋 ", "󰂅 "],
+            "default": ["󰂎 ", "󰁺 ", "󰁻 ", "󰁼 ", "󰁽 ", "󰁾 ", "󰁿 ", "󰂀 ", "󰂁 ", "󰂂 ", "󰁹 "],
+        },
+        "format-charging": "{icon}{capacity}%",
+        "tooltip": true,
+        "tooltip-format": "󰔚 {timeTo}\n󱒀 {power} Watt\n󱈏 {health}%",
+    },
+    "bluetooth": {
+      "format": " {status}",
+      "format-disabled": "", // an empty format will hide the module
+      "format-connected": " {num_connections}",
+      "tooltip-format": "{device_enumerate}",
+      "tooltip-format-enumerate-connected": "{device_alias} [{device_address}]",
+      "tooltip-format-enumerate-connected": "{device_alias} [{device_address}] 󱊢{device_battery_percentage}%",
+      "on-click-right": "blueberry"
+    },
+    "network": {
+        "format-wifi": " {signalStrength}%",
+        "format-ethernet": "󰈀 {ifname}",
+        "format-disconnected": "󰜺 No Network",
+        "max-length": 8,
+        "on-click-right": "nm-connection-editor",
+        "tooltip": true,
+        "tooltip-format-wifi": "󰒗 {ipaddr}/{cidr}\n󰑩 {gwaddr}\n {essid} ({signalStrength}%)\n󰶣{bandwidthUpBytes} 󰶡{bandwidthDownBytes}",
+        "tooltip-format-ethernet": "󰒗 {ipaddr}/{cidr}\n󰑩 {gwaddr}\n󰾲 {ifname}\n󰶣{bandwidthUpBytes} 󰶡{bandwidthDownBytes}",
+        "tooltip-format-disconnected": "󰜺 No Network"
+    },
+    "pulseaudio": {
+        "format": "{icon}{volume}%",
+        "format-bluetooth": "{icon} {volume}%",
+        "format-muted": " ",
+        "format-icons": {
+            "headphone": ["  ", "  ", "  "],
+            "default": [" ", " ", " "]
+        },
+        "scroll-step": 1,
+        "on-click-right": "pavucontrol",
+        "tooltip": true
+    },
+    "backlight": {
+        "format": "{icon}{percent}%",
+        "format-icons": [" ", " ", " ", " ", " ", " ", " ", " ", " "],
+        "on-scroll-up": "brightnessctl set +5%",
+        "on-scroll-down": "brightnessctl set 5%-",
+        "on-click-right": "brightnessctl set 25%"
+    },
+}

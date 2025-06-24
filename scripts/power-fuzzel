@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+entries=" Poweroff\n⭮ Reboot\n Suspend\n Lock\n Logout"
+
+menu () {
+  echo -e "$1" | \
+    fuzzel --dmenu --width 25 --lines 5 --prompt "Power: " |\
+    awk '{print tolower($2)}'
+}
+
+case $(menu "$entries") in
+  lock)
+    # Use swaylock or your preferred lock screen for niri
+    swaylock
+    ;;
+
+  logout)
+    # Exit niri session
+    niri msg action quit
+    ;;
+
+  suspend)
+    systemctl suspend
+    ;;
+
+  reboot)
+    systemctl reboot
+    ;;
+
+  poweroff)
+    systemctl poweroff
+    ;;
+
+esac

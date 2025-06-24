@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+timeout=30
+
+while [ $timeout -gt 0 ]; do
+    if busctl --user list | grep -q 'org.freedesktop.portal.Desktop'; then
+        break
+    fi
+    sleep 1
+    timeout=$((timeout - 1))
+done
+
+# Start waybar
+exec stdbuf -oL -eL waybar 2>&1 | logger --tag wayber

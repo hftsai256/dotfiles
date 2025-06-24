@@ -5,8 +5,6 @@
     ./hardware-configuration.nix
   ];
 
-  hydra.enable = true;
-
   gpu.type = "intel";
 
   ipu6 = {
@@ -14,8 +12,7 @@
     platform = "ipu6ep";
   };
 
-  hypr.enable = true;
-  hypr.ecoSystem = "kde";
+  niri.enable = true;
 
   tablet.enable = true;
   secureBoot.enable = true;
@@ -27,7 +24,8 @@
 
   fortinet.enable = true;
   gaming.enable = false;
-  workarounds.flatpak.enable = true;
+
+  hydra.enable = true;
 
   hostname = "whiteforest";
 }

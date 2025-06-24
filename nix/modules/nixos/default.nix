@@ -46,17 +46,18 @@
     ./mfp.nix
     ./security.nix
     ./fonts.nix
+    ./themes.nix
     ./virtualization.nix
     ./sddm.nix
     ./hypr
+    ./niri.nix
     ./firefox.nix
-    ./workarounds.nix
   ];
 
   config = {
     services = {
       desktopManager.plasma6.enable = config.kde.enable;
-      xserver.desktopManager.gnome.enable = config.gnome.enable;
+      desktopManager.gnome.enable = config.gnome.enable;
       flatpak.enable = true;
       fwupd.enable = true;
 

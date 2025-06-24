@@ -47,7 +47,6 @@ in
   };
 
   hardware.xone.enable = true;
-  workarounds.flatpak.enable = true;
 
   hostname = "maplebright";
 }

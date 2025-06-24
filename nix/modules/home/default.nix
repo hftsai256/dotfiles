@@ -30,6 +30,7 @@
   imports = [
     ./nixvim
     ./hypr
+    ./niri.nix
     ./fonts
     ./zsh
     ./term.nix
@@ -90,7 +91,7 @@
 
     home.file = {
       ".local/bin" = {
-        source = ../../scripts;
+        source = ../../../scripts;
         recursive = true;
       };
     };

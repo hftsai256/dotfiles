@@ -22,8 +22,18 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    nixvim = {
+    nixvim-stable = {
       url = "github:nix-community/nixvim/nixos-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixvim-unstable = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    niri = {
+      url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -58,6 +68,7 @@
         home-manager = inputs.home-manager;
         os-module = ./modules/nixos;
         home-module = ./modules/home;
+        nixvim = inputs.nixvim-stable;
       };
 
       unstable = {
@@ -65,11 +76,13 @@
         home-manager = inputs.home-manager-unstable;
         os-module = ./modules/nixos-unstable;
         home-module = ./modules/home;
+        nixvim = inputs.nixvim-unstable;
       };
     };
 
     overlays = [
       inputs.nixgl.overlay
+      inputs.niri.overlays.niri
       (import inputs.rust-overlay)
       (import ./overlays/gfx.nix)
     ];
@@ -97,7 +110,7 @@
         pkgs = importPkgs selectedPkgSrc.nixpkgs system;
 
         extraSpecialArgs = {
-          inherit (inputs) nixvim;
+          inherit (selectedPkgSrc) nixvim;
         } // extraSpecialArgs;
 
         modules = [
@@ -111,6 +124,7 @@
       user,
       host,
       homeModules ? [],
+      selectedPkgSrc ? pkgSrc.stable,
       extraSpecialArgs ? {},
       ...
     }:
@@ -130,13 +144,13 @@
             ./users/${user}-${host}.nix
 
             { config = with nixosConfig; {
-                inherit hypr;
+                inherit hypr niri;
                 home = { inherit username homeDirectory stateVersion; };
                 fonts.fontconfig = { inherit (fonts.fontconfig) enable defaultFonts; };
             }; }
           ] ++ homeModules;
 
-          extraSpecialArgs = { inherit (inputs) nixvim; } // extraSpecialArgs;
+          extraSpecialArgs = { inherit (selectedPkgSrc) nixvim; } // extraSpecialArgs;
         };
       };
 
@@ -168,7 +182,7 @@
 
           selectedPkgSrc.home-manager.nixosModules.home-manager
         ] ++ (
-          map (user: mkNixosHomeModule { inherit host user homeModules extraSpecialArgs; }) regularUsers
+          map (user: mkNixosHomeModule { inherit host user homeModules selectedPkgSrc extraSpecialArgs; }) regularUsers
         ) ++ osModules;
       };
 
@@ -181,10 +195,13 @@
         rainberry = {
           regularUsers = defaultRegularUsers;
           selectedPkgSrc = pkgSrc.unstable;
+          homeModules = [ inputs.niri.homeModules.niri ];
         };
 
         whiteforest = {
           regularUsers = defaultRegularUsers;
+          selectedPkgSrc = pkgSrc.unstable;
+          homeModules = [ inputs.niri.homeModules.niri ];
         };
 
         maplebright = {
