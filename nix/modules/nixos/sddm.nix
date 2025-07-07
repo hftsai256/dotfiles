@@ -19,8 +19,6 @@ in
       sddm-sugar-dark
     ];
 
-    services.displayManager.defaultSession = lib.mkIf config.hypr.enable "hyprland-uwsm";
-
     services.displayManager.sddm = {
       enable = true;
       package = lib.mkForce pkgs.libsForQt5.sddm;

@@ -2,6 +2,7 @@
 
 * {
   box-shadow: none;
+  border-width: 0;
   padding: 0;
 }
 
@@ -20,6 +21,12 @@ tooltip {
   background: @termBG;
 }
 
+tooltip.background {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+
 tooltip label {
   color: @termFG;
   background: @term08;
@@ -33,24 +40,31 @@ tooltip label {
 #network,
 #pulseaudio,
 #custom-power,
+#idle_inhibitor {
+  font-size: 14px;
+  min-width: 14px;
+}
+
+#backlight,
+#battery,
+#bluetooth,
+#network,
+#pulseaudio,
+#custom-power,
 #idle_inhibitor,
 #workspaces,
-#window,
-#tray,
 #clock {
-  margin-top: 8px;
-  margin-bottom: 8px;
-  padding: 4px 8px 4px 8px;
-  border-radius: 8px;
+  margin: 8px 0px 8px 0px;
+  padding: 8px 8px 8px 8px;
   color: @termFG;
   background-color: @term00;
   opacity: 0.9;
 }
 
 #workspaces {
-  margin-left: 8px;
-  margin-right: 4px;
-  padding: 4px;
+  margin: 8px 4px 8px 8px;
+  padding: 8px 6px 8px 6px;
+  border-radius: 8px;
 }
 
 #workspaces button {
@@ -75,49 +89,44 @@ tooltip label {
   text-shadow: @term11 0 0 4px;
 }
 
-#clock {
-  margin-left: 4px;
-  margin-right: 4px;
-}
-
-#custom-power, #network, #backlight {
-  margin-right: 4px;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  padding-left: 4px;
-}
-
 #custom-power {
+  padding-left: 4px;
   color: @term09hl;
 }
 
-#battery, #custom-ac {
+#battery {
   color: @term10hl;
 }
 
 #idle_inhibitor {
-  border-radius: 0;
-  margin-left: 0;
-  margin-right: 0;
-  padding-left: 4px;
-  padding-right: 4px;
   color: @term12hl;
 }
 
-#pulseaudio, #bluetooth, #battery, #custom-ac {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+#clock {
+  border-radius: 8px;
+}
+
+#custom-power, #network {
+  margin-right: 8px;
+  padding-right: 12px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+#battery, #pulseaudio {
+  margin-left: 0px;
+  padding-left: 12px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
   padding-right: 4px;
-  margin-left: 4px;
-  margin-right: 0;
 }
 
 #tray, #window {
-  margin-left: 4px;
-  margin-right: 4px;
+  margin: 8px 8px 8px 4px;
+  padding: 0px 8px 0px 8px;
   font-family: 'monospace';
   color: @termBG;
   background-color: @termFG;
+  border-radius: 8px;
   box-shadow: @termBG 2px 1px 2px;
 }
-

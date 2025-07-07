@@ -36,7 +36,7 @@
     },
     "clock": {
         "justify": "center",
-        "format": "{:%I\n%M\n\n%p\n\n%b\n%d\n\n%a}",
+        "format": "{:%I\n%M\n\n%p\n\n%b\n%d\n\n%a}",
         "tooltip-format": "{calendar}",
         "calendar": {
             "format": {

@@ -12,7 +12,12 @@
     platform = "ipu6ep";
   };
 
-  niri.enable = true;
+  screencast.enable = true;
+
+  hypr = {
+    enable = true;
+    ecoSystem = "kde";
+  };
 
   tablet.enable = true;
   secureBoot.enable = true;

@@ -19,7 +19,7 @@ input {
         natural-scroll
     }
 
-    focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse max-scroll-amount="20%"
 }
 
 layout {
@@ -97,6 +97,7 @@ window-rule {
 
 window-rule {
     match app-id="org.gnome.Nautilus"
+    match app-id="org.gnome.Calculator"
     match app-id="org.gnome.NetworkDisplays"
     match app-id="org.remmina.Remmina"
     match app-id="mpv"

@@ -44,6 +44,7 @@
     ./network.nix
     ./ipu6.nix
     ./mfp.nix
+    ./screencast.nix
     ./security.nix
     ./fonts.nix
     ./themes.nix
@@ -60,10 +61,12 @@
       desktopManager.gnome.enable = config.gnome.enable;
       flatpak.enable = true;
       fwupd.enable = true;
+      upower.enable = true;
 
       pipewire = {
         enable = true;
         alsa.enable = true;
+        pulse.enable = true;
       };
     };
 

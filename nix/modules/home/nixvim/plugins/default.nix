@@ -45,12 +45,11 @@
           };
         };
 
-        rust_analyzer = with pkgs.rust-bin.stable.latest; {
+        rust_analyzer = {
           enable = true;
           installCargo = false;
           installRustc = false;
           installRustfmt = false;
-          package = rust-analyzer;
         };
       };
     };
@@ -97,4 +96,17 @@
     nvim-autopairs.enable = true;
     which-key.enable = true;
   };
+
+  extraConfigLua = ''
+    local sysroot = vim.fn.systemlist("rustc --print sysroot")[1]
+    require('lspconfig').rust_analyzer.setup({
+      settings = {
+        ["rust-analyzer"] = {
+          cargo = {
+            sysroot = sysroot,
+          },
+        },
+      },
+    })
+  '';
 }

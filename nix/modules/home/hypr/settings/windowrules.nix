@@ -14,7 +14,6 @@ in
       "float, class:^(org.freedesktop.impl.portal.desktop.*)$"
       "float, class:^(xdg-desktop-portal.*)$"
       "float, class:mpv"
-      "float, class:.blueman-manager-wrapped"
       "float, class:pavucontrol"
       "float, class:virt-manager"
       "float, class:nm-connection-editor"

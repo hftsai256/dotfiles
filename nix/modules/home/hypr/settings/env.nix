@@ -2,60 +2,71 @@
 let
   cfg = config.hypr;
 
-  theme = {
+  gtkTheme = {
     gtk = {
-      gtk = "vimix-light-doder";
-      icon = "Vimix-Doder";
+      iconTheme = {
+        name = "Tela";
+        package = pkgs.tela-icon-theme;
+      };
+      theme = {
+        name = "Orchis-Dark-Compact";
+        package = pkgs.orchis-theme;
+      };
     };
 
     kde = {
-      gtk = "Breeze";
-      icon = "breeze";
+      theme = {
+        name = "Breeze";
+        package = pkgs.kdePackages.breeze-gtk;
+      };
+      iconTheme = {
+        name = "breeze";
+        package = pkgs.kdePackages.breeze-icons;
+      };
     };
   };
 
 in
 {
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [
-      simp1e-cursors
-    ] ++ lib.optionals (cfg.ecoSystem == "gtk") [
-      vimix-gtk-themes
-      vimix-icon-theme
-    ] ++ lib.optionals (cfg.ecoSystem == "kde") [
-      kdePackages.breeze-gtk
-      kdePackages.breeze-icons
-    ];
+    gtk = {
+      enable = true;
 
-    xdg.configFile = {
-      "uwsm/env".text = ''
-        export QT_QPA_PLATFORM=wayland
-        export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
-        export QT_AUTO_SCREEN_SCALE_FACTOR=1
-        export QT_SCALE_FACTOR_ROUNDING_POLICY=RoundPreferFloor
+      cursorTheme = {
+        name = "Simp1e-Breeze-Dark";
+        package = pkgs.simp1e-cursors;
+      };
 
-        export GDK_BACKEND=wayland
-        export GTK_USE_PORTAL=1
+    } // gtkTheme.${cfg.ecoSystem};
 
-        export SDL_VIDEODRIVER=wayland
-        export _JAVA_AWT_WM_NONREPARENTING=1
-        export CLUTTER_BACKEND=wayland
+    home.pointerCursor = {
+      name = "Simp1e-Breeze-Dark";
+      package = pkgs.simp1e-cursors;
+      size = 24;
+    };
 
-        export MOZ_ENABLE_WAYLAND=1
-        export MOZ_ACCELERATED=1
-        export MOZ_WEBRENDER=1
+    home.sessionVariables = {
+      "QT_QPA_PLATFORM" = "wayland";
+      "QT_WAYLAND_DISABLE_WINDOWDECORATION" = "1";
+      "QT_AUTO_SCREEN_SCALE_FACTOR" = "1";
+      "QT_SCALE_FACTOR_ROUNDING_POLICY" = "RoundPreferFloor";
 
-        export XCURSOR_SIZE=24
-        export XCURSOR_THEME=Simp1e-Breeze
-      '';
+      "GDK_BACKEND" = "wayland";
+      "GTK_USE_PORTAL" = "1";
 
-      "uwsm/env-hyprland".text = ''
-        export XDG_MENU_PREFIX=plasma-
-        export XDG_CURRENT_DESKTOP=Hyprland
-        export XDG_SESSION_TYPE=wayland
-        export XDG_SESSION_DESKTOP=Hyprland
-        export TERM=${config.term.app}
-      '';
+      "SDL_VIDEODRIVER" = "wayland";
+      "_JAVA_AWT_WM_NONREPARENTING" = "1";
+      "CLUTTER_BACKEND" = "wayland";
+
+      "MOZ_ENABLE_WAYLAND" = "1";
+      "MOZ_ACCELERATED" = "1";
+      "MOZ_WEBRENDER" = "1";
+
+      "XDG_MENU_PREFIX" = "plasma-";
+      "XDG_CURRENT_DESKTOP" = "Hyprland";
+      "XDG_SESSION_TYPE" = "wayland";
+      "XDG_SESSION_DESKTOP" = "Hyprland";
+      "TERM" = "${config.term.app}";
     };
 
     wayland.windowManager.hyprland.systemd.variables = [
@@ -78,8 +89,6 @@ in
         font-name = "Source Sans Pro 10, Source Han Sans 9";
         monospace-font-name = "Fira Code 10, Symbols Nerd Font 9";
         font-antialiasing = "rgba";
-        gtk-theme = theme.${cfg.ecoSystem}.gtk;
-        icon-theme = theme.${cfg.ecoSystem}.icon;
       };
     };
   };

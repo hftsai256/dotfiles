@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, hyprland-pkgs, ... }:
 {
   imports = [
     ./kde-ecosystem.nix
@@ -36,9 +36,9 @@
         hyprcursor
         hyprpaper
         kanshi
+        fuzzel
         waybar
         mako
-        wofi
 
         networkmanagerapplet
         pavucontrol
@@ -64,7 +64,8 @@
 
     programs.hyprland = {
       enable = true;
-      withUWSM = true;
+      package = hyprland-pkgs.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      portalPackage = hyprland-pkgs.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     };
   };
 }

@@ -66,7 +66,6 @@
     lib.optionals config.guiApps.enable [
       brave
       thunderbird
-      teams-for-linux
       mpv
 
       gnome-network-displays

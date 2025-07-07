@@ -10,12 +10,12 @@ menu () {
 case $(menu "$entries") in
   lock)
     # Use swaylock or your preferred lock screen for niri
-    swaylock
+    hyprlock
     ;;
 
   logout)
     # Exit niri session
-    niri msg action quit
+    niri msg action quit || hyprctl dispatch exit
     ;;
 
   suspend)

@@ -12,16 +12,13 @@
       (callPackage ../../packages/openfortivpn-webview.nix {})
     ];
 
-    miracastPorts = {
-      tcp = [ 7236 7250 ];
-      udp = [ 7236 5353 ];
-    };
-
   in
   {
     environment.systemPackages = (with pkgs; [
       iw
     ]) ++ (lib.optionals config.fortinet.enable vpnPkgs);
+
+    programs.nm-applet.enable = true;
 
     networking = {
       hostName = config.hostname;
@@ -30,9 +27,7 @@
 
       firewall = {
         enable = true;
-        allowedTCPPorts = [ 22 80 443 8080 ] ++ miracastPorts.tcp;
-        allowedUDPPorts = miracastPorts.udp;
-        trustedInterfaces = [ "p2p-wl*" ];
+        allowedTCPPorts = [ 22 80 443 8080 ];
       };
     };
 
@@ -44,6 +39,7 @@
         publish = {
           enable = true;
           addresses = true;
+          workstation = true;
         };
       };
 

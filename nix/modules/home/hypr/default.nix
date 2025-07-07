@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   inherit (config.lib.file) mkOutOfStoreSymlink;
   inherit (config.home) homeDirectory;
@@ -35,9 +35,12 @@ in
   config = lib.mkIf config.hypr.enable {
     wayland.windowManager.hyprland = {
       enable = true;
-      systemd.enable = false;
       package = null;
       portalPackage = null;
+      plugins = with pkgs.hyprlandPlugins; [
+        hyprspace
+        hyprgrass
+      ];
     };
 
     xdg = {
@@ -45,7 +48,6 @@ in
         "hypr/hyprpaper.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprpaper.conf";
         "hypr/hypridle.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hypridle.conf";
         "hypr/hyprlock.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprlock.conf";
-        wofi.source = mkOutOfStoreSymlink "${xdgPath}/wofi";
         waybar.source = mkOutOfStoreSymlink "${xdgPath}/waybar-hypr";
       };
     };

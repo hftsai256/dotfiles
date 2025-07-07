@@ -8,8 +8,8 @@
 
   term.app = "kitty";
   guiApps.enable = true;
-  guiApps.eeLab.enable = true;
-  guiApps.cadLab.enable = true;
+  guiApps.eeLab.enable = false;
+  guiApps.cadLab.enable = false;
   rime.enable = true;
 
   kanshiSettings = [
@@ -45,15 +45,19 @@
       }
     ]; }
 
-    { profile.name = "clamshell";
+    { profile.name = "4ktv";
       profile.outputs = [
       {
         criteria = "*";
         status = "enable";
+        scale = 2.4;
+        position = "0,0";
       }
       {
         criteria = "Sharp Corporation 0x1548 Unknown";
-        status = "disable";
+        status = "enable";
+        scale = 1.2;
+        position = "0,0";
       }
     ]; }
 

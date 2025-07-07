@@ -11,16 +11,17 @@ in
 {
   wayland.windowManager.hyprland.settings = {
     bind = [
-      "SUPER+CTRL, t, exec, ${config.term.app}"
-      "SUPER+CTRL, e, exec, ${fm.${cfg.ecoSystem}} $HOME"
-      "SUPER+CTRL, b, exec, brave --password-store=detect"
-      "SUPER+CTRL, m, exec, thunderbird"
+      "SUPER, t, exec, ${config.term.app}"
+      "SUPER, e, exec, ${fm.${cfg.ecoSystem}} $HOME"
+      "SUPER, b, exec, brave --password-store=detect"
+      "SUPER, m, exec, thunderbird"
 
-      "SUPER+SHIFT, v, exec, cliphist list | wofi -S dmenu | cliphist decode | wl-copy"
-      "SUPER, space, exec, wofi -S drun -m fuzzy -i --width 320"
+      "SUPER+SHIFT, v, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
+      "SUPER, d, exec, fuzzel"
 
       "SUPER, q, killactive"
-      "SUPER+CTRL+SHIFT, 3, exec, grim"
+      "SUPER+SHIFT, 3, exec, grim"
+      ''SUPER+SHIFT, 4, exec, grim -g "$(slurp) -w"''
       ''SUPER+CTRL+SHIFT, 4, exec, grim -g "$(slurp)"''
 
       "SUPER+CTRL, backspace, exec, $HOME/.config/waybar/scripts/power"
@@ -73,7 +74,7 @@ in
         let ws = if i == 0 then 10 else i;
         in [
           "SUPER, ${toString i}, workspace, ${toString ws}"
-          "SUPER+SHIFT, ${toString i}, movetoworkspace, ${toString ws}"
+          "SUPER+CTRL, ${toString i}, movetoworkspace, ${toString ws}"
         ]
       ) 10)
     );

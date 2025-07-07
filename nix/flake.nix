@@ -32,6 +32,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hyprland-pkgs.url = "github:hyprwm/Hyprland";
+
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,11 +41,6 @@
 
     solaar = {
       url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -83,7 +80,6 @@
     overlays = [
       inputs.nixgl.overlay
       inputs.niri.overlays.niri
-      (import inputs.rust-overlay)
       (import ./overlays/gfx.nix)
     ];
 
@@ -167,7 +163,7 @@
     }:
       selectedPkgSrc.nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit (inputs) nixpkgs nixpkgs-unstable nixos-hardware lanzaboote impermanence;
+          inherit (inputs) nixpkgs nixpkgs-unstable nixos-hardware lanzaboote impermanence hyprland-pkgs;
         } // specialArgs;
 
         modules = [
