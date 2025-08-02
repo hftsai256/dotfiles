@@ -64,19 +64,9 @@
     ] ++
 
     lib.optionals config.guiApps.enable [
-      brave
-      thunderbird
-      mpv
-
       gnome-network-displays
-      simple-scan
-
       selectdefaultapplication
       dconf-editor
-
-      remmina
-      libreoffice
-      drawio
     ] ++
 
     lib.optionals (config.guiApps.enable && config.guiApps.eeLab.enable) [

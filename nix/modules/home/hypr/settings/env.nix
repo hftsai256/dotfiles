@@ -16,7 +16,7 @@ let
 
     kde = {
       theme = {
-        name = "Breeze";
+        name = "Breeze-Dark";
         package = pkgs.kdePackages.breeze-gtk;
       };
       iconTheme = {
@@ -38,6 +38,12 @@ in
       };
 
     } // gtkTheme.${cfg.ecoSystem};
+
+    qt = {
+      enable = true;
+      platformTheme.name = "qtct";
+      style.name = "breeze";
+    };
 
     home.pointerCursor = {
       name = "Simp1e-Breeze-Dark";

@@ -42,7 +42,7 @@ in
     };
 
   in {
-    hardware.graphics = lib.mkIf cfg.enable graphics.${gpu.type};
+    hardware.graphics = graphics.${gpu.type};
 
     environment.systemPackages = lib.mkIf (gpu.type != "headless") [
       pkgs.glxinfo

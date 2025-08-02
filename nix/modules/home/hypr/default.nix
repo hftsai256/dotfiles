@@ -44,6 +44,7 @@ in
     };
 
     xdg = {
+      enable = true;
       configFile = {
         "hypr/hyprpaper.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprpaper.conf";
         "hypr/hypridle.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hypridle.conf";

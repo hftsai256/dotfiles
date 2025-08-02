@@ -64,8 +64,8 @@
 
     programs.hyprland = {
       enable = true;
-      package = hyprland-pkgs.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      portalPackage = hyprland-pkgs.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      # package = hyprland-pkgs.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      # portalPackage = hyprland-pkgs.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     };
   };
 }

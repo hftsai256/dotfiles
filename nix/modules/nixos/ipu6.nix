@@ -13,7 +13,7 @@ in
         ipu6 platform - 
         * ipu6: Tiger Lake
         * ipu6ep: Alder Lake
-        * ipu6epmtl:
+        * ipu6epmtl: Meteor Lake
         '';
     };
   };
@@ -31,10 +31,6 @@ in
       gst-plugins-base
       gst-plugins-good
     ];
-
-    services.pipewire.wireplumber = {
-      enable = true;
-    };
   };
 
 }

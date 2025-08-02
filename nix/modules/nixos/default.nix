@@ -52,7 +52,6 @@
     ./sddm.nix
     ./hypr
     ./niri.nix
-    ./firefox.nix
   ];
 
   config = {
@@ -93,6 +92,8 @@
       efibootmgr
     ];
 
+    environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
+
     programs = {
       kdeconnect.enable = true;
       dconf.enable = true;
@@ -104,8 +105,6 @@
         flake = "/home/${config.user}/.dotfiles/nix";
       };
     };
-
-    firefox.enable = true;
 
     nixpkgs.config.allowUnfree = true;
     

@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    # nixpkgs-unstable.url = "github:nixos/nixpkgs/3055e9c183c78b61742ecdf8504179ccb9a63161";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
 
@@ -81,6 +82,7 @@
       inputs.nixgl.overlay
       inputs.niri.overlays.niri
       (import ./overlays/gfx.nix)
+      (import ./overlays/libcamera.nix)
     ];
 
     importPkgs = nixpkgs: system: import nixpkgs {

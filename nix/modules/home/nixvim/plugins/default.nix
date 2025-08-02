@@ -51,6 +51,7 @@
           installRustc = false;
           installRustfmt = false;
         };
+
       };
     };
 
@@ -85,6 +86,13 @@
         updateRoot = true;
       };
       renderer.groupEmpty = true;
+    };
+
+    vimtex = {
+      enable = true;
+      texlivePackage = null;
+      settings.view_method = "zathura";
+      settings.compiler_method = "tectonic";
     };
 
     web-devicons.enable = true;
