@@ -28,4 +28,14 @@
   };
 
   colorschemes.kanagawa.enable = true;
+
+  # Remove trailing whitespaces upon saving
+  extraConfigLua = ''
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      pattern = {"*.py", "*.rs", "*.c", "*.cpp", "*.lua", "*.nix"},
+      callback = function()
+        vim.cmd([[%s/\s\+$//e]])
+      end,
+    })
+  '';
 }
