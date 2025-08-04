@@ -17,7 +17,7 @@ in
 
   hypr = {
     enable = true;
-    ecoSystem = "kde";
+    ecoSystem = "gtk";
   };
 
   jovian = {

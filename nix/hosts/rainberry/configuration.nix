@@ -7,11 +7,10 @@
 
   gpu.type = "amd";
 
-  virtualization.enable = true;
-  virtualization.cpuType = "amd";
-  virtualization.lookingGlass = false;
-
-  niri.enable = true;
+  hypr = {
+    enable = true;
+    ecoSystem = "gtk";
+  };
 
   tablet.enable = true;
   secureBoot.enable = true;
@@ -22,6 +21,12 @@
 
   fortinet.enable = true;
   gaming.enable = false;
+
+  virtualization = {
+    enable = true;
+    cpuType = "amd";
+    lookingGlass = false;
+  };
 
   hydra.enable = true;
 

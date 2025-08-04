@@ -4,7 +4,7 @@
     "height": 24,
     "modules-left": ["hyprland/workspaces", "hyprland/window"],
     "modules-center": ["clock"],
-    "modules-right": ["tray", "pulseaudio", "backlight", "bluetooth", "network", "battery", "custom/ac", "idle_inhibitor", "custom/power"],
+    "modules-right": ["tray", "pulseaudio", "backlight", "bluetooth", "network", "idle_inhibitor", "battery", "custom/power"],
     "custom/power" : {
         "format": "",
         "tooltip": false,
