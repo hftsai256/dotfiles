@@ -50,6 +50,7 @@
     ./themes.nix
     ./virtualization.nix
     ./sddm.nix
+    ./greetd.nix
     ./hypr
     ./niri.nix
   ];
@@ -90,6 +91,7 @@
       picocom
       lm_sensors
       efibootmgr
+      killall
     ];
 
     environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
@@ -107,7 +109,7 @@
     };
 
     nixpkgs.config.allowUnfree = true;
-    
+
     nix.settings = {
       experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
       trusted-users = [ "root" "${config.user}" ];

@@ -50,6 +50,16 @@
           installCargo = false;
           installRustc = false;
           installRustfmt = false;
+          settings = {
+            cargo.allFeatures = true;
+            procMacro.enable = true;
+          };
+        };
+
+        ltex = {
+          enable = true;
+          filetypes = [ "tex" "md" "txt" ];
+          settings.ltex.language = "en-US";
         };
 
       };
@@ -57,7 +67,7 @@
 
     lspsaga = {
       enable = true;
-      beacon.enable = true;
+      settings.beacon.enable = true;
     };
 
     telescope = {
@@ -81,11 +91,13 @@
 
     nvim-tree = {
       enable = true;
-      updateFocusedFile = {
-        enable = true;
-        updateRoot = true;
+      settings = {
+        update_focused_file = {
+          enable = true;
+          update_root = true;
+        };
+        renderer.group_empty = true;
       };
-      renderer.groupEmpty = true;
     };
 
     vimtex = {
@@ -104,17 +116,4 @@
     nvim-autopairs.enable = true;
     which-key.enable = true;
   };
-
-  extraConfigLua = ''
-    local sysroot = vim.fn.systemlist("rustc --print sysroot")[1]
-    require('lspconfig').rust_analyzer.setup({
-      settings = {
-        ["rust-analyzer"] = {
-          cargo = {
-            sysroot = sysroot,
-          },
-        },
-      },
-    })
-  '';
 }

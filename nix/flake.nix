@@ -4,7 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    # nixpkgs-unstable.url = "github:nixos/nixpkgs/3055e9c183c78b61742ecdf8504179ccb9a63161";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
 
@@ -30,10 +29,15 @@
 
     nixvim-unstable = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     hyprland-pkgs.url = "github:hyprwm/Hyprland";
+
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland-pkgs";
+    };
 
     niri = {
       url = "github:sodiboo/niri-flake";
@@ -119,8 +123,9 @@
       };
 
     mkNixosHomeModule = {
-      user,
+      system,
       host,
+      user,
       homeModules ? [],
       selectedPkgSrc ? pkgSrc.stable,
       extraSpecialArgs ? {},
@@ -137,7 +142,7 @@
           useGlobalPkgs = true;
           useUserPackages = true;
 
-          users.${user}.imports = [ 
+          users.${user}.imports = [
             ./modules/home
             ./users/${user}-${host}.nix
 
@@ -148,7 +153,13 @@
             }; }
           ] ++ homeModules;
 
-          extraSpecialArgs = { inherit (selectedPkgSrc) nixvim; } // extraSpecialArgs;
+          extraSpecialArgs = {
+            inherit (selectedPkgSrc) nixvim;
+            hyprland = {
+              pkgs = inputs.hyprland-pkgs.packages.${system};
+              plugins = inputs.hyprland-plugins.packages.${system};
+            };
+          } // extraSpecialArgs;
         };
       };
 
@@ -165,7 +176,11 @@
     }:
       selectedPkgSrc.nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit (inputs) nixpkgs nixpkgs-unstable nixos-hardware lanzaboote impermanence hyprland-pkgs;
+          inherit (inputs) nixpkgs nixpkgs-unstable nixos-hardware lanzaboote impermanence;
+          hyprland = {
+            pkgs = inputs.hyprland-pkgs.packages.${system};
+            plugins = inputs.hyprland-plugins.packages.${system};
+          };
         } // specialArgs;
 
         modules = [
@@ -180,7 +195,9 @@
 
           selectedPkgSrc.home-manager.nixosModules.home-manager
         ] ++ (
-          map (user: mkNixosHomeModule { inherit host user homeModules selectedPkgSrc extraSpecialArgs; }) regularUsers
+          map (user: mkNixosHomeModule {
+            inherit system host user homeModules selectedPkgSrc extraSpecialArgs;
+          }) regularUsers
         ) ++ osModules;
       };
 

@@ -5,6 +5,13 @@
     ./hardware-configuration.nix
   ];
 
+  nix.settings = {
+    max-jobs = 4;
+    cores = 4;
+  };
+
+  services.intune.enable = true;
+
   gpu.type = "intel";
 
   ipu6 = {
@@ -12,11 +19,13 @@
     platform = "ipu6ep";
   };
 
+  greetd.enable = true;
+
   screencast.enable = true;
 
   hypr = {
     enable = true;
-    ecoSystem = "kde";
+    ecoSystem = "gtk";
   };
 
   tablet.enable = true;

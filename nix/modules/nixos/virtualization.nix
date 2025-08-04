@@ -44,7 +44,6 @@
     environment.systemPackages = [
       pkgs.virt-manager
       pkgs.swtpm
-      pkgs.OVMF
     ] ++ lib.optionals cfg.lookingGlass [
       pkgs.looking-glass-client
       pkgs.scream
@@ -52,17 +51,12 @@
 
     users.users.${config.user}.extraGroups = [ "libvirtd" ];
 
+    networking.firewall.trustedInterfaces = [ "virbr0" ];
+
     virtualisation = {
       libvirtd = {
         enable = true;
         qemu = {
-          ovmf = {
-            enable = true;
-            packages = [ (pkgs.OVMF.override {
-              secureBoot = true;
-              tpmSupport = true;
-            }).fd ];
-          };
           swtpm.enable = true;
           package = pkgs.qemu_kvm;
           runAsRoot = true;

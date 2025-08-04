@@ -29,6 +29,8 @@
 @define-color termBG #1d1f21;
 @define-color termFG #c5c8c6;
 
+@define-color term00hl #50545c;
+
 @define-color term09hl #ff8080;
 @define-color term10hl #f4ff8c;
 @define-color term11hl #ffd27b;

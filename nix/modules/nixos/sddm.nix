@@ -7,7 +7,7 @@ in
   options = {
     sddm.enable = lib.options.mkOption {
       type = lib.types.bool;
-      default = true;
+      default = false;
       description = ''
         SDDM display manager
       '';
@@ -16,16 +16,23 @@ in
 
   config = lib.mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
-      sddm-sugar-dark
+      (catppuccin-sddm.override {
+        flavor = "mocha";
+        accent = "sapphire";
+        loginBackground = true;
+        userIcon = true;
+      })
     ];
 
     services.displayManager.sddm = {
       enable = true;
-      package = lib.mkForce pkgs.libsForQt5.sddm;
+      package = pkgs.kdePackages.sddm;
       wayland.enable = true;
-      wayland.compositor = "kwin";
-      theme = "sugar-dark";
-      extraPackages = lib.mkForce [ pkgs.libsForQt5.qt5.qtgraphicaleffects ];
+      theme = "catppuccin-mocha-sapphire";
+      settings = {
+        General.RememberLastSession = true;
+        Users.RememberLastUser = true;
+      };
     };
   };
 }

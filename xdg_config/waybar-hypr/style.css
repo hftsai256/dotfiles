@@ -55,7 +55,7 @@ tooltip label {
 #workspaces,
 #clock {
   margin: 8px 0px 8px 0px;
-  padding: 8px 8px 8px 8px;
+  padding: 4px 8px 4px 8px;
   color: @termFG;
   background-color: @term00;
   opacity: 0.9;
@@ -63,7 +63,8 @@ tooltip label {
 
 #workspaces {
   margin: 8px 4px 8px 8px;
-  padding: 8px 6px 8px 6px;
+  padding-left: 6px;
+  padding-right: 6px;
   border-radius: 8px;
 }
 
@@ -113,7 +114,7 @@ tooltip label {
   border-bottom-right-radius: 8px;
 }
 
-#battery, #pulseaudio {
+#idle_inhibitor, #pulseaudio {
   margin-left: 0px;
   padding-left: 12px;
   border-top-left-radius: 8px;
@@ -125,8 +126,9 @@ tooltip label {
   margin: 8px 8px 8px 4px;
   padding: 0px 8px 0px 8px;
   font-family: 'monospace';
-  color: @termBG;
-  background-color: @termFG;
+  color: @termFG;
+  background-color: @term00;
+  opacity: 0.9;
   border-radius: 8px;
-  box-shadow: @termBG 2px 1px 2px;
+  /* box-shadow: @termBG 2px 1px 2px; */
 }

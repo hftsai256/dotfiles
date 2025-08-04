@@ -27,17 +27,16 @@
       gaps_in = 4;
       gaps_out = "0, 8, 8, 8"; # CSS style: top right bottom left
       border_size = 2;
-      "col.active_border" = "0x89b4faff";
-      "col.inactive_border" = "0xff45475a";
       layout = "dwindle";
       allow_tearing = true;
+
+      "col.active_border" = "rgba(ffe3aaff)";
+      "col.inactive_border" = "rgba(6d6483ff)";
     };
 
     decoration = {
       blur.enabled = !config.hypr.lowSpec;
-      shadow.enabled = !config.hypr.lowSpec;
-      shadow.color = "0xaa1d1f21";
-      shadow.offset = "2, 1";
+      shadow.enabled = false;
       rounding = 8;
     };
 
@@ -56,8 +55,7 @@
       preserve_split = true;
     };
 
-    misc = {
-      vfr = true;
-    };
+    xwayland.force_zero_scaling = true;
+    misc.vfr = true;
   };
 }

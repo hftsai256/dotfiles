@@ -38,11 +38,24 @@ in
       systemd.enable = false;
       package = null;
       portalPackage = null;
-      plugins = with pkgs.hyprlandPlugins; [
-        hyprspace
-        hyprgrass
-      ];
     };
+
+    services = {
+      hypridle.enable = true;
+      hyprpaper.enable = true;
+    };
+
+    programs = {
+      fuzzel.enable = true;
+      waybar.enable = true;
+      waybar.systemd.enable = true;
+    };
+
+    home.packages = with pkgs; [
+      hyprsunset
+    ];
+
+    home.pointerCursor.hyprcursor.enable = true;
 
     xdg = {
       enable = true;
@@ -51,6 +64,7 @@ in
         "hypr/hyprpaper.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprpaper.conf";
         "hypr/hypridle.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hypridle.conf";
         "hypr/hyprlock.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprlock.conf";
+        "hypr/hyprsunset.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprsunset.conf";
         waybar.source = mkOutOfStoreSymlink "${xdgPath}/waybar-hypr";
       };
     };

@@ -22,19 +22,15 @@ in
     graphics = {
       amd = {
         enable = true;
-        enable32Bit = config.gaming.enable;
+        enable32Bit = lib.mkOverride 150 config.gaming.enable;
         extraPackages = with pkgs; [
-          amdvlk
           amdenc
-        ];
-        extraPackages32 = lib.mkIf config.gaming.enable [
-          pkgs.driversi686Linux.amdvlk
         ];
       };
 
       intel = {
         enable = true;
-        enable32Bit = config.gaming.enable;
+        enable32Bit = lib.mkOverride 150 config.gaming.enable;
         extraPackages = with pkgs; [
           vpl-gpu-rt
         ];
@@ -43,16 +39,22 @@ in
 
   in {
     hardware.graphics = graphics.${gpu.type};
+    hardware.xone.enable = cfg.enable;
 
-    environment.systemPackages = lib.mkIf (gpu.type != "headless") [
+    environment.systemPackages = lib.optionals (gpu.type != "headless") [
       pkgs.glxinfo
       pkgs.vulkan-tools
     ];
 
     programs.steam = lib.mkIf cfg.enable {
       enable = true;
-      gamescopeSession.enable = true;
+      gamescopeSession.enable = lib.mkDefault cfg.console.enable;
       protontricks.enable = true;
+      extraPackages = [
+        (pkgs.writeShellScriptBin "steamos-session-select" ''
+          pkill gamescope
+        '')
+      ];
     };
 
     programs.corectrl.enable = (gpu.type == "amd");

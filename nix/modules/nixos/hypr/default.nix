@@ -1,5 +1,8 @@
-{ config, pkgs, lib, hyprland-pkgs, ... }:
-{
+{ config, pkgs, lib, hyprland, ... }:
+let
+  cfg = config.hypr;
+
+in {
   imports = [
     ./kde-ecosystem.nix
     ./gtk-ecosystem.nix
@@ -25,20 +28,11 @@
   config = lib.mkIf config.hypr.enable {
     environment = {
       systemPackages = with pkgs; [
-        plasma5Packages.qt5.qtwayland
-        plasma5Packages.qt5.qtsvg
+        # plasma5Packages.qt5.qtwayland
+        # plasma5Packages.qt5.qtsvg
 
         kdePackages.qtwayland
         kdePackages.qtsvg
-
-        hypridle
-        hyprlock
-        hyprcursor
-        hyprpaper
-        kanshi
-        fuzzel
-        waybar
-        mako
 
         networkmanagerapplet
         pavucontrol
@@ -65,8 +59,19 @@
     programs.hyprland = {
       enable = true;
       withUWSM = true;
-      # package = hyprland-pkgs.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      # portalPackage = hyprland-pkgs.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      # package = hyprland.pkgs.hyprland;
+      # portalPackage = hyprland.pkgs.xdg-desktop-portal-hyprland;
     };
+
+    programs.hyprlock = {
+      enable = true;
+      package = pkgs.hyprlock;
+    };
+
+    security.pam.services.hyprlock = {
+      enableGnomeKeyring = (cfg.ecoSystem == "gtk");
+      enableKwallet = (cfg.ecoSystem == "kde");
+    };
+
   };
 }

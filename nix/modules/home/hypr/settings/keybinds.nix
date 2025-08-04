@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
   cfg = config.hypr;
 
@@ -7,22 +7,37 @@ let
     kde = "dolphin";
   };
 
+  mirror = pkgs.writeShellScriptBin "mirror" ''
+    set -euo pipefail
+
+    DP_OUT=$(hyprctl monitors -j | ${pkgs.jq}/bin/jq -r \
+      '.[] | select(.name | test("^DP-")) | .name' | head -n1)
+
+    if [ -n "$DP_OUT" ]; then
+        echo "Mirroring eDP-1 to $DP_OUT"
+        exec ${pkgs.wl-mirror}/bin/wl-present mirror eDP-1 \
+          --fullscreen-output "$DP_OUT" --fullscreen
+      else
+        echo "No DP output connected" >&2
+        exit 1
+    fi
+  '';
+
 in
 {
   wayland.windowManager.hyprland.settings = {
     bind = [
       "SUPER, t, exec, ${config.term.app}"
       "SUPER, e, exec, ${fm.${cfg.ecoSystem}} $HOME"
-      "SUPER, b, exec, flatpak run com.brave.Browser --password-store=detect"
+      "SUPER, b, exec, flatpak run com.brave.Browser --password-store=detect --disable-features=WaylandWpColorManagerV1"
       "SUPER, m, exec, thunderbird"
 
       "SUPER+SHIFT, v, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
       "SUPER, d, exec, fuzzel"
 
       "SUPER, q, killactive"
-      "SUPER+SHIFT, 3, exec, grim"
-      ''SUPER+SHIFT, 4, exec, grim -g "$(slurp) -w"''
-      ''SUPER+CTRL+SHIFT, 4, exec, grim -g "$(slurp)"''
+      "SUPER+CTRL, 3, exec, grim"
+      ''SUPER+CTRL, 4, exec, grim -g "$(slurp)"''
 
       "SUPER+CTRL, backspace, exec, $HOME/.config/waybar/scripts/power"
 
@@ -47,6 +62,9 @@ in
       # Move the currently focused window to the scratchpad
       "SUPER+SHIFT, minus, movetoworkspace, special"
       "SUPER+SHIFT, backspace, movetoworkspace, special"
+
+      # Mirror eDP-1 to the first plugged DP-x external monitor
+      "SUPER+SHIFT, m, exec, ${mirror}/bin/mirror"
 
       # Show the next scratchpad window or hide the focused scratchpad window.
       # If there are multiple scratchpad windows, this command cycles through them.
@@ -74,7 +92,7 @@ in
         let ws = if i == 0 then 10 else i;
         in [
           "SUPER, ${toString i}, workspace, ${toString ws}"
-          "SUPER+CTRL, ${toString i}, movetoworkspace, ${toString ws}"
+          "SUPER+SHIFT, ${toString i}, movetoworkspace, ${toString ws}"
         ]
       ) 10)
     );
