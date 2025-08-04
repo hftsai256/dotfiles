@@ -38,6 +38,7 @@ in
 
       dolphin
       filelight
+      kcalc
       kate
       ark
       okular

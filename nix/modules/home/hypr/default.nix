@@ -35,6 +35,7 @@ in
   config = lib.mkIf config.hypr.enable {
     wayland.windowManager.hyprland = {
       enable = true;
+      systemd.enable = false;
       package = null;
       portalPackage = null;
       plugins = with pkgs.hyprlandPlugins; [
@@ -46,6 +47,7 @@ in
     xdg = {
       enable = true;
       configFile = {
+        "uwsm/env".source = "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
         "hypr/hyprpaper.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprpaper.conf";
         "hypr/hypridle.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hypridle.conf";
         "hypr/hyprlock.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprlock.conf";
