@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+function _giffy() {
+
+if [[ "$1" == "-h" || "$1" == "--help" ]]; then cat <<HELP
+Usage: giffy [input file] [output file]
+
+Make a gif from input video with a customized color palette.
+HELP
+return; fi
+
+if [[ -f "$1" ]]; then
+  start_time=0
+  palette="/tmp/palette.png"
+  filters="scale=-1:-1:flags=lanczos"
+
+  ffmpeg -i $1 -vf "$filters,palettegen" -y $palette
+  ffmpeg -i $1 -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y $2
+else
+  echo "'$1' - file does not exist"
+fi
+
+}
+
+# By putting the above code inside a function, if this file is sourced (which
+# is required for external aliases/functions to be used as commands), vars
+# can be local and return can be used to exit.
+
+_giffy "$@"

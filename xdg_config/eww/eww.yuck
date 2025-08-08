@@ -1,0 +1,24 @@
+(include "vars.yuck")
+(include "widgets/leftsides.yuck")
+(include "widgets/rightsides.yuck")
+
+(defwidget bar [ws title]
+  (centerbox :orientation "h"
+             :class "topbar"
+    (leftsides :ws ws :title title)
+    ""
+    (rightsides)))
+
+(defwindow bar [screen id port]
+  :monitor screen
+  :windowtype "dock"
+  :geometry (geometry :x "0%"
+                      :y "0px"
+                      :width "100%"
+                      :height "0px"
+                      :anchor "top center")
+  :stacking "bt"
+  :exclusive true
+  :focusable false
+  (bar :ws {hypr_workspaces['${port}']}
+       :title hypr_title))

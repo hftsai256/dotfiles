@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+entries=" Poweroff\n⭮ Reboot\n Suspend\n Lock\n Logout"
+
+menu () {
+  echo -e "$1" | \
+    wofi --width 160 --height 240 --dmenu --cache-file /dev/null |\
+    awk '{print tolower($2)}'
+}
+
+
+case $(menu "$entries") in
+  lock)
+    hyprlock
+    ;;
+
+  logout)
+    uwsm stop || hyprctl dispatch exit
+    ;;
+
+  suspend)
+    systemctl suspend
+    ;;
+
+  reboot)
+    systemctl reboot
+    ;;
+
+  poweroff)
+    systemctl poweroff
+    ;;
+
+esac

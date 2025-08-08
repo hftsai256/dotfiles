@@ -1,0 +1,120 @@
+@import "base16-hybrid.css";
+
+* {
+  box-shadow: none;
+  padding: 0;
+}
+
+window#waybar {
+  background: transparent; 
+  font-weight: 600;
+  font-family: 'monospace';
+  font-size: 12px;
+  color: @termFG;
+}
+
+tooltip {
+  font-weight: 600;
+  font-family: 'monospace';
+  font-size: 12px;
+  background: @termBG;
+}
+
+tooltip label {
+  color: @termFG;
+}
+
+#backlight,
+#battery,
+#bluetooth,
+#network,
+#pulseaudio,
+#custom-power,
+#idle_inhibitor,
+#workspaces,
+#window,
+#tray,
+#clock {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding: 4px 8px 4px 8px;
+  border-radius: 8px;
+  color: @termFG;
+  background-color: @term00;
+  opacity: 0.9;
+}
+
+#workspaces {
+  margin-left: 8px;
+  margin-right: 4px;
+  padding: 4px;
+}
+
+#workspaces button {
+  color: @term07;
+  padding-left: 4px;
+  padding-right: 4px;
+  min-width: 12px;
+}
+
+#workspaces button.visible {
+  color: @term12hl;
+  text-shadow: @term12 0 0 4px;
+}
+
+#workspaces button.active {
+  color: @term14hl;
+  text-shadow: @term14 0 0 4px;
+}
+
+#workspaces button.urgent {
+  color: @term11hl;
+  text-shadow: @term11 0 0 4px;
+}
+
+#clock {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+#custom-power, #network, #pulseaudio {
+  margin-right: 4px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding-left: 4px;
+}
+
+#custom-power {
+  color: @term09hl;
+}
+
+#battery {
+  color: @term10hl;
+}
+
+#idle_inhibitor {
+  border-radius: 0;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+  color: @term12hl;
+}
+
+#backlight, #bluetooth, #battery {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding-right: 4px;
+  margin-left: 4px;
+  margin-right: 0;
+}
+
+#tray, #window {
+  margin-left: 4px;
+  margin-right: 4px;
+  font-family: 'monospace';
+  color: @termBG;
+  background-color: @termFG;
+  box-shadow: @termBG 2px 1px 2px;
+}
+

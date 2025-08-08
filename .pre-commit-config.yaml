@@ -1,0 +1,9 @@
+repos:
+- repo: https://github.com/JohnnyMorganz/StyLua
+  rev: v0.15.2
+  hooks:
+    - id: stylua-system
+- repo: https://github.com/psf/black
+  rev: 22.10.0
+  hooks:
+    - id: black

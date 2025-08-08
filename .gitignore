@@ -1,0 +1,23 @@
+# MacOS thumbnails
+.DS_Store
+
+# Python cache
+**/__pycache__
+
+# Vim Plugins (Shall be pulled independently)
+xdg_config/nvim/plugin
+xdg_config/nvim/undodir
+
+# Other repository
+rime-liur-lua/
+
+# Intellectual propitiatory stuff
+init/secret
+
+# Identity sensitive files
+ssh/config
+
+# Nix
+nix/result
+nix/ACTIVATED_USER
+nix/modules/neovim/nvim/undodir

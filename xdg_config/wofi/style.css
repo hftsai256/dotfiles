@@ -1,0 +1,57 @@
+window {
+    background-color: #707880;
+}
+
+#input {
+    margin: 5px;
+    border-radius: 0px;
+    border: none;
+    border-bottom: 3px solid black;
+    background-color: #373b41;
+    color: white;
+}
+
+#inner-box {
+    background-color: #373b41;
+
+}
+
+window box scrolledwindow viewport box flowbox flowboxchild expander #text:selected{
+    color: #282a2e;
+}
+
+window box scrolledwindow viewport box flowbox flowboxchild expander list row{
+    background-color: #1d1f21;
+}
+
+#entry:unselected {
+    background-color: #1d1f21;
+}
+
+#entry:selected {
+    background-color: #81a2be;
+}
+
+#outer-box {
+    margin: 4px;
+    padding: 16px;
+    background-color: #373b41;
+}
+
+#text {
+    font-family: monospace;
+    padding: 4px;
+    color: #c5c8c6;
+}
+
+#entry:nth-child(even){
+    background-color: #464b53;
+}
+
+#entry:selected {
+    background-color: #5f819d;
+}
+
+#text:selected {
+    color: #282a2e;
+}
