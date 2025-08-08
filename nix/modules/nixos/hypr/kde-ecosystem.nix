@@ -1,0 +1,65 @@
+{ config, pkgs, lib, ... }:
+let
+  cfg = config.hypr;
+
+in
+{
+  config = lib.mkIf (cfg.enable && cfg.ecoSystem == "kde") {
+    environment.systemPackages = with pkgs.kdePackages; [
+      frameworkintegration # provides Qt plugin
+      kauth # provides helper service
+      kcoreaddons # provides extra mime type info
+      kded # provides helper service
+      kfilemetadata # provides Qt plugins
+      kguiaddons # provides geo URL handlers
+      kiconthemes # provides Qt plugins
+      kimageformats # provides Qt plugins
+      kio # provides helper service + a bunch of other stuff
+      kio-admin # managing files as admin
+      kio-extras # stuff for MTP, AFC, etc
+      kio-extras-kf5
+      kio-fuse # fuse interface for KIO
+      kpackage # provides kpackagetool tool
+      kservice # provides kbuildsycoca6 tool
+      plasma-workspace
+
+      breeze
+      breeze-icons
+      breeze-gtk
+      ocean-sound-theme
+      qqc2-breeze-style
+      qqc2-desktop-style
+
+      dolphin
+      filelight
+      kcalc
+      kate
+      ark
+      okular
+      gwenview
+      partitionmanager
+    ];
+
+    xdg.portal = {
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-hyprland
+        kdePackages.xdg-desktop-portal-kde
+        xdg-desktop-portal-gtk
+      ];
+      config = {
+        hyprland = {
+          default = [ "hyprland" ];
+          "org.freedesktop.impl.portal.AppChooser" = [ "kde" ];
+          "org.freedesktop.impl.portal.FileChooser" = [ "kde" ];
+        };
+        common = {
+          default = [ "kde" "gtk" ];
+        };
+      };
+    };
+
+    environment.etc."xdg/menus/applications.menu".source =
+      "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
+
+  };
+}

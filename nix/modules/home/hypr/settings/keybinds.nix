@@ -1,0 +1,117 @@
+{ config, pkgs, ... }:
+let
+  cfg = config.hypr;
+
+  fm = {
+    gtk = "nautilus";
+    kde = "dolphin";
+  };
+
+  mirror = pkgs.writeShellScriptBin "mirror" ''
+    set -euo pipefail
+
+    DP_OUT=$(hyprctl monitors -j | ${pkgs.jq}/bin/jq -r \
+      '.[] | select(.name | test("^DP-")) | .name' | head -n1)
+
+    if [ -n "$DP_OUT" ]; then
+        echo "Mirroring eDP-1 to $DP_OUT"
+        exec ${pkgs.wl-mirror}/bin/wl-present mirror eDP-1 \
+          --fullscreen-output "$DP_OUT" --fullscreen
+      else
+        echo "No DP output connected" >&2
+        exit 1
+    fi
+  '';
+
+  qs = "noctalia-shell ipc call";
+
+in
+{
+  wayland.windowManager.hyprland.settings = {
+    bind = [
+      "SUPER, t, exec, ${config.term.app}"
+      "SUPER, e, exec, ${fm.${cfg.ecoSystem}} $HOME"
+      "SUPER, b, exec, flatpak run com.brave.Browser --password-store=detect --disable-features=WaylandWpColorManagerV1"
+      "SUPER, m, exec, thunderbird"
+
+      "SUPER+SHIFT, v, exec, ${qs} plugin:clipper openPanel"
+      "SUPER, d, exec, ${qs} launcher toggle"
+
+      "SUPER, q, killactive"
+      "SUPER+CTRL, 3, exec, grim"
+      ''SUPER+CTRL, 4, exec, grim -g "$(slurp)"''
+
+      "CTRL+ALT, delete, exec, ${qs} sessionMenu toggle"
+
+      "SUPER, left, movefocus, l"
+      "SUPER, right, movefocus, r"
+      "SUPER, up, movefocus, u"
+      "SUPER, down, movefocus, d"
+      "SUPER, h, movefocus, l"
+      "SUPER, l, movefocus, r"
+      "SUPER, k, movefocus, u"
+      "SUPER, j, movefocus, d"
+      "SUPER, f, layoutmsg, colresize 1.0"
+      "SUPER, r, layoutmsg, colresize +conf"
+      "SUPER+SHIFT, r, layoutmsg, colresize -conf"
+      "SUPER, bracketleft, layoutmsg, swapcol l"
+      "SUPER, bracketright, layoutmsg, swapcol r"
+      "SUPER, backslash, layoutmsg, promote"
+
+      "SUPER+SHIFT, up, movecurrentworkspacetomonitor, u"
+      "SUPER+SHIFT, down, movecurrentworkspacetomonitor, d"
+      "SUPER+SHIFT, left, movecurrentworkspacetomonitor, l"
+      "SUPER+SHIFT, right, movecurrentworkspacetomonitor, r"
+      "SUPER+SHIFT, k, movecurrentworkspacetomonitor, u"
+      "SUPER+SHIFT, j, movecurrentworkspacetomonitor, d"
+      "SUPER+SHIFT, h, movecurrentworkspacetomonitor, l"
+      "SUPER+SHIFT, l, movecurrentworkspacetomonitor, r"
+
+      # Move the currently focused window to the scratchpad
+      "SUPER+SHIFT, minus, movetoworkspace, special"
+      "SUPER+SHIFT, backspace, movetoworkspace, special"
+
+      # Mirror eDP-1 to the first plugged DP-x external monitor
+      "SUPER+SHIFT, m, exec, ${mirror}/bin/mirror"
+
+      # Show the next scratchpad window or hide the focused scratchpad window.
+      # If there are multiple scratchpad windows, this command cycles through them.
+      "SUPER+SHIFT, p, togglespecialworkspace"
+
+      # Toggle the current focus between tiling and floating mode
+      "SUPER+SHIFT, return, movetoworkspace,e+0"
+      "SUPER+SHIFT, return, togglefloating"
+      "SUPER+SHIFT, return, centerwindow"
+      "SUPER+SHIFT, space, pseudo"
+
+      # Pulse Audio controls
+      ",XF86AudioRaiseVolume, exec, pactl set-sink-volume 0 +5%" #increase sound volume
+      ",XF86AudioLowerVolume, exec, pactl set-sink-volume 0 -5%" #decrease sound volume
+      ",XF86AudioMute, exec, pactl set-sink-mute 0 toggle" # mute sound
+      ",XF86AudioMicMute, exec, pactl set-source-mute alsa_input.pci-0000_00_1b.0.analog-stereo toggle" # mute mic
+
+      # Screen brightness controls
+      ",XF86MonBrightnessUp, exec, brightnessctl -q s +10%"
+      ",XF86MonBrightnessDown, exec, brightnessctl -q s 10%\-"
+    ] ++ (
+      builtins.concatLists (builtins.genList (i:
+        let ws = if i == 0 then 10 else i;
+        in [
+          "SUPER, ${toString i}, workspace, ${toString ws}"
+          "SUPER+SHIFT, ${toString i}, movetoworkspace, ${toString ws}"
+        ]
+      ) 10)
+    );
+
+    # Long pressing bind
+    bindo = [
+      "SUPER, f, fullscreen, 0"
+    ];
+
+    bindm = [
+      # resize windows with mainMod + LMB/RMB and dragging
+      "SUPER, mouse:272, movewindow"
+      "SUPER, mouse:273, resizewindow"
+    ];
+  };
+}

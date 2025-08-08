@@ -1,0 +1,33 @@
+{ ... }:
+{
+  imports = [
+    ./hardware-configuration.nix
+  ];
+
+  gpu.type = "amd";
+  gaming = {
+    enable = true;
+    gamescope.enable = true;
+    console.enable = false;
+    decky.enable = true;
+  };
+
+  greetd.enable = true;
+
+  hypr.enable = true;
+  hypr.ecoSystem = "kde";
+
+  tablet.enable = true;
+  mfp.enable = true;
+  logitech.enable = true;
+
+  virtualization = {
+    enable = true;
+    cpuType = "amd";
+    vfio.enable = true;
+  };
+
+  hydra.enable = true;
+
+  hostname = "maplebright";
+}
