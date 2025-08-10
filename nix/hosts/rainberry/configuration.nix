@@ -1,4 +1,4 @@
-{ nixos-hardware, pkgs, ... }:
+{ nixos-hardware, ... }:
 {
   imports = [
     nixos-hardware.nixosModules.lenovo-thinkpad-t14s-amd-gen1
@@ -6,6 +6,7 @@
   ];
 
   gpu.type = "amd";
+  gaming.enable = true;
 
   hypr = {
     enable = true;
@@ -20,7 +21,6 @@
   mfp.enable = true;
 
   fortinet.enable = true;
-  gaming.enable = false;
 
   virtualization = {
     enable = true;

@@ -22,7 +22,7 @@ in
     graphics = {
       amd = {
         enable = true;
-        enable32Bit = lib.mkDefault config.gaming.enable;
+        enable32Bit = lib.mkOverride 150 config.gaming.enable;
         extraPackages = with pkgs; [
           amdvlk
           amdenc
@@ -34,7 +34,7 @@ in
 
       intel = {
         enable = true;
-        enable32Bit = lib.mkDefault config.gaming.enable;
+        enable32Bit = lib.mkOverride 150 config.gaming.enable;
         extraPackages = with pkgs; [
           vpl-gpu-rt
         ];
