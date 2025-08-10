@@ -52,6 +52,12 @@
           installRustfmt = false;
         };
 
+        ltex = {
+          enable = true;
+          filetypes = [ "tex" "md" "txt" ];
+          settings.ltex.language = "en-US";
+        };
+
       };
     };
 
