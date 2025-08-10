@@ -58,6 +58,7 @@ in
       "QT_SCALE_FACTOR_ROUNDING_POLICY" = "RoundPreferFloor";
 
       "GDK_BACKEND" = "wayland";
+      "GDK_SCALE" = "2";
       "GTK_USE_PORTAL" = "1";
 
       "SDL_VIDEODRIVER" = "wayland";
@@ -95,6 +96,7 @@ in
         font-name = "Source Sans Pro 10, Source Han Sans 9";
         monospace-font-name = "Fira Code 10, Symbols Nerd Font 9";
         font-antialiasing = "rgba";
+        color-scheme = "prefer-dark";
       };
     };
   };
