@@ -20,9 +20,8 @@ in
       "SUPER, d, exec, fuzzel"
 
       "SUPER, q, killactive"
-      "SUPER+SHIFT, 3, exec, grim"
-      ''SUPER+SHIFT, 4, exec, grim -g "$(slurp) -w"''
-      ''SUPER+CTRL+SHIFT, 4, exec, grim -g "$(slurp)"''
+      "SUPER+CTRL, 3, exec, grim"
+      ''SUPER+CTRL, 4, exec, grim -g "$(slurp)"''
 
       "SUPER+CTRL, backspace, exec, $HOME/.config/waybar/scripts/power"
 
@@ -74,7 +73,7 @@ in
         let ws = if i == 0 then 10 else i;
         in [
           "SUPER, ${toString i}, workspace, ${toString ws}"
-          "SUPER+CTRL, ${toString i}, movetoworkspace, ${toString ws}"
+          "SUPER+SHIFT, ${toString i}, movetoworkspace, ${toString ws}"
         ]
       ) 10)
     );

@@ -18,7 +18,6 @@ in
       (restartProgram "hyprpaper")
       (restartProgram "mako")
       (restartProgram "waybar")
-      (restartProgram "kanshi")
       (restartService "fcitx5-daemon")
     ];
   };
