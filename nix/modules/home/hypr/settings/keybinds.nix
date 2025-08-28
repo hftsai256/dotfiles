@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
   cfg = config.hypr;
 
@@ -6,6 +6,22 @@ let
     gtk = "nautilus";
     kde = "dolphin";
   };
+
+  mirror = pkgs.writeShellScriptBin "mirror" ''
+    set -euo pipefail
+
+    DP_OUT=$(hyprctl monitors -j | ${pkgs.jq}/bin/jq -r \
+      '.[] | select(.name | test("^DP-")) | .name' | head -n1)
+
+    if [ -n "$DP_OUT" ]; then
+        echo "Mirroring eDP-1 to $DP_OUT"
+        exec ${pkgs.wl-mirror}/bin/wl-present mirror eDP-1 \
+          --fullscreen-output "$DP_OUT" --fullscreen
+      else
+        echo "No DP output connected" >&2
+        exit 1
+    fi
+  '';
 
 in
 {
@@ -46,6 +62,9 @@ in
       # Move the currently focused window to the scratchpad
       "SUPER+SHIFT, minus, movetoworkspace, special"
       "SUPER+SHIFT, backspace, movetoworkspace, special"
+
+      # Mirror eDP-1 to the first plugged DP-x external monitor
+      "SUPER+SHIFT, m, exec, ${mirror}/bin/mirror"
 
       # Show the next scratchpad window or hide the focused scratchpad window.
       # If there are multiple scratchpad windows, this command cycles through them.

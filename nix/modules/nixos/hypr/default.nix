@@ -31,15 +31,6 @@
         kdePackages.qtwayland
         kdePackages.qtsvg
 
-        hypridle
-        hyprlock
-        hyprcursor
-        hyprpaper
-        kanshi
-        fuzzel
-        waybar
-        mako
-
         networkmanagerapplet
         pavucontrol
         brightnessctl
@@ -68,5 +59,11 @@
       # package = hyprland-pkgs.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
       # portalPackage = hyprland-pkgs.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
     };
+
+    programs.hyprlock = {
+      enable = true;
+      #package = hyprland-pkgs.${pkgs.stdenv.hostPlatform.system}.hyprlock;
+    };
+
   };
 }

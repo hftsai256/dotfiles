@@ -44,6 +44,23 @@ in
       ];
     };
 
+    services = {
+      hypridle.enable = true;
+      hyprpaper.enable = true;
+    };
+
+    programs = {
+      fuzzel.enable = true;
+      waybar.enable = true;
+      waybar.systemd.enable = true;
+    };
+
+    home.packages = [
+      pkgs.hyprsunset
+    ];
+
+    home.pointerCursor.hyprcursor.enable = true;
+
     xdg = {
       enable = true;
       configFile = {
@@ -51,6 +68,7 @@ in
         "hypr/hyprpaper.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprpaper.conf";
         "hypr/hypridle.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hypridle.conf";
         "hypr/hyprlock.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprlock.conf";
+        "hypr/hyprsunset.conf".source = mkOutOfStoreSymlink "${xdgPath}/hypr/hyprsunset.conf";
         waybar.source = mkOutOfStoreSymlink "${xdgPath}/waybar-hypr";
       };
     };
