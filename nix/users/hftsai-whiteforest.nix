@@ -61,25 +61,6 @@
       }
     ]; }
 
-    { profile.name = "4ktv";
-      profile.outputs = [
-      {
-        criteria = "DP-2";
-        status = "enable";
-        scale = officeRes.r;
-        position = "${toString (scale laptopRes).x},0";
-      }
-      {
-        criteria = "Sharp Corporation 0x1548 Unknown";
-        status = "enable";
-        scale = 1.2;
-        position = "0,0";
-      }
-      ];
-      profile.exec = [
-        "${pkgs.wl-mirror}/bin/wl-present mirror eDP-1 --fullscreen-output DP-2 --fullscreen"
-      ]; }
-
     { profile.name = "clamshell";
       profile.outputs = [
       {
@@ -93,6 +74,22 @@
         status = "disable";
       }
     ]; }
+
+    { profile.name = "generic";
+      profile.outputs = [
+      {
+        criteria = "*";
+        status = "enable";
+        scale = officeRes.r;
+        position = "${toString (scale laptopRes).x},0";
+      }
+      {
+        criteria = "Sharp Corporation 0x1548 Unknown";
+        status = "enable";
+        scale = 1.2;
+        position = "0,0";
+      }
+      ]; }
 
     { profile.name = "standalone";
       profile.outputs = [
