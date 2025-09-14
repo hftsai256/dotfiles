@@ -63,7 +63,7 @@
 
     lspsaga = {
       enable = true;
-      beacon.enable = true;
+      settings.beacon.enable = true;
     };
 
     telescope = {
@@ -87,11 +87,13 @@
 
     nvim-tree = {
       enable = true;
-      updateFocusedFile = {
-        enable = true;
-        updateRoot = true;
+      settings = {
+        update_focused_file = {
+          enable = true;
+          update_root = true;
+        };
+        renderer.group_empty = true;
       };
-      renderer.groupEmpty = true;
     };
 
     vimtex = {

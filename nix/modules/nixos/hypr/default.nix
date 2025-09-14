@@ -1,5 +1,8 @@
-{ config, pkgs, lib, hyprland-pkgs, ... }:
-{
+{ config, pkgs, lib, hyprland, ... }:
+let
+  cfg = config.hypr;
+
+in {
   imports = [
     ./kde-ecosystem.nix
     ./gtk-ecosystem.nix
@@ -56,13 +59,18 @@
     programs.hyprland = {
       enable = true;
       withUWSM = true;
-      # package = hyprland-pkgs.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      # portalPackage = hyprland-pkgs.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      package = hyprland.pkgs.hyprland;
+      portalPackage = hyprland.pkgs.xdg-desktop-portal-hyprland;
     };
 
     programs.hyprlock = {
       enable = true;
-      #package = hyprland-pkgs.${pkgs.stdenv.hostPlatform.system}.hyprlock;
+      package = pkgs.hyprlock;
+    };
+
+    security.pam.services.hyprlock = {
+      enableGnomeKeyring = (cfg.ecoSystem == "gtk");
+      enableKwallet = (cfg.ecoSystem == "kde");
     };
 
   };

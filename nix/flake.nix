@@ -34,6 +34,11 @@
 
     hyprland-pkgs.url = "github:hyprwm/Hyprland";
 
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland-pkgs";
+    };
+
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -118,8 +123,9 @@
       };
 
     mkNixosHomeModule = {
-      user,
+      system,
       host,
+      user,
       homeModules ? [],
       selectedPkgSrc ? pkgSrc.stable,
       extraSpecialArgs ? {},
@@ -147,7 +153,13 @@
             }; }
           ] ++ homeModules;
 
-          extraSpecialArgs = { inherit (selectedPkgSrc) nixvim; } // extraSpecialArgs;
+          extraSpecialArgs = {
+            inherit (selectedPkgSrc) nixvim;
+            hyprland = {
+              pkgs = inputs.hyprland-pkgs.packages.${system};
+              plugins = inputs.hyprland-plugins.packages.${system};
+            };
+          } // extraSpecialArgs;
         };
       };
 
@@ -164,7 +176,11 @@
     }:
       selectedPkgSrc.nixpkgs.lib.nixosSystem {
         specialArgs = {
-          inherit (inputs) nixpkgs nixpkgs-unstable nixos-hardware lanzaboote impermanence hyprland-pkgs;
+          inherit (inputs) nixpkgs nixpkgs-unstable nixos-hardware lanzaboote impermanence;
+          hyprland = {
+            pkgs = inputs.hyprland-pkgs.packages.${system};
+            plugins = inputs.hyprland-plugins.packages.${system};
+          };
         } // specialArgs;
 
         modules = [
@@ -179,7 +195,9 @@
 
           selectedPkgSrc.home-manager.nixosModules.home-manager
         ] ++ (
-          map (user: mkNixosHomeModule { inherit host user homeModules selectedPkgSrc extraSpecialArgs; }) regularUsers
+          map (user: mkNixosHomeModule {
+            inherit system host user homeModules selectedPkgSrc extraSpecialArgs;
+          }) regularUsers
         ) ++ osModules;
       };
 

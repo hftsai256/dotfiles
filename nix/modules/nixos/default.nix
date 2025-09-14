@@ -50,6 +50,7 @@
     ./themes.nix
     ./virtualization.nix
     ./sddm.nix
+    ./greetd.nix
     ./hypr
     ./niri.nix
   ];

@@ -12,6 +12,8 @@
     platform = "ipu6ep";
   };
 
+  greetd.enable = true;
+
   screencast.enable = true;
 
   hypr = {

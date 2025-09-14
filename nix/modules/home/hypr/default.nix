@@ -38,10 +38,6 @@ in
       systemd.enable = false;
       package = null;
       portalPackage = null;
-      plugins = with pkgs.hyprlandPlugins; [
-        hyprspace
-        hyprgrass
-      ];
     };
 
     services = {
@@ -55,8 +51,8 @@ in
       waybar.systemd.enable = true;
     };
 
-    home.packages = [
-      pkgs.hyprsunset
+    home.packages = with pkgs; [
+      hyprsunset
     ];
 
     home.pointerCursor.hyprcursor.enable = true;

@@ -8,6 +8,8 @@
   gpu.type = "amd";
   gaming.enable = true;
 
+  greetd.enable = true;
+
   hypr = {
     enable = true;
     ecoSystem = "gtk";
