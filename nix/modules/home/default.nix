@@ -43,8 +43,8 @@
 
       git = {
         enable = true;
-        userName = config.fullName;
-        userEmail = config.email;
+        settings.user.name = config.fullName;
+        settings.user.email = config.email;
       };
     };
 
