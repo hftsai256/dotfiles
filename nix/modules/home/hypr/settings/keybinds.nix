@@ -29,7 +29,7 @@ in
     bind = [
       "SUPER, t, exec, ${config.term.app}"
       "SUPER, e, exec, ${fm.${cfg.ecoSystem}} $HOME"
-      "SUPER, b, exec, flatpak run com.brave.Browser --password-store=detect"
+      "SUPER, b, exec, flatpak run com.brave.Browser --password-store=detect --disable-features=WaylandWpColorManagerV1"
       "SUPER, m, exec, thunderbird"
 
       "SUPER+SHIFT, v, exec, cliphist list | fuzzel -d | cliphist decode | wl-copy"
