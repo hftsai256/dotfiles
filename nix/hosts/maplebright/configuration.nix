@@ -9,9 +9,15 @@ in
   ];
 
   hydra.enable = true;
+
+  virtualization = {
+    enable = true;
+    cpuType = "amd";
+    vfio.enable = true;
+  };
+
   gpu.type = "amd";
-  sddm.enable = false;
-  kde.enable = false;
+
   mfp.enable = true;
   logitech.enable = true;
 

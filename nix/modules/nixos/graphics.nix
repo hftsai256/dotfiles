@@ -24,11 +24,7 @@ in
         enable = true;
         enable32Bit = lib.mkOverride 150 config.gaming.enable;
         extraPackages = with pkgs; [
-          amdvlk
           amdenc
-        ];
-        extraPackages32 = lib.mkIf config.gaming.enable [
-          pkgs.driversi686Linux.amdvlk
         ];
       };
 

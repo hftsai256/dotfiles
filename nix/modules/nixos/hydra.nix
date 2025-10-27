@@ -6,7 +6,7 @@
 
   config.nix = {
     buildMachines = [ {
-      hostName = "hydra.lan";
+      hostName = "hydra.trusted.internal";
       systems = ["x86_64-linux" "aarch64-linux"];
       protocol = "ssh-ng";
       maxJobs = 24;

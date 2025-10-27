@@ -29,7 +29,7 @@
 
     nixvim-unstable = {
       url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     hyprland-pkgs.url = "github:hyprwm/Hyprland";
