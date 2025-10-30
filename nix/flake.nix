@@ -217,10 +217,6 @@
           regularUsers = defaultRegularUsers;
           selectedPkgSrc = pkgSrc.unstable;
           homeModules = [ inputs.niri.homeModules.niri ];
-          osModules = [
-            { config.nix.settings.max-jobs = 4;
-              config.nix.settings.cores = 4; }
-          ];
         };
 
         maplebright = {

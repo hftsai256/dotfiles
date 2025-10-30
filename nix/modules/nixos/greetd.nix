@@ -27,7 +27,10 @@ in
       };
     };
 
-    security.pam.services.greetd.enableGnomeKeyring = (ecoSystem == "gtk");
-    security.pam.services.greetd.enableKwallet = (ecoSystem == "kde");
+    security.pam.services.greetd = {
+      gnupg.enable = true;
+      enableGnomeKeyring = (ecoSystem == "gtk");
+      enableKwallet = (ecoSystem == "kde");
+    };
   };
 }

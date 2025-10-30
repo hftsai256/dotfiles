@@ -5,6 +5,13 @@
     ./hardware-configuration.nix
   ];
 
+  nix.settings = {
+    max-jobs = 4;
+    cores = 4;
+  };
+
+  services.intune.enable = true;
+
   gpu.type = "intel";
 
   ipu6 = {
