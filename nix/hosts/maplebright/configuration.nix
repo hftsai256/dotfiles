@@ -18,13 +18,9 @@ in
 
   gpu.type = "amd";
 
+  niri.enable = true;
   mfp.enable = true;
   logitech.enable = true;
-
-  hypr = {
-    enable = true;
-    ecoSystem = "gtk";
-  };
 
   jovian = {
     hardware.has.amd.gpu = true;

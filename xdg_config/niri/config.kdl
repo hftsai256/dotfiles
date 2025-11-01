@@ -141,11 +141,13 @@ window-rule {
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
-    Mod+E hotkey-overlay-title="Open File Manager: nautilus" { spawn "nautilus"; }
-    Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Mod+B hotkey-overlay-title="Open Default Browser: brave" { spawn "brave"; }
-    Super+Alt+L hotkey-overlay-title="Lock the Screen: hyprlock" { spawn "hyprlock"; }
+    Mod+T hotkey-overlay-title="Open a Terminal" { spawn "kitty"; }
+    Mod+E hotkey-overlay-title="Open File Manager" { spawn "nautilus"; }
+    Mod+D hotkey-overlay-title="Open Application Launcher" { spawn "fuzzel"; }
+    Mod+B hotkey-overlay-title="Open Default Browser" {
+        spawn "flatpak" "run" "com.brave.Browser" "--password-store=detect" "--disable-features=WaylandWpColorManagerV1";
+    }
+    Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "hyprlock" "--grace" "5"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
@@ -343,7 +345,7 @@ binds {
     // Mod+Shift+Space { switch-layout "prev"; }
 
     Mod+Shift+3 { screenshot-screen; }
-    Mod+Alt+Shift+4 { screenshot; }
+    Mod+Ctrl+Shift+4 { screenshot; }
     Mod+Shift+4 { screenshot-window; }
 
     // Applications such as remote-desktop clients and software KVM switches may
@@ -357,10 +359,7 @@ binds {
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
     // The quit action will show a confirmation dialog to avoid accidental exits.
-    Mod+Shift+E { quit; }
     Ctrl+Alt+Delete { quit; }
 
-    // Powers off the monitors. To turn them back on, do any input like
-    // moving the mouse or pressing any other key.
-    Mod+Shift+P { power-off-monitors; }
+    Mod+Shift+M hotkey-overlay-title="Mirror eDP-1 to DP" { spawn "mirror"; }
 }

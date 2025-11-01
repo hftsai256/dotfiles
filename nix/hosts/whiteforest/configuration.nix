@@ -20,13 +20,8 @@
   };
 
   greetd.enable = true;
-
   screencast.enable = true;
-
-  hypr = {
-    enable = true;
-    ecoSystem = "gtk";
-  };
+  niri.enable = true;
 
   tablet.enable = true;
   secureBoot.enable = true;

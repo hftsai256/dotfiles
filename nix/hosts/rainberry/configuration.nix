@@ -9,11 +9,8 @@
   gaming.enable = true;
 
   greetd.enable = true;
-
-  hypr = {
-    enable = true;
-    ecoSystem = "gtk";
-  };
+  screencast.enable = true;
+  niri.enable = true;
 
   tablet.enable = true;
   secureBoot.enable = true;
