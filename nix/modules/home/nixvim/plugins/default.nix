@@ -50,6 +50,7 @@
           installCargo = false;
           installRustc = false;
           installRustfmt = false;
+          settings.cargo.sysroot = ''vim.fn.systemlist("rustc --print sysroot")[1]'';
         };
 
         ltex = {
@@ -112,17 +113,4 @@
     nvim-autopairs.enable = true;
     which-key.enable = true;
   };
-
-  extraConfigLua = ''
-    local sysroot = vim.fn.systemlist("rustc --print sysroot")[1]
-    require('lspconfig').rust_analyzer.setup({
-      settings = {
-        ["rust-analyzer"] = {
-          cargo = {
-            sysroot = sysroot,
-          },
-        },
-      },
-    })
-  '';
 }
