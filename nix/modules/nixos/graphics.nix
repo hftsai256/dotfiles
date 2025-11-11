@@ -39,16 +39,22 @@ in
 
   in {
     hardware.graphics = graphics.${gpu.type};
+    hardware.xone.enable = cfg.enable;
 
-    environment.systemPackages = lib.mkIf (gpu.type != "headless") [
+    environment.systemPackages = lib.optionals (gpu.type != "headless") [
       pkgs.glxinfo
       pkgs.vulkan-tools
     ];
 
     programs.steam = lib.mkIf cfg.enable {
       enable = true;
-      gamescopeSession.enable = true;
+      gamescopeSession.enable = lib.mkDefault cfg.console.enable;
       protontricks.enable = true;
+      extraPackages = [
+        (pkgs.writeShellScriptBin "steamos-session-select" ''
+          pkill gamescope
+        '')
+      ];
     };
 
     programs.corectrl.enable = (gpu.type == "amd");

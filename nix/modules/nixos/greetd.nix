@@ -23,6 +23,12 @@ in
           command = "${pkgs.tuigreet}/bin/tuigreet --time";
           user = "greeter";
         };
+
+        initial_session = lib.mkIf config.gaming.console.enable {
+          command = "${pkgs.gamescope}/bin/gamescope -- steam -tenfoot -pipewire-dmabuf";
+          user = "hftsai";
+        };
+
         terminal.vt = lib.mkForce 7;
       };
     };
