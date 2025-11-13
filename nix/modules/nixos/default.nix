@@ -39,6 +39,7 @@
     ./sigrok.nix
     ./logitech.nix
     ./tablet.nix
+    ./usbhid.nix
     ./graphics.nix
     ./geographics.nix
     ./network.nix
