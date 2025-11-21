@@ -40,7 +40,7 @@
     ./logitech.nix
     ./tablet.nix
     ./usbhid.nix
-    ./graphics.nix
+    ./gaming.nix
     ./geographics.nix
     ./network.nix
     ./ipu6.nix
@@ -83,6 +83,7 @@
       neovim
       git
       dig
+      jq
       wget
       curl
       usbutils
