@@ -5,8 +5,11 @@
   ];
 
   gpu.type = "amd";
-  gaming.enable = true;
-  gaming.console.enable = true;
+  gaming = {
+    enable = true;
+    console.enable = true;
+    decky.enable = true;
+  };
 
   greetd.enable = true;
 
