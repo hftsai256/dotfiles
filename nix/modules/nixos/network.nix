@@ -2,7 +2,10 @@
 {
   options = {
     fortinet.enable = lib.options.mkEnableOption
-        "Fortinet VPN and related packages";
+      "Fortinet VPN and related packages";
+
+    tftp.enable = lib.options.mkEnableOption
+      "TFTP server";
   };
 
   config =
@@ -28,6 +31,7 @@
       firewall = {
         enable = true;
         allowedTCPPorts = [ 22 80 443 8080 ];
+        allowedUDPPorts = lib.mkIf config.tftp.enable [ 69 ];
       };
     };
 
@@ -46,7 +50,10 @@
       openssh.enable = true;
 
       samba.enable = true;
+      samba.nmbd.enable = false;
       samba-wsdd.enable = true;
+
+      atftpd.enable = config.tftp.enable;
     };
   };
 }

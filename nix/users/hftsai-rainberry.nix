@@ -74,7 +74,7 @@
     { profile.name = "standalone";
       profile.outputs = [
       {
-        criteria = "Sharp Corporation 0x1548 Unknown";
+        criteria = "AU Optronics 0x403D Unknown";
         status = "enable";
         scale = laptopRes.r;
         position = "0,0";

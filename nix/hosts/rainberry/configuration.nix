@@ -6,7 +6,10 @@
   ];
 
   gpu.type = "amd";
-  gaming.enable = true;
+  gaming = {
+    enable = true;
+    decky.enable = true;
+  };
 
   greetd.enable = true;
 
@@ -22,7 +25,8 @@
   impermanence.enable = true;
   mfp.enable = true;
 
-  fortinet.enable = true;
+  fortinet.enable = false;
+  tftp.enable = true;
 
   virtualization = {
     enable = true;
