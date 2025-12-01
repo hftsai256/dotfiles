@@ -54,6 +54,7 @@
     ./greetd.nix
     ./hypr
     ./niri.nix
+    ./workarounds.nix
   ];
 
   config = {
@@ -116,5 +117,7 @@
       experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
       trusted-users = [ "root" "${config.user}" ];
     };
+
+    workarounds.flatpak.enable = true;
   };
 }

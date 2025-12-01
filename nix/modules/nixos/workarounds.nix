@@ -17,7 +17,7 @@ in {
       mkRoBind = path: {
         device = path;
         fsType = "fuse.bindfs";
-        options = [ "ro" "resolve-symlinks" "x-gvfs-hide" ];
+        options = [ "ro" "resolve-symlinks" "perms=0755" "x-gvfs-hide" ];
       };
 
       aggregated = pkgs.buildEnv {
@@ -29,7 +29,11 @@ in {
             noto-fonts-emoji
             source-sans-pro
             source-serif-pro
-            source-han-sans;
+            source-han-sans
+            fira-code;
+
+          inherit (pkgs.nerd-fonts)
+            symbols-only;
 
           inherit (pkgs.kdePackages)
             breeze-gtk

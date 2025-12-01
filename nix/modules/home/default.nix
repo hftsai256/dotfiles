@@ -67,6 +67,7 @@
       gnome-network-displays
       selectdefaultapplication
       dconf-editor
+      naps2
     ] ++
 
     lib.optionals (config.guiApps.enable && config.guiApps.eeLab.enable) [

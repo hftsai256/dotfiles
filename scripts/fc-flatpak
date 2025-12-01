@@ -1,24 +1,21 @@
 #!/usr/bin/env bash
 
-# Source directory containing your fontconfig
 USER_FONTCONFIG_DIR="$HOME/.config/fontconfig/conf.d"
 
-# Ensure it exists
 if [ ! -d "$USER_FONTCONFIG_DIR" ]; then
   echo "❌ No fontconfig directory found at $USER_FONTCONFIG_DIR"
   exit 1
 fi
 
-# Get list of all installed Flatpak app IDs
 APP_IDS=$(flatpak list --app --columns=application)
 
-# Loop over each app and copy config
 for app_id in $APP_IDS; do
   TARGET_DIR="$HOME/.var/app/$app_id/config/fontconfig/conf.d"
-  mkdir -p "$TARGET_DIR"
-
   echo "🔄 Syncing fontconfig to $app_id"
-  cp "$USER_FONTCONFIG_DIR"/*.conf "$TARGET_DIR/"
+
+  rm -rf "$TARGET_DIR"
+  install -d -m 755 "$TARGET_DIR"
+  install -m 644 "$USER_FONTCONFIG_DIR"/*.conf "$TARGET_DIR"
 done
 
 echo "✅ Fontconfig synced to all Flatpak apps."
