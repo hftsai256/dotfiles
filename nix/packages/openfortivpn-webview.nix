@@ -6,7 +6,7 @@
   ...
 }:
 
-stdenv.mkDerivation rec {
+stdenv.mkDerivation (finalAttrs: {
   pname = "openfortivpn-webview";
   version = "1.2.3";
 
@@ -17,7 +17,7 @@ stdenv.mkDerivation rec {
     hash = "sha256-CLcckVsKxpIE+zKwptrkWQpSK3f9j6eLdTtqph7W8Mw=";
   };
 
-  sourceRoot = "${src.name}/openfortivpn-webview-qt";
+  sourceRoot = "${finalAttrs.src.name}/openfortivpn-webview-qt";
 
   buildInputs = [
     qt6.qtbase
@@ -32,8 +32,8 @@ stdenv.mkDerivation rec {
 
   installPhase = ''
     install -d $out/bin
-    mv ${pname} $out/bin
+    mv ${finalAttrs.pname} $out/bin
   '';
-}
+})
 
 
