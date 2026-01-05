@@ -2,7 +2,7 @@
   description = "My Home Manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
@@ -62,7 +62,7 @@
 
   outputs = { self, ... } @ inputs:
   let
-    stateVersion = "25.05";
+    stateVersion = "26.05";
 
     pkgSrc = {
       stable = {

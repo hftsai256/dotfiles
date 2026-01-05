@@ -26,7 +26,6 @@ in {
           inherit (pkgs)
             simp1e-cursors
             noto-fonts
-            noto-fonts-emoji
             source-sans-pro
             source-serif-pro
             source-han-sans

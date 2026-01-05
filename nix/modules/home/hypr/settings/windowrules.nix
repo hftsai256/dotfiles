@@ -6,31 +6,31 @@ let
 in
 {
   wayland.windowManager.hyprland.settings = {
-    windowrulev2 = [
-      "float, class:^(org.kde.*)$"
-      "float, class:^(org.gnome.*)$"
-      "float, class:^(org.remmina.*)$"
-      "float, class:kdesystemsettings"
-      "float, class:^(org.freedesktop.impl.portal.desktop.*)$"
-      "float, class:^(xdg-desktop-portal.*)$"
-      "float, class:mpv"
-      "float, class:pavucontrol"
-      "float, class:virt-manager"
-      "float, class:nm-connection-editor"
-      "float, class:kicad,title:^(.*KiCad.*)$"
-      "float, class:nwg-look"
-      "float, class:hyprland-share-picker"
-      "float, class:org.gnome.NetworkDisplays"
-      "float, class:naps2,title:^(?!NAPS2 -)(.*)$"
-      "float, class:^(org.fcitx.*)$"
+    windowrule = [
+      "float on, match:class ^(org.kde.*)$"
+      "float on, match:class ^(org.gnome.*)$"
+      "float on, match:class ^(org.remmina.*)$"
+      "float on, match:class kdesystemsettings"
+      "float on, match:class ^(org.freedesktop.impl.portal.desktop.*)$"
+      "float on, match:class ^(xdg-desktop-portal.*)$"
+      "float on, match:class mpv"
+      "float on, match:class pavucontrol"
+      "float on, match:class virt-manager"
+      "float on, match:class nm-connection-editor"
+      "float on, match:class kicad, match:title ^(.*KiCad.*)$"
+      "float on, match:class nwg-look"
+      "float on, match:class hyprland-share-picker"
+      "float on, match:class org.gnome.NetworkDisplays"
+      "float on, match:class naps2, match:title ^(?!NAPS2 -)(.*)$"
+      "float on, match:class ^(org.fcitx.*)$"
 
-      "float, class:org.mozilla.Thunderbird, initialTitle:^$"
-      "float, class:org.mozilla.Thunderbird, initialTitle:^Write.*$"
+      "float on, match:class org.mozilla.Thunderbird, match:initial_title ^$"
+      "float on, match:class org.mozilla.Thunderbird, match:initial_title ^Write.*$"
 
-      "float, initialTitle:MainPicker"
+      "float on, match:initial_title MainPicker"
 
-      "${popupLandscape}, class:org.kde.dolphin"
-      "${popupLandscape}, class:^(xdg-desktop-portal-*)$"
+      "${popupLandscape}, match:class org.kde.dolphin"
+      "${popupLandscape}, match:class ^(xdg-desktop-portal-*)$"
     ];
   };
 }

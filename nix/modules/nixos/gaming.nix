@@ -89,7 +89,7 @@ in
     hardware.xone.enable = cfg.enable;
 
     environment.systemPackages = lib.optionals (gpu.type != "headless") [
-      pkgs.glxinfo
+      pkgs.mesa-demos
       pkgs.vulkan-tools
     ] ++ lib.optionals (cfg.decky.enable) [
       pkgs.python3
