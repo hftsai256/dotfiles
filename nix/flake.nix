@@ -211,6 +211,7 @@
           regularUsers = defaultRegularUsers;
           selectedPkgSrc = pkgSrc.unstable;
           homeModules = [ inputs.niri.homeModules.niri ];
+          osModules = [ inputs.jovian.nixosModules.default ];
         };
 
         whiteforest = {
