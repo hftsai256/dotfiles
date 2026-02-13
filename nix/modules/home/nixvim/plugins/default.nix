@@ -115,5 +115,6 @@
     nvim-surround.enable = true;
     nvim-autopairs.enable = true;
     which-key.enable = true;
+    highlight-colors.enable = true;
   };
 }

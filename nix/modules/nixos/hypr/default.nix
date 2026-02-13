@@ -28,9 +28,6 @@ in {
   config = lib.mkIf config.hypr.enable {
     environment = {
       systemPackages = with pkgs; [
-        # plasma5Packages.qt5.qtwayland
-        # plasma5Packages.qt5.qtsvg
-
         kdePackages.qtwayland
         kdePackages.qtsvg
 
@@ -54,11 +51,13 @@ in {
     xdg.portal = {
       enable = true;
       xdgOpenUsePortal = true;
+      extraPortals = [
+        pkgs.xdg-desktop-portal-hyprland
+      ];
     };
 
     programs.hyprland = {
       enable = true;
-      withUWSM = true;
       # package = hyprland.pkgs.hyprland;
       # portalPackage = hyprland.pkgs.xdg-desktop-portal-hyprland;
     };

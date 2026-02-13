@@ -9,8 +9,6 @@
   ];
 
   wayland.windowManager.hyprland.settings = {
-    debug.disable_logs = false;
-
     input = {
       kb_layout = "us";
       follow_mouse = 1;
