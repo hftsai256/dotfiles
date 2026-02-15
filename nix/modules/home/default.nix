@@ -56,6 +56,7 @@
       broot
       yazi
       tree
+      appimage-run
     ] ++
 
     lib.optionals (config.gfx == "nixgl") [
