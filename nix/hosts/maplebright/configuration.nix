@@ -7,7 +7,8 @@
   gpu.type = "amd";
   gaming = {
     enable = true;
-    console.enable = true;
+    gamescope.enable = true;
+    console.enable = false;
     decky.enable = true;
   };
 

@@ -25,7 +25,7 @@ in
         };
 
         initial_session = lib.mkIf config.gaming.console.enable {
-          command = "${pkgs.gamescope}/bin/gamescope -- steam -tenfoot -pipewire-dmabuf";
+          command = "${pkgs.gamescope}/bin/gamescope --steam -- steam -tenfoot -steamos3 -pipewire-dmabuf";
           user = "hftsai";
         };
 

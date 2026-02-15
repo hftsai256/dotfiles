@@ -8,6 +8,7 @@ in
   options = {
     gaming.enable = lib.options.mkEnableOption "Graphical stack for gaming";
     gaming.console.enable = lib.options.mkEnableOption "Console mode";
+    gaming.gamescope.enable = lib.options.mkEnableOption "Enable Gamescope Session";
     gaming.decky = {
       enable = lib.options.mkEnableOption "Integrate Decky-Loader";
 
@@ -84,6 +85,35 @@ in
       };
     };
 
+    exitGamescope = pkgs.writeShellScriptBin "steamos-session-select" ''
+      #!/usr/bin/env bash
+      session="''${1:-gamescope}"
+
+      echo "[$(date)] steamos-session-select invoked with: $session" >> /tmp/steamos-switch.log
+
+      # Stop graphical-session.target
+      echo "Stopping graphical-session.target..." >> /tmp/steamos-switch.log
+      systemctl --user stop graphical-session.target 2>&1 | tee -a /tmp/steamos-switch.log || true
+
+      # Wait for all units to stop
+      echo "Waiting for all graphical units to stop..." >> /tmp/steamos-switch.log
+      while [ -n "$(systemctl --user --no-legend --state=deactivating list-units)" ]; do
+        sleep 0.2
+      done
+
+      # Clean up systemd activation environment
+      echo "Cleaning systemd activation environment..." >> /tmp/steamos-switch.log
+      systemctl --user unset-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE 2>&1 | tee -a /tmp/steamos-switch.log || true
+
+      # Kill the D-Bus session to force a complete restart
+      echo "Killing D-Bus session..." >> /tmp/steamos-switch.log
+      systemctl --user stop dbus.service 2>&1 | tee -a /tmp/steamos-switch.log || true
+
+      # Kill gamescope to return to greetd
+      echo "Killing gamescope..." >> /tmp/steamos-switch.log
+      pkill -9 gamescope
+    '';
+
   in {
     hardware.graphics = graphics.${gpu.type};
     hardware.xone.enable = cfg.enable;
@@ -97,13 +127,28 @@ in
 
     programs.steam = lib.mkIf cfg.enable {
       enable = true;
-      gamescopeSession.enable = lib.mkDefault cfg.console.enable;
+
+      gamescopeSession = {
+        enable = lib.mkDefault cfg.gamescope.enable;
+        steamArgs = [ "-tenfoot" "-pipewire-dmabuf" "-steamos3" ];
+      };
+
       protontricks.enable = true;
-      extraPackages = [
-        (pkgs.writeShellScriptBin "steamos-session-select" ''
-          pkill gamescope
-        '')
-      ];
+
+      package = pkgs.steam.override {
+        extraPkgs = pkgs: [
+          exitGamescope
+        ];
+
+        extraProfile = ''
+          export PATH=${exitGamescope}/bin:$PATH
+        '';
+      };
+    };
+
+    programs.gamescope = lib.mkIf cfg.gamescope.enable {
+      enable = true;
+      capSysNice = true;
     };
 
     systemd.services.decky-loader = lib.mkIf cfg.decky.enable {
