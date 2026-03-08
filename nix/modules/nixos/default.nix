@@ -59,6 +59,11 @@
 
   config = {
     services = {
+      logind.settings.Login = {
+        HandlePowerKey = "hybrid-sleep";
+        HandlePowerKeyLongPress = "poweroff";
+      };
+
       desktopManager.plasma6.enable = config.kde.enable;
       desktopManager.gnome.enable = config.gnome.enable;
       flatpak.enable = true;

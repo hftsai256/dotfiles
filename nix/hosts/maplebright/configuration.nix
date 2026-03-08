@@ -8,7 +8,7 @@
   gaming = {
     enable = true;
     gamescope.enable = true;
-    console.enable = false;
+    console.enable = true;
     decky.enable = true;
   };
 
