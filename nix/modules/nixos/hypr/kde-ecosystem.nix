@@ -53,15 +53,24 @@ in
 
     xdg.portal = {
       extraPortals = with pkgs; [
+        xdg-desktop-portal-hyprland
         kdePackages.xdg-desktop-portal-kde
         xdg-desktop-portal-gtk
       ];
       config = {
+        hyprland = {
+          default = [ "hyprland" ];
+          "org.freedesktop.impl.portal.AppChooser" = [ "kde" ];
+          "org.freedesktop.impl.portal.FileChooser" = [ "kde" ];
+        };
         common = {
-          default = [ "hyprland" "kde" ];
+          default = [ "kde" "gtk" ];
         };
       };
     };
+
+    environment.etc."xdg/menus/applications.menu".source =
+      "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
 
     systemd.user.services.polkit-kde-authentication-agent-1 = {
       enable = true;

@@ -214,7 +214,7 @@
           osModules = [ inputs.jovian.nixosModules.default ];
         };
 
-        whiteforest = {
+        CYT-HTSAI-LINUX = {
           regularUsers = defaultRegularUsers;
           selectedPkgSrc = pkgSrc.unstable;
           homeModules = [ inputs.niri.homeModules.niri ];

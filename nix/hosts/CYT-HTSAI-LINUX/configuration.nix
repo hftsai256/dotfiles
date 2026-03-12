@@ -41,5 +41,5 @@
 
   hydra.enable = true;
 
-  hostname = "whiteforest";
+  hostname = "CYT-HTSAI-LINUX";
 }
