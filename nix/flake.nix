@@ -44,11 +44,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    solaar = {
-      url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nixgl = {
       url = "github:guibou/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -87,6 +82,7 @@
       inputs.niri.overlays.niri
       (import ./overlays/gfx.nix)
       (import ./overlays/libcamera.nix)
+      (import ./overlays/packages.nix)
     ];
 
     importPkgs = nixpkgs: system: import nixpkgs {
@@ -190,7 +186,6 @@
           }
 
           selectedPkgSrc.os-module
-          inputs.solaar.nixosModules.default
           ./hosts/${host}/configuration.nix
 
           selectedPkgSrc.home-manager.nixosModules.home-manager

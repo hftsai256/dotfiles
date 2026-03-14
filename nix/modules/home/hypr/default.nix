@@ -4,6 +4,7 @@ let
   inherit (config.home) homeDirectory;
 
   xdgPath = "${homeDirectory}/.dotfiles/xdg_config";
+  userServices = [ "hypridle" "hyprpaper" "hyprsunset" ];
 
 in
 {
@@ -35,25 +36,30 @@ in
   config = lib.mkIf config.hypr.enable {
     wayland.windowManager.hyprland = {
       enable = true;
-      systemd.enable = false;
+      systemd.enable = true;
+      systemd.variables = [ "--all" ];
       package = null;
       portalPackage = null;
     };
 
-    services = {
-      hypridle.enable = true;
-      hyprpaper.enable = true;
-    };
+    services = lib.genAttrs userServices
+      (_: {
+        enable = true;
+      });
 
-    programs = {
-      fuzzel.enable = true;
-      waybar.enable = true;
-      waybar.systemd.enable = true;
-    };
+    systemd.user.services = lib.genAttrs
+      userServices
+      (_: {
+        Unit = {
+          After = lib.mkForce [ "hyprland-session.target" ];
+          PartOf = lib.mkForce [ "hyprland-session.target" ];
+        };
+        Install.WantedBy = lib.mkForce [ "hyprland-session.target" ];
+      });
 
-    home.packages = with pkgs; [
-      hyprsunset
-    ];
+    programs.hyprlock.enable = true;
+    programs.fuzzel.enable = true;
+    programs.waybar.enable = true;
 
     home.pointerCursor.hyprcursor.enable = true;
 

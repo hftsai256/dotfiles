@@ -8,14 +8,14 @@
   gaming = {
     enable = true;
     gamescope.enable = true;
-    console.enable = true;
+    console.enable = false;
     decky.enable = true;
   };
 
   greetd.enable = true;
 
   hypr.enable = true;
-  hypr.ecoSystem = "gtk";
+  hypr.ecoSystem = "kde";
 
   tablet.enable = true;
   mfp.enable = true;

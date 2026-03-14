@@ -25,6 +25,9 @@ in {
         paths = builtins.attrValues {
           inherit (pkgs)
             simp1e-cursors
+            tela-icon-theme
+            orchis-theme
+            orchis-kde
             noto-fonts
             source-sans-pro
             source-serif-pro
@@ -33,10 +36,6 @@ in {
 
           inherit (pkgs.nerd-fonts)
             symbols-only;
-
-          inherit (pkgs.kdePackages)
-            breeze-gtk
-            breeze-icons;
         };
 
         pathsToLink = [

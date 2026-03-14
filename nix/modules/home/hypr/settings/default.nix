@@ -5,6 +5,7 @@
     ./windowrules.nix
     ./monitors.nix
     ./env.nix
+    ./theme.nix
     ./init.nix
   ];
 

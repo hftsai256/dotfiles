@@ -25,7 +25,7 @@
 
   hypr = {
     enable = true;
-    ecoSystem = "gtk";
+    ecoSystem = "kde";
   };
 
   tablet.enable = true;

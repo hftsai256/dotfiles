@@ -32,6 +32,7 @@
     ./hypr
     ./niri.nix
     ./fonts
+    ./flatpak.nix
     ./zsh
     ./term.nix
     ./rime.nix
@@ -47,6 +48,8 @@
         settings.user.email = config.email;
       };
     };
+
+    flatpakTheming.enable = true;
 
     home.packages = with pkgs; [
       ripgrep

@@ -56,16 +56,7 @@ in {
       ];
     };
 
-    programs.hyprland = {
-      enable = true;
-      # package = hyprland.pkgs.hyprland;
-      # portalPackage = hyprland.pkgs.xdg-desktop-portal-hyprland;
-    };
-
-    programs.hyprlock = {
-      enable = true;
-      package = pkgs.hyprlock;
-    };
+    programs.hyprland.enable = true;
 
     security.pam.services.hyprlock = {
       enableGnomeKeyring = (cfg.ecoSystem == "gtk");

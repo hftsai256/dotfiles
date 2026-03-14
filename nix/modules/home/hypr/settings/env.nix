@@ -1,87 +1,26 @@
-{ config, pkgs, lib, ... }:
-let
-  cfg = config.hypr;
-
-  gtkTheme = {
-    gtk = {
-      iconTheme = {
-        name = "Tela";
-        package = pkgs.tela-icon-theme;
-      };
-      theme = {
-        name = "Orchis-Dark-Compact";
-        package = pkgs.orchis-theme;
-      };
-    };
-
-    kde = {
-      theme = {
-        name = "Breeze-Dark";
-        package = pkgs.kdePackages.breeze-gtk;
-      };
-      iconTheme = {
-        name = "breeze";
-        package = pkgs.kdePackages.breeze-icons;
-      };
-    };
-  };
-
-in
+{ config, ... }:
 {
-  config = lib.mkIf cfg.enable {
-    gtk = {
-      enable = true;
+  wayland.windowManager.hyprland.settings.env = [
+    "QT_QPA_PLATFORM,wayland"
+    "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+    "QT_AUTO_SCREEN_SCALE_FACTOR,1"
+    "QT_SCALE_FACTOR_ROUNDING_POLICY,RoundPreferFloor"
 
-      cursorTheme = {
-        name = "Simp1e-Breeze-Dark";
-        package = pkgs.simp1e-cursors;
-      };
+    "GDK_BACKEND,wayland"
+    "GDK_SCALE,2"
+    "GTK_USE_PORTAL,1"
 
-    } // gtkTheme.${cfg.ecoSystem};
+    "SDL_VIDEODRIVER,wayland"
+    "_JAVA_AWT_WM_NONREPARENTING,1"
+    "CLUTTER_BACKEND,wayland"
 
-    qt = {
-      enable = true;
-      platformTheme.name = "qtct";
-      style.name = "breeze";
-    };
+    "MOZ_ENABLE_WAYLAND,1"
+    "MOZ_ACCELERATED,1"
+    "MOZ_WEBRENDER,1"
 
-    home.pointerCursor = {
-      name = "Simp1e-Breeze-Dark";
-      package = pkgs.simp1e-cursors;
-      size = 24;
-    };
-
-    wayland.windowManager.hyprland.settings.env = [
-      "QT_QPA_PLATFORM,wayland"
-      "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-      "QT_AUTO_SCREEN_SCALE_FACTOR,1"
-      "QT_SCALE_FACTOR_ROUNDING_POLICY,RoundPreferFloor"
-
-      "GDK_BACKEND,wayland"
-      "GDK_SCALE,2"
-      "GTK_USE_PORTAL,1"
-
-      "SDL_VIDEODRIVER,wayland"
-      "_JAVA_AWT_WM_NONREPARENTING,1"
-      "CLUTTER_BACKEND,wayland"
-
-      "MOZ_ENABLE_WAYLAND,1"
-      "MOZ_ACCELERATED,1"
-      "MOZ_WEBRENDER,1"
-
-      "XDG_CURRENT_DESKTOP,Hyprland"
-      "XDG_SESSION_TYPE,wayland"
-      "XDG_SESSION_DESKTOP,Hyprland"
-      "TERM,${config.term.app}"
-    ];
-
-    dconf.settings = {
-      "org/gnome/desktop/interface" = {
-        font-name = "Source Sans Pro 10, Source Han Sans 9";
-        monospace-font-name = "Fira Code 10, Symbols Nerd Font 9";
-        font-antialiasing = "rgba";
-        color-scheme = "prefer-dark";
-      };
-    };
-  };
+    "XDG_CURRENT_DESKTOP,Hyprland"
+    "XDG_SESSION_TYPE,wayland"
+    "XDG_SESSION_DESKTOP,Hyprland"
+    "TERM,${config.term.app}"
+  ];
 }
