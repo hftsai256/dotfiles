@@ -23,12 +23,6 @@ in
       kservice # provides kbuildsycoca6 tool
       plasma-workspace
 
-      pkgs.polkit
-      polkit-kde-agent-1
-      kwallet
-      kwallet-pam # kwallet PAM module
-      kwalletmanager # provides KCMs and stuff
-
       breeze
       breeze-icons
       breeze-gtk
@@ -45,11 +39,6 @@ in
       gwenview
       partitionmanager
     ];
-
-    security = {
-      polkit.enable = true;
-      pam.services.login.kwallet.enable = true;
-    };
 
     xdg.portal = {
       extraPortals = with pkgs; [
@@ -72,19 +61,5 @@ in
     environment.etc."xdg/menus/applications.menu".source =
       "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
 
-    systemd.user.services.polkit-kde-authentication-agent-1 = {
-      enable = true;
-      description = "The KDE's Implementation of Policy Kit Authentication Agent";
-      wantedBy = [ "hyprland-session.target" ];
-      wants = [ "hyprland-session.target" ];
-      after = [ "hyprland-session.target" ];
-      serviceConfig = {
-        Type = "simple";
-        ExecStart = "${pkgs.kdePackages.polkit-kde-agent-1}/libexec/polkit-kde-authentication-agent-1";
-        Restart = "on-failure";
-        RestartSec = 1;
-        TimeoutStopSec = 10;
-      };
-    };
   };
 }

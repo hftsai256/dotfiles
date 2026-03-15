@@ -35,8 +35,7 @@ in
 
     security.pam.services.greetd = {
       gnupg.enable = true;
-      enableGnomeKeyring = (ecoSystem == "gtk");
-      enableKwallet = (ecoSystem == "kde");
+      enableGnomeKeyring = true;
     };
   };
 }

@@ -28,6 +28,11 @@ in {
   config = lib.mkIf config.hypr.enable {
     environment = {
       systemPackages = with pkgs; [
+        # Use Gnome Keyring anyways to same my life
+        polkit
+        polkit_gnome
+        gnome-keyring
+
         kdePackages.qtwayland
         kdePackages.qtsvg
 
@@ -57,10 +62,29 @@ in {
     };
 
     programs.hyprland.enable = true;
+    programs.seahorse.enable = true;
+    services.gnome.gnome-keyring.enable = true;
 
-    security.pam.services.hyprlock = {
-      enableGnomeKeyring = (cfg.ecoSystem == "gtk");
-      enableKwallet = (cfg.ecoSystem == "kde");
+    security.polkit.enable = true;
+    security.pam.services = {
+      login.enableGnomeKeyring = true;
+      greetd.enableGnomeKeyring = true;
+      hyprlock.enableGnomeKeyring = true;
+    };
+
+    systemd.user.services.polkit-gnome-authentication-agent-1 = {
+      enable = true;
+      description = "The Gnome's Implementation of Policy Kit Authentication Agent";
+      wantedBy = [ "hyprland-session.target" ];
+      wants = [ "hyprland-session.target" ];
+      after = [ "hyprland-session.target" ];
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
     };
 
   };
