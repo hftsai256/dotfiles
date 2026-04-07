@@ -9,9 +9,7 @@
 
     "GDK_BACKEND,wayland"
 
-    # Effectively 1.5x xwayland rendering
     "GDK_SCALE,2"
-    "GDK_DPI_SCALE,0.75"
     "GTK_USE_PORTAL,1"
 
     "SDL_VIDEODRIVER,wayland"
