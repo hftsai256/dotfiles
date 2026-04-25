@@ -79,9 +79,7 @@
         "widgets": {
             "center": [
                 {
-                    "defaultSettings": {
-                    },
-                    "id": "plugin:workspace-overview"
+                    "id": "plugin:screen-toolkit"
                 },
                 {
                     "characterCount": 2,
@@ -106,11 +104,8 @@
                 },
                 {
                     "defaultSettings": {
-                        "enableCross": true,
-                        "enableWindowsSelection": true,
-                        "screenshotEditor": "swappy"
                     },
-                    "id": "plugin:screen-shot-and-record"
+                    "id": "plugin:workspace-overview"
                 }
             ],
             "left": [

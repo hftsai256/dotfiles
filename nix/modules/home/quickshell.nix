@@ -57,7 +57,7 @@ in
             "clipper"
             "polkit-agent"
             "workspace-overview"
-            "screen-shot-and-record"
+            "screen-toolkit"
           ] (_name: {
             enabled = true;
             sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
