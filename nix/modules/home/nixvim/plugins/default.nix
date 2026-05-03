@@ -80,13 +80,11 @@
 
     treesitter = {
       enable = true;
-      settings = {
-        highlight = {
-          enable = true;
-          disable = [ "rust" ];
-        };
-        indent.enable = true;
+      highlight = {
+        enable = true;
+        disable = [ "rust" ];
       };
+      indent.enable = true;
     };
 
     nvim-tree = {
@@ -115,6 +113,5 @@
     nvim-surround.enable = true;
     nvim-autopairs.enable = true;
     which-key.enable = true;
-    highlight-colors.enable = true;
   };
 }

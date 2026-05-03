@@ -7,12 +7,12 @@ final: prev: {
   });
   hyprlandPlugins = prev.hyprlandPlugins // {
     hyprgrass = prev.hyprlandPlugins.hyprgrass.overrideAttrs (old: {
-      version = "unstable-2026-03-24";
+      version = "unstable-2026-04-29";
 
       src = prev.fetchFromGitHub {
         owner = "horriblename";
         repo = "hyprgrass";
-        rev = "b1d05b8a6a2c2c701260a1b839a0916d595ed44a";
+        rev = "5a1632b80cbfce4cd3648df1fb17c97f6147e1af";
         hash = "sha256-UpUoQ2nioxYBDCCyk/ftSYk6w3r/Q1TdvdNgfRr5Tm0=";  # ← placeholder
       };
     });

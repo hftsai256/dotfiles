@@ -61,13 +61,11 @@
     ];
 
     dwindle = {
-      pseudotile = true;
       preserve_split = true;
     };
 
     scrolling.fullscreen_on_one_column = false;
 
     xwayland.force_zero_scaling = true;
-    misc.vfr = true;
   };
 }

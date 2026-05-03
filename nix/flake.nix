@@ -37,7 +37,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    nixvim-stable = {
+    nixvim = {
       url = "github:nix-community/nixvim/nixos-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -50,6 +50,28 @@
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprland-unstable = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    hyprgrass = {
+      url = "github:horriblename/hyprgrass";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.hyprland.follows = "hyprland";
+    };
+
+    hyprgrass-unstable = {
+      url = "github:horriblename/hyprgrass";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+      inputs.hyprland.follows = "hyprland-unstable";
     };
 
     niri = {
@@ -83,7 +105,9 @@
         disko = inputs.disko;
         lanzaboote = inputs.lanzaboote;
         home-manager = inputs.home-manager;
-        nixvim = inputs.nixvim-stable;
+        nixvim = inputs.nixvim;
+        hyprland = inputs.hyprland;
+        hyprgrass = inputs.hyprgrass;
         niri = inputs.niri;
         noctalia = inputs.noctalia;
         nixgl = inputs.nixgl;
@@ -96,9 +120,11 @@
         disko = inputs.disko-unstable;
         lanzaboote = inputs.lanzaboote-unstable;
         home-manager = inputs.home-manager-unstable;
+        nixvim = inputs.nixvim-unstable;
+        hyprland = inputs.hyprland-unstable;
+        hyprgrass = inputs.hyprgrass-unstable;
         niri = inputs.niri-unstable;
         noctalia = inputs.noctalia;
-        nixvim = inputs.nixvim-unstable;
         nixgl = inputs.nixgl-unstable;
         os-module = ./modules/nixos-unstable;
         home-module = ./modules/home;
@@ -109,9 +135,26 @@
       selectedPkgSrc.nixgl.overlay
       selectedPkgSrc.niri.overlays.niri
       selectedPkgSrc.noctalia.overlays.default
+
       (import ./overlays/gfx.nix)
       (import ./overlays/libcamera.nix)
       (import ./packages/overlay.nix)
+
+      (final: prev: {
+        hyprland =
+          selectedPkgSrc.hyprland.packages.${prev.stdenv.hostPlatform.system}.hyprland;
+        hyprlandPlugins = prev.hyprlandPlugins // {
+          hyprgrass =
+            selectedPkgSrc.hyprgrass.packages.${prev.stdenv.hostPlatform.system}.hyprgrass;
+          hyprgrass-pulse =
+            selectedPkgSrc.hyprgrass.packages.${prev.stdenv.hostPlatform.system}.hyprgrass-pulse;
+        };
+        xdg-desktop-portal-hyprland =
+          selectedPkgSrc.hyprland.packages.${prev.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      })
+
+
+
     ];
 
     importPkgs = selectedPkgSrc: system: import selectedPkgSrc.nixpkgs {
