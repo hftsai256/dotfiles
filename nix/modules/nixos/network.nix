@@ -17,6 +17,24 @@
 
   in
   {
+    services.udev.extraRules = ''
+      ACTION=="move", SUBSYSTEM=="net", \
+        ATTRS{idVendor}=="0b95", ATTRS{idProduct}=="1790", \
+        TAG+="systemd", ENV{SYSTEMD_WANTS}="ax88179-init@%k.service"
+    '';
+
+    systemd.services."ax88179-init@" = {
+      description = "Initialize AX88179B PHY on %I";
+      bindsTo = [ "sys-subsystem-net-devices-%i.device" ];
+      after = [ "sys-subsystem-net-devices-%i.device" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
+        ExecStart = "${pkgs.ethtool}/bin/ethtool %I";
+        RemainAfterExit = false;
+      };
+    };
+
     environment.systemPackages = (with pkgs; [
       iw
     ]) ++ (lib.optionals config.fortinet.enable vpnPkgs);
