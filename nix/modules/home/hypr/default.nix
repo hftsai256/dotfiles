@@ -1,8 +1,11 @@
-{ config, pkgs, lib, ... }:
-{
+{ config, lib, ... }:
+let
+  inherit (config.lib.file) mkOutOfStoreSymlink;
+  inherit (config.home) homeDirectory;
+
+in {
   imports = [
-    ../kanshi.nix
-    ./settings
+    ../shikane.nix
   ];
 
   options = {
@@ -33,9 +36,11 @@
       portalPackage = null;
     };
 
-    kanshi = {
-      enable = true;
-      target = "hyprland-session.target";
+    xdg.configFile = {
+      "hypr/hyprland.lua".source =
+        mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/xdg_config/hypr/hyprland.lua";
     };
+
+    shikane.enable = true;
   };
 }

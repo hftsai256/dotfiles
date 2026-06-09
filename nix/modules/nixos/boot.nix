@@ -6,7 +6,7 @@ in {
   options = {
     kernel.type = lib.options.mkOption {
       type = lib.types.enum [ "lts" "mainline" "rt" ];
-      default = "mainline";
+      default = "lts";
       description = "Linux kernel variants";
     };
   };

@@ -2,7 +2,7 @@
   description = "My Home Manager configuration";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:nixos/nixos-hardware";
     impermanence.url = "github:nix-community/impermanence";
@@ -28,7 +28,7 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -38,7 +38,7 @@
     };
 
     nixvim = {
-      url = "github:nix-community/nixvim/nixos-25.11";
+      url = "github:nix-community/nixvim/nixos-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -53,25 +53,13 @@
     };
 
     hyprland = {
-      url = "github:hyprwm/Hyprland";
+      url = "github:hyprwm/Hyprland/v0.55.3";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     hyprland-unstable = {
-      url = "github:hyprwm/Hyprland";
+      url = "github:hyprwm/Hyprland/v0.55.3";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    hyprgrass = {
-      url = "github:horriblename/hyprgrass";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.hyprland.follows = "hyprland";
-    };
-
-    hyprgrass-unstable = {
-      url = "github:horriblename/hyprgrass";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-      inputs.hyprland.follows = "hyprland-unstable";
     };
 
     niri = {
@@ -143,18 +131,11 @@
       (final: prev: {
         hyprland =
           selectedPkgSrc.hyprland.packages.${prev.stdenv.hostPlatform.system}.hyprland;
-        hyprlandPlugins = prev.hyprlandPlugins // {
-          hyprgrass =
-            selectedPkgSrc.hyprgrass.packages.${prev.stdenv.hostPlatform.system}.hyprgrass;
-          hyprgrass-pulse =
-            selectedPkgSrc.hyprgrass.packages.${prev.stdenv.hostPlatform.system}.hyprgrass-pulse;
-        };
         xdg-desktop-portal-hyprland =
           selectedPkgSrc.hyprland.packages.${prev.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+
+        hyprlandPlugins = prev.hyprlandPlugins // { };
       })
-
-
-
     ];
 
     importPkgs = selectedPkgSrc: system: import selectedPkgSrc.nixpkgs {
@@ -225,6 +206,7 @@
 
           extraSpecialArgs = {
             inherit (selectedPkgSrc) nixvim;
+            inherit (nixosConfig) time;
           } // extraSpecialArgs;
         };
       };
@@ -270,8 +252,8 @@
       machines = {
         aetherforge = {
           regularUsers = defaultRegularUsers;
-          selectedPkgSrc = pkgSrc.unstable;
-          osModules = with pkgSrc.unstable; [ disko.nixosModules.disko ];
+          selectedPkgSrc = pkgSrc.stable;
+          osModules = with pkgSrc.stable; [ disko.nixosModules.disko ];
           homeModules = [];
           specialArgs = { installDrive = "/dev/nvme0n1"; swapSize = "32G"; };
         };

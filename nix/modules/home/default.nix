@@ -36,6 +36,7 @@
     ./zsh
     ./term.nix
     ./rime.nix
+    ./touchscreen.nix
   ];
 
   config = {

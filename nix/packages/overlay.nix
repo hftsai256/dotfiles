@@ -2,9 +2,9 @@ final: prev: {
   kdePackages = prev.kdePackages.overrideScope (kfinal: kprev: {
     qt6ct = prev.callPackage ./qt6ct-kde.nix { };
   });
-  libsForQt5 = prev.libsForQt5.overrideScope (kfinal: kprev: {
-    qt5ct = prev.callPackage ./qt5ct-kde.nix { };
-  });
+  # libsForQt5 = prev.libsForQt5.overrideScope (kfinal: kprev: {
+  #   qt5ct = prev.callPackage ./qt5ct-kde.nix { };
+  # });
   hyprlandPlugins = prev.hyprlandPlugins // {
     hyprgrass = prev.hyprlandPlugins.hyprgrass.overrideAttrs (old: {
       version = "unstable-2026-04-29";
@@ -17,8 +17,8 @@ final: prev: {
       };
     });
   };
-  hyprqt6engine = prev.callPackage ./hyprqt6engine.nix { };
-  roland = prev.callPackage ./roland.nix { };
+  # hyprqt6engine = prev.callPackage ./hyprqt6engine.nix { };
+  # roland = prev.callPackage ./roland.nix { };
   openfortivpn-webview = prev.callPackage ./openfortivpn-webview.nix { };
   orchis-kde = prev.callPackage ./orchis-kde.nix { };
   decky-loader = prev.callPackage ./decky-loader.nix { };

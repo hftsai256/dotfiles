@@ -1,5 +1,8 @@
-{ config, lib, pkgs, ... }:
-{
+{ config, lib, pkgs, specialArgs, ... }:
+let
+  timeZone = specialArgs.time.timeZone;
+
+in {
   options = {
     flatpakTheming.enable = lib.mkEnableOption "Tweaks for applying flatpak themes";
   };
@@ -19,7 +22,8 @@
         --env=XCURSOR_SIZE=24 \
         --env=QT_QPA_PLATFORM=wayland \
         --env=QT_QPA_PLATFORMTHEME=qt6ct \
-        --env=XCURSOR_THEME=Simp1e-Breeze-Dark
+        --env=XCURSOR_THEME=Simp1e-Breeze-Dark \
+        --env=TZ=${timeZone}
     '';
 
     systemd.user.services.flatpak-fontconfig-sync = {
