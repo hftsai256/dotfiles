@@ -2,6 +2,7 @@
 let
   cfg = config.qs;
   themeCfg = config.themes;
+  shell = "noctalia-shell ipc call";
 
   inherit (config.lib.file) mkOutOfStoreSymlink;
   inherit (config.home) homeDirectory;
@@ -37,6 +38,7 @@ in
 {
   options = {
     qs.enable = lib.mkEnableOption "Quickshell/Noctalia module";
+    touchscreen.enable = lib.mkEnableOption "Enable touchscreen with roland backend";
     themes.enable = lib.mkEnableOption "Manage themes over home-manager";
   };
 
@@ -121,6 +123,22 @@ in
         adw-gtk3
         tela-icon-theme
         simp1e-cursors
+      ];
+    })
+
+    (lib.mkIf (config ? services.roland && config.services.roland.enable && cfg.enable) {
+      services.roland.settings.gestures = [
+        { num_fingers = 1;
+          kind = "SwipeUp";
+          on_edge = { Bottom = 30; };
+          min_distance = 50.0;
+          action = "pkill -SIGRTMIN wvkbd-mobintl";
+        }
+        { num_fingers = 4;
+          kind = "PinchIn";
+          min_distance = 20.0;
+          action = "${shell} launcher toggle";
+        }
       ];
     })
 

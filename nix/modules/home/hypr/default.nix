@@ -6,6 +6,7 @@ let
 in {
   imports = [
     ../shikane.nix
+    ./touchscreen.nix
   ];
 
   options = {

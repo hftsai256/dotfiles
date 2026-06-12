@@ -53,12 +53,12 @@
     };
 
     hyprland = {
-      url = "github:hyprwm/Hyprland/v0.55.3";
+      url = "github:hyprwm/Hyprland/v0.55.4";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     hyprland-unstable = {
-      url = "github:hyprwm/Hyprland/v0.55.3";
+      url = "github:hyprwm/Hyprland/v0.55.4";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -69,6 +69,16 @@
 
     niri-unstable = {
       url = "github:sodiboo/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
+    roland = {
+      url = "github:hftsai256/roland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    roland-unstable = {
+      url = "github:hftsai256/roland";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -97,6 +107,7 @@
         hyprland = inputs.hyprland;
         hyprgrass = inputs.hyprgrass;
         niri = inputs.niri;
+        roland = inputs.roland;
         noctalia = inputs.noctalia;
         nixgl = inputs.nixgl;
         os-module = ./modules/nixos;
@@ -112,6 +123,7 @@
         hyprland = inputs.hyprland-unstable;
         hyprgrass = inputs.hyprgrass-unstable;
         niri = inputs.niri-unstable;
+        roland = inputs.roland-unstable;
         noctalia = inputs.noctalia;
         nixgl = inputs.nixgl-unstable;
         os-module = ./modules/nixos-unstable;
@@ -122,6 +134,7 @@
     selectOverlays = selectedPkgSrc: [
       selectedPkgSrc.nixgl.overlay
       selectedPkgSrc.niri.overlays.niri
+      selectedPkgSrc.roland.overlays.default
       selectedPkgSrc.noctalia.overlays.default
 
       (import ./overlays/gfx.nix)
@@ -195,6 +208,7 @@
             ./modules/home
             ./users/${user}-${host}.nix
             selectedPkgSrc.niri.homeModules.niri
+            selectedPkgSrc.roland.homeModules.default
             selectedPkgSrc.noctalia.homeModules.default
 
             { config = with nixosConfig; {

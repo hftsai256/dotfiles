@@ -33,11 +33,13 @@ hl.env("TZDATA", "/etc/zoneinfo")
 hl.on("hyprland.start", function()
   local function restart(cmd)
     local bin = cmd:match("^(%S+)")
-    hl.dispatch(hl.dsp.exec_cmd("sh -c 'pgrep -x " .. bin .. " && pkill -x " .. bin .. "; " .. cmd .. "'"))
+    hl.dispatch(hl.dsp.exec_cmd("sh -c 'pgrep -x " .. bin .. " && pkill -x " .. bin .. "; " .. cmd .. "; true'"))
   end
 
   hl.dispatch(hl.dsp.exec_cmd("systemctl --user import-environment && systemctl --user start hyprland-session.target"))
   restart("noctalia-shell")
+  restart("iio-hyprland")
+  restart("wvkbd-mobintl --hidden -L 240")
   restart("solaar --window=hide")
   hl.dispatch(hl.dsp.exec_cmd("wl-paste --watch cliphist store"))
 end)
@@ -220,7 +222,7 @@ hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "u" }))
 hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "d" }))
 
 -- Layout toggle (dwindle ↔ scrolling)
-hl.bind(mainMod .. " + SHIFT + L", function()
+hl.bind(mainMod .. " + SHIFT + semicolon", function()
   setLayout(currentLayout == "dwindle" and "scrolling" or "dwindle")
 end)
 

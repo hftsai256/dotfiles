@@ -6,9 +6,10 @@
 
   term.app = "kitty";
   rime.enable = true;
-  touchscreen.enable = true;
   guiApps.enable = true;
   qs.enable = true;
+
+  services.roland.enable = true;
 
   shikane.settings = let
     homeRes   = { x = 3840; y = 2160; r = 1.5; };
