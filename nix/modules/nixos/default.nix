@@ -67,6 +67,9 @@
       fwupd.enable = true;
       upower.enable = true;
 
+      tuned.enable = true;
+      tlp.enable = lib.mkForce false;
+
       pipewire = {
         enable = true;
         alsa.enable = true;

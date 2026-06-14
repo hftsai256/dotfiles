@@ -14,27 +14,27 @@
     pkgs.source-han-sans
   ];
 
-  kanshi.settings = [
-    { profile.name = "home-desk";
-      profile.outputs = [
-      {
-        criteria = "Dell Inc. DELL S2721QS FYCXM43";
-        status = "enable";
-        scale = 1.6;
-        position = "0,0";
+  shikane.settings = {
+    profile = [
+      { name = "home";
+        output = [
+          { search = ["m=DELL S2721QS" "s=FYCXM43" "v=Dell Inc."];
+            enable = true;
+            scale = 1.5;
+            position = "0,0";
+          }
+        ];
       }
-    ]; }
-
-    { profile.name = "home-TV";
-      profile.outputs = [
-      {
-        criteria = "*";
-        status = "enable";
-        scale = 2.0;
-        position = "0,0";
+      { name = "TV";
+        output = [
+          { search = "n/(DP|HDMI)-[1-9]$";
+            enable = true;
+            scale = 2.0;
+            position = "0,0";
+          }
+        ];
       }
-    ]; }
-
-  ];
+    ];
+  };
 }
 

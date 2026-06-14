@@ -131,7 +131,13 @@
       };
     };
 
-    selectOverlays = selectedPkgSrc: [
+    selectOverlays = selectedPkgSrc:
+    let
+      unstablePkgs = system: import inputs.nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    in [
       selectedPkgSrc.nixgl.overlay
       selectedPkgSrc.niri.overlays.niri
       selectedPkgSrc.roland.overlays.default
@@ -140,6 +146,23 @@
       (import ./overlays/gfx.nix)
       (import ./overlays/libcamera.nix)
       (import ./packages/overlay.nix)
+
+      # Always source steam-related packages from unstable regardless of selected package set
+      (final: prev:
+      let
+        upkgs = unstablePkgs prev.stdenv.hostPlatform.system;
+      in {
+        steam = upkgs.steam;
+        steam-run = upkgs.steam-run;
+        steamPackages = upkgs.steamPackages;
+      })
+
+      # Enable deprecated setuid support in bubblewrap
+      (final: prev: {
+        bubblewrap = prev.bubblewrap.overrideAttrs (old: {
+          mesonFlags = (old.mesonFlags or []) ++ [ "-Dsupport_setuid=true" ];
+        });
+      })
 
       (final: prev: {
         hyprland =
@@ -274,13 +297,13 @@
 
         CYT-HTSAI-LINUX = {
           regularUsers = defaultRegularUsers;
-          selectedPkgSrc = pkgSrc.unstable;
+          selectedPkgSrc = pkgSrc.stable;
           homeModules = [];
         };
 
         maplebright = {
           regularUsers = defaultRegularUsers;
-          selectedPkgSrc = pkgSrc.unstable;
+          selectedPkgSrc = pkgSrc.stable;
           homeModules = [];
         };
       };
