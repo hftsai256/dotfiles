@@ -48,7 +48,7 @@
     };
 
     noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
+      url = "github:noctalia-dev/noctalia/v4.7.7";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
@@ -317,7 +317,7 @@
     homeConfigurations = let
       homes.deck = {
         host = "steamdeck";
-        selectedPkgSrc = pkgSrc.unstable;
+        selectedPkgSrc = pkgSrc.stable;
       };
 
     in
