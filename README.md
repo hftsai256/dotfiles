@@ -1,49 +1,44 @@
 # Dotfiles
 
-Personal XDG-compliant dotfiles and Home Manager configurations for managing user environments across work and personal machines.
+Personal XDG-compliant dotfiles, Home Manager configurations, and NixOS system configs.
 
-## Overview
+## Structure
 
-- Primary languages: Nix ≈49%, Shell ≈47%, CSS ≈3%
-- Focus: Declarative user-level configuration via Home Manager
-- Core components:
-  - `nix/`               — Home Manager modules, profiles, and shared settings
-  - `scripts/`           — Utility scripts, including `nixhm-apply` for standalone activation
-  - `xdg_config/`        — Configuration directories to symlink into `~/.config`
-  - `ssh/`, `wallpapers/` — Supporting resources
-
-This repository does **not** contain full NixOS system configurations (no flake.nix, configuration.nix, etc.). It manages **user environments only**.
+| Path | Purpose |
+|---|---|
+| `nix/` | Home Manager modules, profiles, and shared settings |
+| `scripts/` | Utility scripts, including `nixhm-apply` |
+| `xdg_config/` | Config directories to symlink into `~/.config` |
+| `ssh/`, `wallpapers/` | Supporting resources |
 
 ## Usage
 
-### On NixOS
+### NixOS
 
-Import the desired parts of this repository (typically from the `nix/` directory) into your **own** system configuration:
+Import from `nix/` into your system flake and reference the relevant Home Manager profile under `home-manager.users.<name>`. Then rebuild:
 
-- Reference the relevant Home Manager profile/module in your `home-manager.users.<yourname>` block.
-- Rebuild the system:
+```bash
+sudo nixos-rebuild switch --flake /path/to/your-flake#hostname
+```
 
-  ```bash
-  sudo nixos-rebuild switch --flake /path/to/your/system-flake#hostname
-  ```
+Do **not** run `nixhm-apply` on NixOS.
 
-  or (legacy path):
+### Non-NixOS (SteamOS, macOS, WSL, Arch, etc.)
 
-  ```bash
-  sudo nixos-rebuild switch
-  ```
+See [HOME_MANAGER.md](./HOME_MANAGER.md). In short:
 
-The user environment activates automatically as part of system activation. Do **not** run `nixhm-apply` on NixOS — it is intended only for standalone Home Manager on non-NixOS hosts.
+```bash
+git clone https://git.htwillows.net/hftsai256/dotfiles.git ~/.dotfiles
+~/.dotfiles/nix/scripts/nixhm-apply
+```
 
-### On non-NixOS hosts
+The script installs Nix if needed, then presents a profile menu.
 
-Follow the instructions in [HOME_MANAGER.md](./HOME_MANAGER.md) to apply configurations via the `nixhm-apply` script.
+## Docs
 
-## Documentation
-
-- [NIX_OS.md](./NIX_OS.md) — Manual steps for a fresh NixOS installation (LUKS + tmpfs root + Btrfs subvolumes)
-- [HOME_MANAGER.md](./HOME_MANAGER.md) — Standalone Home Manager setup on non-NixOS systems
+- [HOME_MANAGER.md](./HOME_MANAGER.md) - Standalone Home Manager on non-NixOS hosts
+- [NIX_OS.md](./NIX_OS.md) - Fresh NixOS install (disko + nixos-anywhere, or manual LUKS/Btrfs)
 
 ## License
 
-MIT (or replace with your preferred license)
+MIT
