@@ -126,7 +126,9 @@ in
     };
 
     programs.gamescope = lib.mkIf cfg.gamescope.enable {
-      capSysNice = true;
+      # Disable this will decouple bwrap setuid issue:
+      # https://github.com/NixOS/nixpkgs/issues/523200
+      capSysNice = false;
     };
 
     systemd.services.decky-loader = lib.mkIf cfg.decky.enable {

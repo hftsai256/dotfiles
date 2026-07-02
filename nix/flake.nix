@@ -157,13 +157,6 @@
         steamPackages = upkgs.steamPackages;
       })
 
-      # Enable deprecated setuid support in bubblewrap
-      (final: prev: {
-        bubblewrap = prev.bubblewrap.overrideAttrs (old: {
-          mesonFlags = (old.mesonFlags or []) ++ [ "-Dsupport_setuid=true" ];
-        });
-      })
-
       (final: prev: {
         hyprland =
           selectedPkgSrc.hyprland.packages.${prev.stdenv.hostPlatform.system}.hyprland;
