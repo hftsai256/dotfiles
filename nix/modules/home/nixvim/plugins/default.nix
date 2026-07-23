@@ -1,7 +1,11 @@
-{ pkgs, ... }: {
+{pkgs, ...}: {
   imports = [
     ./cmp.nix
     ./git.nix
+  ];
+
+  extraPackages = with pkgs; [
+    alejandra
   ];
 
   plugins = {
@@ -10,12 +14,19 @@
       servers = {
         lua_ls.enable = true;
         ts_ls.enable = true;
-        nixd.enable = true;
         clangd.enable = true;
         html.enable = true;
         cssls.enable = true;
         eslint.enable = true;
         svelte.enable = true;
+
+        nixd = {
+          enable = true;
+          settings = {
+            formatting.command = ["alejandra"];
+            nixpkgs.expr = "import (builtins.getFlake (toString ./.)).inputs.nixpkgs { }";
+          };
+        };
 
         pylsp = {
           enable = true;
@@ -58,10 +69,9 @@
 
         ltex = {
           enable = true;
-          filetypes = [ "tex" "md" "txt" ];
+          filetypes = ["tex" "md" "txt"];
           settings.ltex.language = "en-US";
         };
-
       };
     };
 
@@ -82,7 +92,7 @@
       enable = true;
       highlight = {
         enable = true;
-        disable = [ "rust" ];
+        disable = ["rust"];
       };
       indent.enable = true;
     };
