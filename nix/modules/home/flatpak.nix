@@ -1,13 +1,21 @@
-{ config, lib, pkgs, specialArgs, ... }:
-let
-  timeZone = specialArgs.time.timeZone;
-
+{
+  config,
+  lib,
+  pkgs,
+  specialArgs,
+  ...
+}: let
+  hasTimeZone = lib.hasAttrByPath ["time" "timeZone"] specialArgs;
+  timeZone =
+    if hasTimeZone
+    then specialArgs.time.timeZone
+    else null;
 in {
   options = {
     flatpakTheming.enable = lib.mkEnableOption "Tweaks for applying flatpak themes";
   };
 
-  config = lib.mkIf config.flatpakTheming.enable {
+  config = lib.mkIf (config.flatpakTheming.enable && hasTimeZone) {
     home.activation.flatpakOverrides = lib.hm.dag.entryAfter ["writeBoundary"] ''
       run ${pkgs.flatpak}/bin/flatpak override --user --reset
 
@@ -42,7 +50,7 @@ in {
         PathChanged = "%h/.local/share/flatpak/app";
         Unit = "flatpak-fontconfig-sync.service";
       };
-      Install.WantedBy = [ "default.target" ];
+      Install.WantedBy = ["default.target"];
     };
   };
 }

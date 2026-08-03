@@ -4,7 +4,6 @@
     ./keybinds.nix
     ./windowrules.nix
     ./monitors.nix
-    ./touchscreen.nix
     ./env.nix
     ./init.nix
   ];

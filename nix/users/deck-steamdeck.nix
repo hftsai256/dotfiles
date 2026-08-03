@@ -1,5 +1,8 @@
-{ pkgs, ... }:
 {
+  pkgs,
+  lib,
+  ...
+}: {
   fullName = "Halley Tsai";
   email = "hftsai256@gmail.com";
   gfx = "nixgl";
@@ -8,8 +11,10 @@
   guiApps.eeLab.enable = false;
   term.app = "foot";
 
+  services.kdeconnect.enable = lib.mkForce false;
+
   home.packages = with pkgs; [
-    xclip  # steamOS is still on X11
+    xclip # steamOS is still on X11
     mame-tools
   ];
 }

@@ -1,8 +1,16 @@
-{ config, pkgs, lib, ... }:
-let
+{
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
+}: let
   cfg = config.qs;
   themeCfg = config.themes;
   shell = "noctalia-shell ipc call";
+
+  hasRoland = lib.hasAttrByPath ["services" "roland"] options;
+  hasNoctalia = lib.hasAttrByPath ["programs" "noctalia-shell"] options;
 
   inherit (config.lib.file) mkOutOfStoreSymlink;
   inherit (config.home) homeDirectory;
@@ -33,58 +41,61 @@ let
       recursive = true;
     };
   };
-
-in
-{
+in {
   options = {
     qs.enable = lib.mkEnableOption "Quickshell/Noctalia module";
     touchscreen.enable = lib.mkEnableOption "Enable touchscreen with roland backend";
-    themes.enable = lib.mkEnableOption "Manage themes over home-manager";
+
+    themes.enable = lib.mkOption {
+      type = lib.types.bool;
+      default = config.qs.enable;
+      description = "Whether to manage themes over home-manager";
+    };
   };
 
   config = lib.mkMerge [
-    (lib.mkIf cfg.enable {
-      themes.enable = lib.mkDefault true;
-
-      programs.noctalia-shell = {
+    # Noctalia – outer guard only on options, enable checks inside
+    (lib.optionalAttrs hasNoctalia {
+      programs.noctalia-shell = lib.mkIf cfg.enable {
         enable = true;
         plugins = {
-          sources = [{
-            enabled = true;
-            name = "Official Noctalia Plugins";
-            url = "https://github.com/noctalia-dev/noctalia-plugins";
-          }];
+          sources = [
+            {
+              enabled = true;
+              name = "Official Noctalia Plugins";
+              url = "https://github.com/noctalia-dev/noctalia-plugins";
+            }
+          ];
 
-          states = lib.genAttrs [
-            "clipper"
-            "polkit-agent"
-            "workspace-overview"
-            "screen-toolkit"
-          ] (_name: {
-            enabled = true;
-            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-          });
+          states =
+            lib.genAttrs [
+              "clipper"
+              "polkit-agent"
+              "workspace-overview"
+              "screen-toolkit"
+            ] (_name: {
+              enabled = true;
+              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+            });
         };
       };
 
-      xdg.configFile."noctalia/settings.json".source =
-        mkOutOfStoreSymlink "${xdgRepoPath}/noctalia-settings.json";
+      xdg.configFile."noctalia/settings.json" = lib.mkIf cfg.enable {
+        source = mkOutOfStoreSymlink "${xdgRepoPath}/noctalia-settings.json";
+      };
     })
 
     (lib.mkIf themeCfg.enable {
       gtk = {
         enable = true;
-
         theme = {
           name = "adw-gtk3";
           package = pkgs.adw-gtk3;
         };
-
         iconTheme = {
           name = "Tela-blue-dark";
           package = pkgs.tela-icon-theme;
         };
-
         cursorTheme = {
           name = "Simp1e-Breeze-Dark";
           package = pkgs.simp1e-cursors;
@@ -100,15 +111,14 @@ in
         };
       };
 
-      # Synlink theme files for flatpak applications
       xdg.dataFile = lib.mkMerge [
         (linkShareDir "themes" config.gtk.theme.package config.gtk.theme.name)
       ];
 
       xdg.configFile = builtins.listToAttrs (map (variant: {
         name = "${variant}/${variant}.conf";
-        value = { text = qtctConfig variant; };
-      }) [ "qt6ct" "qt5ct" ]);
+        value = {text = qtctConfig variant;};
+      }) ["qt6ct" "qt5ct"]);
 
       home.pointerCursor = {
         name = "Simp1e-Breeze-Dark";
@@ -126,15 +136,17 @@ in
       ];
     })
 
-    (lib.mkIf (config ? services.roland && config.services.roland.enable && cfg.enable) {
-      services.roland.settings.gestures = [
-        { num_fingers = 1;
+    (lib.optionalAttrs hasRoland {
+      services.roland.settings.gestures = lib.mkIf (cfg.enable && config.services.roland.enable) [
+        {
+          num_fingers = 1;
           kind = "SwipeUp";
-          on_edge = { Bottom = 30; };
+          on_edge = {Bottom = 30;};
           min_distance = 50.0;
           action = "pkill -SIGRTMIN wvkbd-mobintl";
         }
-        { num_fingers = 4;
+        {
+          num_fingers = 4;
           kind = "PinchIn";
           min_distance = 20.0;
           action = "${shell} launcher toggle";
@@ -142,6 +154,6 @@ in
       ];
     })
 
-    { xdg.enable = true; }
+    {xdg.enable = true;}
   ];
 }
