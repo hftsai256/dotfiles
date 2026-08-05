@@ -20,11 +20,11 @@
         eslint.enable = true;
         svelte.enable = true;
 
-        nixd = {
+        nil_ls = {
           enable = true;
           settings = {
+            nix.flake.autoArchive = false;
             formatting.command = ["alejandra"];
-            nixpkgs.expr = "import (builtins.getFlake (toString ./.)).inputs.nixpkgs { }";
           };
         };
 

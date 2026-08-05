@@ -20,7 +20,7 @@ stdenv.mkDerivation rec {
   patches = [
     (fetchurl {
       url = "https://aur.archlinux.org/cgit/aur.git/plain/qt6ct-shenanigans.patch?h=qt6ct-kde";
-      hash = "sha256-gXtwFPLT4e6Y3Y3NdEltOkSFj6cUOAZMqrqLxatR5Pk=";
+      hash = "sha256-EHiyx1SuX2D4EGiX/erQhFTSHNmjuMD2ezLz6gQLqqE=";
     })
   ];
 
