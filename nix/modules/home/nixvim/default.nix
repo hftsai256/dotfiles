@@ -1,7 +1,9 @@
-{ pkgs, specialArgs, ... }:
-let
+{
+  pkgs,
+  specialArgs,
+  ...
+}: let
   inherit (specialArgs) nixvim;
-
 in {
   imports = [
     nixvim.homeModules.nixvim
@@ -13,18 +15,13 @@ in {
     defaultEditor = true;
 
     imports = [
-      (import ./plugins { inherit pkgs; })
+      (import ./plugins.nix {inherit pkgs;})
       ./options.nix
       ./keymaps.nix
     ];
 
     performance = {
-      combinePlugins = {
-        enable = true;
-        standalonePlugins = [
-          "nvim-treesitter"
-        ];
-      };
+      combinePlugins.enable = true;
     };
 
     viAlias = true;
