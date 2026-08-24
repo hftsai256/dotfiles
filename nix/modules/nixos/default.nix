@@ -1,10 +1,15 @@
-{ config, pkgs, lib, ... }:
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   options = {
     kde.enable = lib.options.mkEnableOption "KDE Plasma desktop";
     gnome.enable = lib.options.mkEnableOption "Gnome desktop";
     opengl.enable = lib.options.mkEnableOption "GPU acceleration";
-    nixpkgs.unstable.enable = lib.options.mkEnableOption
+    nixpkgs.unstable.enable =
+      lib.options.mkEnableOption
       "use unstable branch of nixpkgs on system-level";
 
     hostname = lib.options.mkOption {
@@ -84,7 +89,7 @@
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmcsFFj11cnDsMjkZFHLzdFBn7Db84SqnWmv6EI7Rru local-admin-key"
       ];
-      extraGroups = [ "wheel" "networkmanager" "input" "scanner" "lp" "dialout" ];
+      extraGroups = ["wheel" "networkmanager" "input" "scanner" "lp" "dialout"];
       shell = pkgs.zsh;
     };
 
@@ -106,7 +111,7 @@
       killall
     ];
 
-    environment.pathsToLink = [ "/share/xdg-desktop-portal" "/share/applications" ];
+    environment.pathsToLink = ["/share/xdg-desktop-portal" "/share/applications"];
 
     programs = {
       kdeconnect.enable = true;
@@ -121,12 +126,13 @@
     };
 
     nixpkgs.config.allowUnfree = true;
+    nixpkgs.config.permittedInsecurePackages = ["pnpm-9.15.9"];
 
     nix.settings = {
       accept-flake-config = true;
       warn-dirty = false;
-      experimental-features = [ "nix-command" "flakes" "pipe-operators" ];
-      trusted-users = [ "root" "${config.user}" ];
+      experimental-features = ["nix-command" "flakes" "pipe-operators"];
+      trusted-users = ["root" "${config.user}"];
 
       extra-substituters = [
         "https://hyprland.cachix.org"
@@ -136,7 +142,6 @@
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
         "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4="
       ];
-
     };
   };
 }

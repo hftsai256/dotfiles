@@ -31,19 +31,19 @@
   colorschemes.kanagawa.enable = true;
 
   extraConfigLua = ''
-    -- Force vim.lsp.buf.hover to always pass rounded borders
+    -- Force vim.lsp.buf.hover to always pass squared borders
     local orig_hover = vim.lsp.buf.hover
     vim.lsp.buf.hover = function(opts)
       opts = opts or {}
-      opts.border = "rounded"
+      opts.border = "single"
       return orig_hover(opts)
     end
 
-    -- Force signature help to use rounded borders
+    -- Force signature help to use squared borders
     local orig_sig = vim.lsp.buf.signature_help
     vim.lsp.buf.signature_help = function(opts)
       opts = opts or {}
-      opts.border = "rounded"
+      opts.border = "single"
       return orig_sig(opts)
     end
 
@@ -66,7 +66,7 @@
         local line_num = range.start.line + 1
 
         vim.lsp.util.preview_location(location, {
-          border = "rounded",
+          border = "single",
           title = string.format(" %s:%d ", display_name, line_num),
           title_pos = "center",
         })
@@ -75,7 +75,7 @@
 
     -- Diagnostic UI Floating Window configuration
     vim.diagnostic.config({
-      virtual_text = true,
+      virtual_text = false,
       signs = true,
       underline = true,
       update_in_insert = false,
@@ -83,18 +83,11 @@
       float = {
         focusable = false,
         style = "minimal",
-        border = "rounded",
+        border = "single",
         source = "always",
         header = "",
         prefix = "",
       },
-    })
-
-    -- Auto-show diagnostic float window on CursorHold
-    vim.api.nvim_create_autocmd("CursorHold", {
-      callback = function()
-        vim.diagnostic.open_float(nil, { focusable = false, border = "rounded" })
-      end,
     })
 
     -- Fix Kanagawa/theme float border invisibility

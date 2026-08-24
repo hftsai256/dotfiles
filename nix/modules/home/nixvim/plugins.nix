@@ -16,6 +16,36 @@
   ];
 
   plugins = {
+    # Floating UI for rename (vim.ui.input) and code actions (vim.ui.select)
+    dressing = {
+      enable = true;
+      settings = {
+        input = {
+          border = "single";
+          relative = "cursor"; # Opens the rename box directly at your cursor
+        };
+        select = {
+          backend = ["telescope" "builtin"]; # Uses Telescope floating window if available
+          builtin = {
+            border = "single";
+            relative = "editor";
+          };
+        };
+      };
+    };
+
+    # Floating terminal. Replace retired lspsaga
+    toggleterm = {
+      enable = true;
+      settings = {
+        open_mapping = "[[<A-t>]]";
+        direction = "float";
+        float_opts = {
+          border = "single";
+        };
+      };
+    };
+
     # LSP & Language Configuration
     lsp = {
       enable = true;
@@ -200,6 +230,11 @@
     lualine.enable = true;
     indent-o-matic.enable = true;
     indent-blankline.enable = true;
+
+    treesitter = {
+      enable = true;
+      indent.enable = true;
+    };
     ts-autotag.enable = true;
     nvim-surround.enable = true;
     nvim-autopairs.enable = true;
