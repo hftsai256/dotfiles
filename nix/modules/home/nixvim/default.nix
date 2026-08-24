@@ -22,6 +22,7 @@ in {
 
     performance = {
       combinePlugins.enable = true;
+      combinePlugins.standalonePlugins = ["snacks.nvim"];
     };
 
     viAlias = true;

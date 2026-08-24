@@ -1,110 +1,115 @@
 {...}: {
-  # Neovim 0.11+ ships its own GLOBAL LSP/diagnostic keymaps for free the
-  # moment a server attaches (:h lsp-defaults, :h diagnostic-defaults) -
-  # none of these are redefined below, they just work:
-  #   gra  code action (n+v)   gri  implementation      grn  rename
-  #   grr  references          grt  type definition     grx  codelens.run
+  # Neovim ships its own GLOBAL LSP/diagnostic keymaps for free the moment
+  # a server attaches (:h lsp-defaults, :h diagnostic-defaults) - most of
+  # these are left alone below, they just work. VERIFIED against an actual
+  # 0.11.2 install (headless keymap dump), not just the docs - the docs
+  # site tracks Neovim's dev branch, which is ahead of any given release:
+  #   gra  code action (n+v)   grn  rename
   #   gO   document symbols    <C-s> (insert) signature help
   #   ]d [d  next/prev diagnostic   ]D [D  last/first diagnostic
   #   <C-w>d  diagnostic at cursor, floating
-  # dressing.nvim still prettifies grn's rename prompt and gra's action
-  # menu automatically, since it hooks vim.ui.input/vim.ui.select globally
-  # rather than a specific keymap.
+  # grt (type definition) and grx (codelens) were NOT in that 0.11.2 dump -
+  # they only landed as real default keymaps in 0.12.0 (see runtime/doc/news.txt
+  # for that release). You're running 0.12.4, so both are live; no custom
+  # leader mapping needed for either.
+  # snacks.nvim's input module prettifies grn's rename prompt (vim.ui.input),
+  # and snacks.picker's own ui_select integration prettifies gra's action
+  # menu (vim.ui.select) - both hook in globally rather than a specific
+  # keymap.
+  #
+  # grr and gri ARE overridden below (still on their native keys): per
+  # :h vim.lsp.buf.references()/.implementation(), the native versions dump
+  # results into the quickfix window at the bottom of the screen with no
+  # quick way to dismiss it. Pointed at snacks.picker instead, same as
+  # <leader>fr/<leader>fi - floating, fuzzy-searchable, closes on <Esc>.
+  # <leader>ci/<leader>co get the same treatment for the same reason.
+  #
+  # telescope.nvim, nvim-tree.lua, and toggleterm.nvim were all replaced by
+  # snacks.nvim modules (plugins.nix) - snacks.picker, snacks.explorer, and
+  # snacks.terminal - which is why every picker/tree binding below calls
+  # into a global `Snacks` table instead of `require('telescope.builtin')`.
   keymaps = [
     # File Tree & Navigation
     {
       mode = ["n"];
       key = "<leader>e";
-      action = "<Cmd>NvimTreeToggle<CR>";
+      action = "<Cmd>lua _G.toggle_explorer()<CR>";
       # <C-e> (the old key) is native Neovim's scroll-down-one-line;
       # <leader>e for the explorer matches the common LazyVim/NvChad
-      # convention and stops shadowing the built-in scroll.
-      options = {
-        silent = true;
-        desc = "Toggle file explorer";
-      };
+      # convention and stops shadowing the built-in scroll. The toggle
+      # helper itself lives in options.nix, next to peek_definition -
+      # snacks.explorer only has "open", not "toggle".
+      options = {silent = true; desc = "Toggle file explorer";};
     }
 
-    # Telescope - everything under <leader>f, one group, one mnemonic
+    # snacks.picker - everything under <leader>f, one group, one mnemonic
     {
       mode = ["n"];
       key = "<C-p>";
-      action = "<Cmd>lua require('telescope.builtin').find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<CR>";
-      # Matches the ctrlp.vim/fzf convention most fuzzy-finder users already have.
-      options = {
-        silent = true;
-        desc = "Find files";
-      };
+      action = "<Cmd>lua Snacks.picker.files({ hidden = true })<CR>";
+      # Matches the ctrlp.vim/fzf convention most fuzzy-finder users already
+      # have. hidden=true to keep the old find_files' --hidden behavior;
+      # .git itself stays excluded, same as before, since ripgrep ignores
+      # VCS directories even with hidden files shown.
+      options = {silent = true; desc = "Find files";};
     }
-    {
-      mode = ["n"];
-      key = "<leader>fe";
-      action = "<Cmd>lua require('telescope').extensions.file_browser.file_browser()<CR>";
-      # Was bare <leader>b, which read like a "buffers" binding (that's
-      # <leader>fb below) and sat outside the f-group its siblings live in.
-      options = {
-        silent = true;
-        desc = "File browser";
-      };
-    }
+    # <leader>fe (Telescope's file_browser extension) is gone rather than
+    # ported - snacks.explorer on <leader>e now covers create/rename/move/
+    # copy/delete itself, so a second "browse and edit files" picker would
+    # just be the same job twice.
     {
       mode = ["n"];
       key = "<leader>fg";
-      action = "<Cmd>lua require('telescope.builtin').live_grep()<CR>";
-      options = {
-        silent = true;
-        desc = "Live grep";
-      };
+      action = "<Cmd>lua Snacks.picker.grep()<CR>";
+      options = {silent = true; desc = "Grep";};
     }
     {
       mode = ["n"];
       key = "<leader>fb";
-      action = "<Cmd>lua require('telescope.builtin').buffers()<CR>";
-      options = {
-        silent = true;
-        desc = "Buffers";
-      };
+      action = "<Cmd>lua Snacks.picker.buffers()<CR>";
+      options = {silent = true; desc = "Buffers";};
     }
     {
       mode = ["n"];
       key = "<leader>fh";
-      action = "<Cmd>lua require('telescope.builtin').help_tags()<CR>";
-      options = {
-        silent = true;
-        desc = "Help tags";
-      };
+      action = "<Cmd>lua Snacks.picker.help()<CR>";
+      options = {silent = true; desc = "Help tags";};
     }
     {
       mode = ["n"];
       key = "<leader>fs";
-      action = "<Cmd>lua require('telescope.builtin').lsp_document_symbols()<CR>";
+      action = "<Cmd>lua Snacks.picker.lsp_symbols()<CR>";
       # Was bare <leader>o; native gO does the same thing with the builtin
       # picker for free, this is the fuzzy-searchable version, filed under
-      # f with the rest of the telescope pickers.
-      options = {
-        silent = true;
-        desc = "Document symbols";
-      };
+      # f with the rest of the picker bindings.
+      options = {silent = true; desc = "Document symbols";};
     }
     {
       mode = ["n"];
       key = "<leader>fr";
-      action = "<Cmd>lua require('telescope.builtin').lsp_references()<CR>";
+      action = "<Cmd>lua Snacks.picker.lsp_references()<CR>";
       # Native grr covers the plain jump/list; this is the fuzzy-searchable version.
-      options = {
-        silent = true;
-        desc = "LSP references";
-      };
+      options = {silent = true; desc = "LSP references";};
     }
     {
       mode = ["n"];
       key = "<leader>fi";
-      action = "<Cmd>lua require('telescope.builtin').lsp_implementations()<CR>";
+      action = "<Cmd>lua Snacks.picker.lsp_implementations()<CR>";
       # Native gri covers the plain jump/list; this is the fuzzy-searchable version.
-      options = {
-        silent = true;
-        desc = "LSP implementations";
-      };
+      options = {silent = true; desc = "LSP implementations";};
+    }
+    {
+      mode = ["n"];
+      key = "grr";
+      action = "<Cmd>lua Snacks.picker.lsp_references()<CR>";
+      # Overrides the native quickfix-window version - see note above.
+      options = {silent = true; desc = "LSP references (floating)";};
+    }
+    {
+      mode = ["n"];
+      key = "gri";
+      action = "<Cmd>lua Snacks.picker.lsp_implementations()<CR>";
+      options = {silent = true; desc = "LSP implementations (floating)";};
     }
 
     # General Utilities
@@ -112,10 +117,7 @@
       mode = ["n"];
       key = "<leader><Space>";
       action = "<Cmd>noh<CR>";
-      options = {
-        silent = true;
-        desc = "Clear search highlight";
-      };
+      options = {silent = true; desc = "Clear search highlight";};
     }
 
     # LSP: definition/declaration restored to their conventional keys.
@@ -149,18 +151,22 @@
       action = "<Cmd>lua vim.lsp.buf.hover()<CR>";
       options = {desc = "Hover documentation";};
     }
+    # Type definition used to be bound here as <leader>ct, standing in for
+    # "gt" (removed for shadowing native tab navigation). On confirmed
+    # Neovim 0.12.4 the native grt already does this job, so the redundant
+    # leader mapping is gone too - one fewer thing to remember.
 
-    # LSP extras with no native equivalent - kept as-is.
+    # Call hierarchy - snacks.picker instead of the native quickfix-window versions.
     {
       mode = ["n"];
       key = "<leader>ci";
-      action = "<Cmd>lua vim.lsp.buf.incoming_calls()<CR>";
+      action = "<Cmd>lua Snacks.picker.lsp_incoming_calls()<CR>";
       options = {desc = "Incoming calls";};
     }
     {
       mode = ["n"];
       key = "<leader>co";
-      action = "<Cmd>lua vim.lsp.buf.outgoing_calls()<CR>";
+      action = "<Cmd>lua Snacks.picker.lsp_outgoing_calls()<CR>";
       options = {desc = "Outgoing calls";};
     }
     {
