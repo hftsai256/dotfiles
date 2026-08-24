@@ -52,16 +52,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    hyprland = {
-      url = "github:hyprwm/Hyprland/v0.55.4";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprland-unstable = {
-      url = "github:hyprwm/Hyprland/v0.55.4";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -93,8 +83,7 @@
     };
   };
 
-  outputs = { self, ... } @ inputs:
-  let
+  outputs = {self, ...} @ inputs: let
     stateVersion = "26.05";
 
     pkgSrc = {
@@ -104,8 +93,6 @@
         lanzaboote = inputs.lanzaboote;
         home-manager = inputs.home-manager;
         nixvim = inputs.nixvim;
-        hyprland = inputs.hyprland;
-        hyprgrass = inputs.hyprgrass;
         niri = inputs.niri;
         roland = inputs.roland;
         noctalia = inputs.noctalia;
@@ -120,8 +107,6 @@
         lanzaboote = inputs.lanzaboote-unstable;
         home-manager = inputs.home-manager-unstable;
         nixvim = inputs.nixvim-unstable;
-        hyprland = inputs.hyprland-unstable;
-        hyprgrass = inputs.hyprgrass-unstable;
         niri = inputs.niri-unstable;
         roland = inputs.roland-unstable;
         noctalia = inputs.noctalia;
@@ -131,12 +116,12 @@
       };
     };
 
-    selectOverlays = selectedPkgSrc:
-    let
-      unstablePkgs = system: import inputs.nixpkgs-unstable {
-        inherit system;
-        config.allowUnfree = true;
-      };
+    selectOverlays = selectedPkgSrc: let
+      unstablePkgs = system:
+        import inputs.nixpkgs-unstable {
+          inherit system;
+          config.allowUnfree = true;
+        };
     in [
       selectedPkgSrc.nixgl.overlay
       selectedPkgSrc.niri.overlays.niri
@@ -148,8 +133,7 @@
       (import ./packages/overlay.nix)
 
       # Always source steam-related packages from unstable regardless of selected package set
-      (final: prev:
-      let
+      (final: prev: let
         upkgs = unstablePkgs prev.stdenv.hostPlatform.system;
       in {
         steam = upkgs.steam;
@@ -157,21 +141,23 @@
         steamPackages = upkgs.steamPackages;
       })
 
-      (final: prev: {
-        hyprland =
-          selectedPkgSrc.hyprland.packages.${prev.stdenv.hostPlatform.system}.hyprland;
-        xdg-desktop-portal-hyprland =
-          selectedPkgSrc.hyprland.packages.${prev.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      # Same as Hyprland
+      (final: prev: let
+        upkgs = unstablePkgs prev.stdenv.hostPlatform.system;
+      in {
+        hyprland = upkgs.hyprland;
+        xdg-desktop-portal-hyprland = upkgs.xdg-desktop-portal-hyprland;
 
-        hyprlandPlugins = prev.hyprlandPlugins // { };
+        hyprlandPlugins = prev.hyprlandPlugins // {};
       })
     ];
 
-    importPkgs = selectedPkgSrc: system: import selectedPkgSrc.nixpkgs {
-      inherit system;
-      overlays = selectOverlays selectedPkgSrc;
-      config.allowUnfree = true;
-    };
+    importPkgs = selectedPkgSrc: system:
+      import selectedPkgSrc.nixpkgs {
+        inherit system;
+        overlays = selectOverlays selectedPkgSrc;
+        config.allowUnfree = true;
+      };
 
     mkStandaloneHome = {
       user,
@@ -181,24 +167,26 @@
       homeModules ? [],
       extraSpecialArgs ? {},
       ...
-    }:
-    let
+    }: let
       username = user;
       homeDirectory = "/home/${user}";
-
     in
       selectedPkgSrc.home-manager.lib.homeManagerConfiguration {
         pkgs = importPkgs selectedPkgSrc system;
 
-        extraSpecialArgs = {
-          inherit (selectedPkgSrc) nixvim;
-        } // extraSpecialArgs;
+        extraSpecialArgs =
+          {
+            inherit (selectedPkgSrc) nixvim;
+          }
+          // extraSpecialArgs;
 
-        modules = [
-          selectedPkgSrc.home-module
-          ./users/${user}-${host}.nix
-          { home = { inherit username homeDirectory stateVersion; }; }
-        ] ++ homeModules;
+        modules =
+          [
+            selectedPkgSrc.home-module
+            ./users/${user}-${host}.nix
+            {home = {inherit username homeDirectory stateVersion;};}
+          ]
+          ++ homeModules;
       };
 
     mkNixosHomeModule = {
@@ -208,38 +196,41 @@
       selectedPkgSrc ? pkgSrc.stable,
       extraSpecialArgs ? {},
       ...
-    }:
-    let
+    }: let
       username = user;
       homeDirectory = "/home/${user}";
       nixosConfig = self.nixosConfigurations.${host}.config;
+    in {
+      home-manager = {
+        useGlobalPkgs = true;
+        useUserPackages = true;
 
-    in
-      {
-        home-manager = {
-          useGlobalPkgs = true;
-          useUserPackages = true;
-
-          users.${user}.imports = [
+        users.${user}.imports =
+          [
             ./modules/home
             ./users/${user}-${host}.nix
             selectedPkgSrc.niri.homeModules.niri
             selectedPkgSrc.roland.homeModules.default
             selectedPkgSrc.noctalia.homeModules.default
 
-            { config = with nixosConfig; {
+            {
+              config = with nixosConfig; {
                 inherit hypr;
-                home = { inherit username homeDirectory stateVersion; };
-                fonts.fontconfig = { inherit (fonts.fontconfig) enable defaultFonts; };
-            }; }
-          ] ++ homeModules;
+                home = {inherit username homeDirectory stateVersion;};
+                fonts.fontconfig = {inherit (fonts.fontconfig) enable defaultFonts;};
+              };
+            }
+          ]
+          ++ homeModules;
 
-          extraSpecialArgs = {
+        extraSpecialArgs =
+          {
             inherit (selectedPkgSrc) nixvim;
             inherit (nixosConfig) time;
-          } // extraSpecialArgs;
-        };
+          }
+          // extraSpecialArgs;
       };
+    };
 
     mkNixOS = {
       host,
@@ -253,39 +244,48 @@
       ...
     }:
       selectedPkgSrc.nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit (inputs) nixpkgs nixpkgs-unstable nixos-hardware lanzaboote impermanence;
-        } // specialArgs;
-
-        modules = [
-          { system.stateVersion = stateVersion;
-            nixpkgs.hostPlatform = system;
-            nixpkgs.overlays = selectOverlays selectedPkgSrc;
+        specialArgs =
+          {
+            inherit (inputs) nixpkgs nixpkgs-unstable nixos-hardware lanzaboote impermanence;
           }
+          // specialArgs;
 
-          selectedPkgSrc.os-module
-          ./hosts/${host}/configuration.nix
+        modules =
+          [
+            {
+              system.stateVersion = stateVersion;
+              nixpkgs.hostPlatform = system;
+              nixpkgs.overlays = selectOverlays selectedPkgSrc;
+            }
 
-          selectedPkgSrc.home-manager.nixosModules.home-manager
-        ] ++ (
-          map (user: mkNixosHomeModule {
-            inherit host user homeModules selectedPkgSrc extraSpecialArgs;
-          }) regularUsers
-        ) ++ osModules;
+            selectedPkgSrc.os-module
+            ./hosts/${host}/configuration.nix
+
+            selectedPkgSrc.home-manager.nixosModules.home-manager
+          ]
+          ++ (
+            map (user:
+              mkNixosHomeModule {
+                inherit host user homeModules selectedPkgSrc extraSpecialArgs;
+              })
+            regularUsers
+          )
+          ++ osModules;
       };
-
-  in
-  {
+  in {
     nixosConfigurations = let
-      defaultRegularUsers = [ "hftsai" ];
+      defaultRegularUsers = ["hftsai"];
 
       machines = {
         aetherforge = {
           regularUsers = defaultRegularUsers;
           selectedPkgSrc = pkgSrc.stable;
-          osModules = with pkgSrc.stable; [ disko.nixosModules.disko ];
+          osModules = with pkgSrc.stable; [disko.nixosModules.disko];
           homeModules = [];
-          specialArgs = { installDrive = "/dev/nvme0n1"; swapSize = "32G"; };
+          specialArgs = {
+            installDrive = "/dev/nvme0n1";
+            swapSize = "32G";
+          };
         };
 
         CYT-HTSAI-LINUX = {
@@ -300,24 +300,22 @@
           homeModules = [];
         };
       };
-
     in
       machines
       |> builtins.mapAttrs (host: attrs:
-          mkNixOS ({ inherit host; } // attrs));
-
+        mkNixOS ({inherit host;} // attrs));
 
     homeConfigurations = let
       homes.deck = {
         host = "steamdeck";
         selectedPkgSrc = pkgSrc.stable;
       };
-
     in
       homes
       |> builtins.mapAttrs (user: cfg: {
-          name = "${user}@${cfg.host}";
-          value = mkStandaloneHome ({ inherit user; } // cfg ); })
+        name = "${user}@${cfg.host}";
+        value = mkStandaloneHome ({inherit user;} // cfg);
+      })
       |> builtins.attrValues
       |> builtins.listToAttrs;
   };
