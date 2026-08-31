@@ -1,14 +1,24 @@
-{ config, pkgs, ... }:
-let
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: let
   inherit (config.lib.file) mkOutOfStoreSymlink;
   inherit (config.home) homeDirectory;
+  nvimRepo = "${homeDirectory}/.dotfiles/xdg_config/nvim";
 
-in
-{
-  # Workaround a bug introduced in v1.19.2 (issue #9579, PR #10456)
-  # https://github.com/NixOS/nix/pull/10456
-  # Need to symlink it manually before the PR is merged
-  xdg.configFile."nvim".source = mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/xdg_config/nvim";
+  pylsp = pkgs.python3.withPackages (ps:
+    [
+      ps.python-lsp-server
+      ps.pylsp-mypy
+      ps.pylsp-rope
+      ps.python-lsp-ruff
+      ps.python-lsp-black
+    ]
+    ++ (ps.python-lsp-server.optional-dependencies.rope or []));
+in {
+  xdg.configFile."nvim".source = lib.mkForce (mkOutOfStoreSymlink "${nvimRepo}");
 
   programs.neovim = {
     enable = true;
@@ -19,56 +29,41 @@ in
 
     withNodeJs = true;
     withPython3 = true;
-
-    plugins = with pkgs.vimPlugins; [
-      # Essential library
-      plenary-nvim
-
-      # Cosmetics
-      lualine-nvim
-      vim-hybrid
-      nvim-web-devicons
-      indent-o-matic
-
-      # Navigation
-      project-nvim
-      nvim-tree-lua
-      telescope-nvim
-      telescope-fzy-native-nvim
-
-      # LSP
-      nvim-lspconfig
-      lspsaga-nvim
-      lsp-zero-nvim
-      cmp-nvim-lsp
-      luasnip
-      cmp_luasnip
-      nvim-cmp
-      nvim-treesitter.withAllGrammars
-      vim-nix
-
-      # LSP: Language specific
-      clangd_extensions-nvim
-      coc-ltex
-      ltex_extra-nvim
-      
-      # Editing
-      nvim-surround
-    ];
+    sideloadInitLua = true;
 
     extraPackages = with pkgs; [
-      tree-sitter
-      nodePackages.bash-language-server
-      nodePackages.typescript-language-server
-      (python3Packages.callPackage ./python-lsp-server.nix {})
-      mypy
-      ruff
+      git
+      gcc
+      gnumake
+
+      alejandra
+      trash-cli
+      ghostscript
+      mermaid-cli
+      tectonic
+      zathura
+      python3Packages.pylatexenc
+
       lua-language-server
-      clang
+      typescript-language-server
+      vscode-langservers-extracted
+      svelte-language-server
       clang-tools
       nil
       ltex-ls
-      nixpkgs-fmt
+      rust-analyzer
+
+      pylsp
+      black
+      ruff
+      isort
+      mypy
     ];
+  };
+
+  programs.lazygit.enable = true;
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
   };
 }

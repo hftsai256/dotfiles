@@ -37,16 +37,6 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    nixvim = {
-      url = "github:nix-community/nixvim/nixos-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixvim-unstable = {
-      url = "github:nix-community/nixvim";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     noctalia = {
       url = "github:noctalia-dev/noctalia/v4.7.7";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -92,7 +82,6 @@
         disko = inputs.disko;
         lanzaboote = inputs.lanzaboote;
         home-manager = inputs.home-manager;
-        nixvim = inputs.nixvim;
         niri = inputs.niri;
         roland = inputs.roland;
         noctalia = inputs.noctalia;
@@ -106,7 +95,6 @@
         disko = inputs.disko-unstable;
         lanzaboote = inputs.lanzaboote-unstable;
         home-manager = inputs.home-manager-unstable;
-        nixvim = inputs.nixvim-unstable;
         niri = inputs.niri-unstable;
         roland = inputs.roland-unstable;
         noctalia = inputs.noctalia;
@@ -174,11 +162,7 @@
       selectedPkgSrc.home-manager.lib.homeManagerConfiguration {
         pkgs = importPkgs selectedPkgSrc system;
 
-        extraSpecialArgs =
-          {
-            inherit (selectedPkgSrc) nixvim;
-          }
-          // extraSpecialArgs;
+        extraSpecialArgs = extraSpecialArgs;
 
         modules =
           [
@@ -225,7 +209,6 @@
 
         extraSpecialArgs =
           {
-            inherit (selectedPkgSrc) nixvim;
             inherit (nixosConfig) time;
           }
           // extraSpecialArgs;

@@ -1,5 +1,9 @@
-{ config, pkgs, lib, ... }:
 {
+  config,
+  pkgs,
+  lib,
+  ...
+}: {
   options = {
     gfx = lib.options.mkOption {
       type = lib.types.enum ["native" "nixgl" "null"];
@@ -28,7 +32,7 @@
   };
 
   imports = [
-    ./nixvim
+    ./neovim
     ./hypr
     ./quickshell.nix
     ./fonts
@@ -52,37 +56,34 @@
 
     flatpakTheming.enable = true;
 
-    home.packages = with pkgs; [
-      ripgrep
-      fd
-      btop
-      bat
-      broot
-      yazi
-      tree
-      appimage-run
-    ] ++
-
-    lib.optionals (config.gfx == "nixgl") [
-      nixgl.auto.nixGLDefault
-      nixgl.nixVulkanIntel
-    ] ++
-
-    lib.optionals config.guiApps.enable [
-      gnome-network-displays
-      selectdefaultapplication
-      dconf-editor
-      naps2
-    ] ++
-
-    lib.optionals (config.guiApps.enable && config.guiApps.eeLab.enable) [
-      kicad
-      ngspice
-    ] ++
-
-    lib.optionals (config.guiApps.enable && config.guiApps.cadLab.enable) [
-      openscad
-    ];
+    home.packages = with pkgs;
+      [
+        ripgrep
+        fd
+        btop
+        bat
+        broot
+        yazi
+        tree
+        appimage-run
+      ]
+      ++ lib.optionals (config.gfx == "nixgl") [
+        nixgl.auto.nixGLDefault
+        nixgl.nixVulkanIntel
+      ]
+      ++ lib.optionals config.guiApps.enable [
+        gnome-network-displays
+        selectdefaultapplication
+        dconf-editor
+        naps2
+      ]
+      ++ lib.optionals (config.guiApps.enable && config.guiApps.eeLab.enable) [
+        kicad
+        ngspice
+      ]
+      ++ lib.optionals (config.guiApps.enable && config.guiApps.cadLab.enable) [
+        openscad
+      ];
 
     home.file = {
       ".local/bin" = {
@@ -91,7 +92,7 @@
       };
     };
 
-    home.sessionPath = [ "$HOME/.local/bin" ];
+    home.sessionPath = ["$HOME/.local/bin"];
 
     services.mpris-proxy.enable = true;
     services.kdeconnect = {
