@@ -34,7 +34,7 @@
   imports = [
     ./neovim
     ./hypr
-    ./quickshell.nix
+    ./noctalia.nix
     ./fonts
     ./flatpak.nix
     ./zsh

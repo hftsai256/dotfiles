@@ -7,7 +7,7 @@
   term.app = "kitty";
   rime.enable = true;
   guiApps.enable = true;
-  qs.enable = true;
+  noctalia.enable = true;
 
   # Steam Gamescope requires fonts to be linked under user's XDG path
   home.packages = [

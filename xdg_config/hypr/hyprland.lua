@@ -37,7 +37,7 @@ hl.on("hyprland.start", function()
   end
 
   hl.dispatch(hl.dsp.exec_cmd("systemctl --user import-environment && systemctl --user start hyprland-session.target"))
-  restart("noctalia-shell")
+  restart("noctalia")
   restart("iio-hyprland")
   restart("wvkbd-mobintl --hidden -L 240")
   restart("solaar --window=hide")
@@ -172,7 +172,7 @@ hl.gesture({
 
 -- ============== KEYBINDS ==============
 local mainMod          = "SUPER"
-local qs               = "noctalia-shell ipc call"
+local noctalia         = "noctalia msg"
 
 -- Layout state
 local BORDER_DWINDLE   = "rgba(ffe3aaff)"
@@ -198,18 +198,18 @@ hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("dolphin " .. (os.getenv("HOME") or "
 hl.bind(mainMod .. " + B",
   hl.dsp.exec_cmd("flatpak run com.brave.Browser --password-store=detect --disable-features=WaylandWpColorManagerV1"))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("thunderbird"))
-hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(qs .. " launcher toggle"))
-hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd(qs .. " plugin:clipper openPanel"))
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(noctalia .. " panel-toggle launcher"))
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd(noctalia .. " panel-toggle clipboard"))
 
 -- Close
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 
 -- Screenshots
-hl.bind(mainMod .. " + CTRL + 3", hl.dsp.exec_cmd("grim"))
-hl.bind(mainMod .. " + CTRL + 4", hl.dsp.exec_cmd("grim -g \"$(slurp)\""))
+hl.bind(mainMod .. " + CTRL + 3", hl.dsp.exec_cmd(noctalia .. " screenshot-fullscreen"))
+hl.bind(mainMod .. " + CTRL + 4", hl.dsp.exec_cmd(noctalia .. " screenshot-region"))
 
 -- Session menu
-hl.bind("CTRL + ALT + DELETE", hl.dsp.exec_cmd(qs .. " sessionMenu toggle"))
+hl.bind("CTRL + ALT + DELETE", hl.dsp.exec_cmd(noctalia .. " panel-toggle session"))
 
 -- Focus movement (arrow keys + hjkl)
 hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "l" }))

@@ -7,7 +7,7 @@
   term.app = "kitty";
   rime.enable = true;
   guiApps.enable = true;
-  qs.enable = true;
+  noctalia.enable = true;
 
   services.roland.enable = true;
 

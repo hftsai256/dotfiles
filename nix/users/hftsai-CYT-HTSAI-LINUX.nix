@@ -11,7 +11,7 @@
   guiApps.enable = true;
   guiApps.eeLab.enable = false;
   guiApps.cadLab.enable = false;
-  qs.enable = true;
+  noctalia.enable = true;
 
   shikane.settings = let
     homeRes   = { x = 3840; y = 2160; r = 1.5; };

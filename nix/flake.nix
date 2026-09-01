@@ -22,10 +22,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia/v4.7.7";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    # Do not follows nixpkgs: that changes the drv hash and misses noctalia.cachix.org.
+    # https://docs.noctalia.dev/noctalia/getting-started/nixos/
+    noctalia.url = "github:noctalia-dev/noctalia/v5.0.0-beta.10";
 
     niri = {
       url = "github:sodiboo/niri-flake";
@@ -56,7 +55,6 @@
       inputs.nixgl.overlay
       inputs.niri.overlays.niri
       inputs.roland.overlays.default
-      inputs.noctalia.overlays.default
 
       (import ./overlays/gfx.nix)
       (import ./overlays/libcamera.nix)

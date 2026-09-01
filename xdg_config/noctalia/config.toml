@@ -1,0 +1,78 @@
+# Noctalia v5 curated config. GUI overrides live in ~/.local/state/noctalia/settings.toml.
+# Screenshot + annotation are built-in; v4 QML plugins (screen-toolkit, clipper, polkit-agent,
+# workspace-overview) are not used.
+
+[shell]
+font_family = "Sans Serif"
+telemetry_enabled = false
+polkit_agent = true
+clipboard_enabled = true
+clipboard_image_action_command = "satty -f -"
+avatar_path = "~/.face"
+settings_show_advanced = true
+
+[shell.screenshot]
+save_to_file = true
+copy_to_clipboard = true
+pipe_to_command = true
+pipe_command = "satty -f -"
+freeze_screen = true
+
+[shell.launcher]
+app_grid = true
+sort_by_usage = true
+
+[theme]
+mode = "dark"
+source = "builtin"
+builtin = "Kanagawa"
+
+[wallpaper]
+enabled = true
+fill_mode = "crop"
+directory = "~/.dotfiles/wallpapers"
+
+[lockscreen]
+enabled = true
+lock_before_suspend = true
+
+[idle.behavior.lock]
+timeout = 300
+action = "lock"
+enabled = true
+
+[idle.behavior.screen-off]
+timeout = 660
+action = "screen_off"
+enabled = true
+
+[weather]
+enabled = true
+unit = "fahrenheit"
+
+[location]
+auto_locate = true
+
+[osd]
+position = "bottom_center"
+
+[bar.main]
+position = "left"
+enabled = true
+background_opacity = 0.93
+margin_ends = 8
+margin_edge = 8
+padding = 8
+widget_spacing = 6
+capsule = true
+reserve_space = true
+start = ["launcher", "clock", "sysmon", "active_window", "media"]
+center = ["screenshot", "workspaces"]
+end = ["tray", "clipboard", "notifications", "battery", "volume", "brightness", "control-center"]
+
+[widget.clock]
+format = "{:%H:%M} {:%a, %b %d}"
+vertical_format = "{:%H}\n{:%M}"
+
+[dock]
+enabled = false

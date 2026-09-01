@@ -5,12 +5,12 @@
   lib,
   ...
 }: let
-  cfg = config.qs;
+  cfg = config.noctalia;
   themeCfg = config.themes;
-  shell = "noctalia-shell ipc call";
+  shell = "noctalia msg";
 
   hasRoland = lib.hasAttrByPath ["services" "roland"] options;
-  hasNoctalia = lib.hasAttrByPath ["programs" "noctalia-shell"] options;
+  hasNoctalia = lib.hasAttrByPath ["programs" "noctalia"] options;
 
   inherit (config.lib.file) mkOutOfStoreSymlink;
   inherit (config.home) homeDirectory;
@@ -43,44 +43,25 @@
   };
 in {
   options = {
-    qs.enable = lib.mkEnableOption "Quickshell/Noctalia module";
+    noctalia.enable = lib.mkEnableOption "Noctalia shell";
 
     themes.enable = lib.mkOption {
       type = lib.types.bool;
-      default = config.qs.enable;
+      default = config.noctalia.enable;
       description = "Whether to manage themes over home-manager";
     };
   };
 
   config = lib.mkMerge [
-    # Noctalia – outer guard only on options, enable checks inside
     (lib.optionalAttrs hasNoctalia {
-      programs.noctalia-shell = lib.mkIf cfg.enable {
+      programs.noctalia = lib.mkIf cfg.enable {
         enable = true;
-        plugins = {
-          sources = [
-            {
-              enabled = true;
-              name = "Official Noctalia Plugins";
-              url = "https://github.com/noctalia-dev/noctalia-plugins";
-            }
-          ];
-
-          states =
-            lib.genAttrs [
-              "clipper"
-              "polkit-agent"
-              "workspace-overview"
-              "screen-toolkit"
-            ] (_name: {
-              enabled = true;
-              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-            });
-        };
       };
 
-      xdg.configFile."noctalia/settings.json" = lib.mkIf cfg.enable {
-        source = mkOutOfStoreSymlink "${xdgRepoPath}/noctalia-settings.json";
+      home.packages = lib.mkIf cfg.enable [pkgs.satty];
+
+      xdg.configFile."noctalia/config.toml" = lib.mkIf cfg.enable {
+        source = mkOutOfStoreSymlink "${xdgRepoPath}/noctalia/config.toml";
       };
     })
 
@@ -148,7 +129,7 @@ in {
           num_fingers = 4;
           kind = "PinchIn";
           min_distance = 20.0;
-          action = "${shell} launcher toggle";
+          action = "${shell} panel-toggle launcher";
         }
       ];
     })
