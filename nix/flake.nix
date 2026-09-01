@@ -12,17 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    disko-unstable = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     lanzaboote = {
-      url = "github:nix-community/lanzaboote";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    lanzaboote-unstable = {
       url = "github:nix-community/lanzaboote";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -30,11 +20,6 @@
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    home-manager-unstable = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     noctalia = {
@@ -47,110 +32,60 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    niri-unstable = {
-      url = "github:sodiboo/niri-flake";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
     roland = {
       url = "github:hftsai256/roland";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    roland-unstable = {
-      url = "github:hftsai256/roland";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     nixgl = {
       url = "github:guibou/nixGL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixgl-unstable = {
-      url = "github:guibou/nixGL";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
   };
 
   outputs = {self, ...} @ inputs: let
     stateVersion = "26.05";
 
-    pkgSrc = {
-      stable = {
-        nixpkgs = inputs.nixpkgs;
-        disko = inputs.disko;
-        lanzaboote = inputs.lanzaboote;
-        home-manager = inputs.home-manager;
-        niri = inputs.niri;
-        roland = inputs.roland;
-        noctalia = inputs.noctalia;
-        nixgl = inputs.nixgl;
-        os-module = ./modules/nixos;
-        home-module = ./modules/home;
-      };
-
-      unstable = {
-        nixpkgs = inputs.nixpkgs-unstable;
-        disko = inputs.disko-unstable;
-        lanzaboote = inputs.lanzaboote-unstable;
-        home-manager = inputs.home-manager-unstable;
-        niri = inputs.niri-unstable;
-        roland = inputs.roland-unstable;
-        noctalia = inputs.noctalia;
-        nixgl = inputs.nixgl-unstable;
-        os-module = ./modules/nixos-unstable;
-        home-module = ./modules/home;
-      };
-    };
-
-    selectOverlays = selectedPkgSrc: let
+    overlays = let
       unstablePkgs = system:
         import inputs.nixpkgs-unstable {
           inherit system;
           config.allowUnfree = true;
         };
     in [
-      selectedPkgSrc.nixgl.overlay
-      selectedPkgSrc.niri.overlays.niri
-      selectedPkgSrc.roland.overlays.default
-      selectedPkgSrc.noctalia.overlays.default
+      inputs.nixgl.overlay
+      inputs.niri.overlays.niri
+      inputs.roland.overlays.default
+      inputs.noctalia.overlays.default
 
       (import ./overlays/gfx.nix)
       (import ./overlays/libcamera.nix)
+
+      # Steam and Hyprland always come from unstable; the rest of the system is 26.05.
+      (final: prev: let
+        upkgs = unstablePkgs prev.stdenv.hostPlatform.system;
+      in {
+        inherit (upkgs)
+          steam
+          steam-run
+          steamPackages
+          hyprland
+          xdg-desktop-portal-hyprland
+          hyprlandPlugins;
+      })
+
       (import ./packages/overlay.nix)
-
-      # Always source steam-related packages from unstable regardless of selected package set
-      (final: prev: let
-        upkgs = unstablePkgs prev.stdenv.hostPlatform.system;
-      in {
-        steam = upkgs.steam;
-        steam-run = upkgs.steam-run;
-        steamPackages = upkgs.steamPackages;
-      })
-
-      # Same as Hyprland
-      (final: prev: let
-        upkgs = unstablePkgs prev.stdenv.hostPlatform.system;
-      in {
-        hyprland = upkgs.hyprland;
-        xdg-desktop-portal-hyprland = upkgs.xdg-desktop-portal-hyprland;
-
-        hyprlandPlugins = prev.hyprlandPlugins // {};
-      })
     ];
 
-    importPkgs = selectedPkgSrc: system:
-      import selectedPkgSrc.nixpkgs {
-        inherit system;
-        overlays = selectOverlays selectedPkgSrc;
+    importPkgs = system:
+      import inputs.nixpkgs {
+        inherit system overlays;
         config.allowUnfree = true;
       };
 
     mkStandaloneHome = {
       user,
       host,
-      selectedPkgSrc ? pkgSrc.stable,
       system ? "x86_64-linux",
       homeModules ? [],
       extraSpecialArgs ? {},
@@ -159,14 +94,14 @@
       username = user;
       homeDirectory = "/home/${user}";
     in
-      selectedPkgSrc.home-manager.lib.homeManagerConfiguration {
-        pkgs = importPkgs selectedPkgSrc system;
+      inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = importPkgs system;
 
         extraSpecialArgs = extraSpecialArgs;
 
         modules =
           [
-            selectedPkgSrc.home-module
+            ./modules/home
             ./users/${user}-${host}.nix
             {home = {inherit username homeDirectory stateVersion;};}
           ]
@@ -177,7 +112,6 @@
       host,
       user,
       homeModules ? [],
-      selectedPkgSrc ? pkgSrc.stable,
       extraSpecialArgs ? {},
       ...
     }: let
@@ -193,9 +127,9 @@
           [
             ./modules/home
             ./users/${user}-${host}.nix
-            selectedPkgSrc.niri.homeModules.niri
-            selectedPkgSrc.roland.homeModules.default
-            selectedPkgSrc.noctalia.homeModules.default
+            inputs.niri.homeModules.niri
+            inputs.roland.homeModules.default
+            inputs.noctalia.homeModules.default
 
             {
               config = with nixosConfig; {
@@ -218,7 +152,6 @@
     mkNixOS = {
       host,
       regularUsers,
-      selectedPkgSrc ? pkgSrc.stable,
       system ? "x86_64-linux",
       osModules ? [],
       homeModules ? [],
@@ -226,10 +159,10 @@
       extraSpecialArgs ? {},
       ...
     }:
-      selectedPkgSrc.nixpkgs.lib.nixosSystem {
+      inputs.nixpkgs.lib.nixosSystem {
         specialArgs =
           {
-            inherit (inputs) nixpkgs nixpkgs-unstable nixos-hardware lanzaboote impermanence;
+            inherit (inputs) nixos-hardware lanzaboote impermanence;
           }
           // specialArgs;
 
@@ -238,18 +171,18 @@
             {
               system.stateVersion = stateVersion;
               nixpkgs.hostPlatform = system;
-              nixpkgs.overlays = selectOverlays selectedPkgSrc;
+              nixpkgs.overlays = overlays;
             }
 
-            selectedPkgSrc.os-module
+            ./modules/nixos
             ./hosts/${host}/configuration.nix
 
-            selectedPkgSrc.home-manager.nixosModules.home-manager
+            inputs.home-manager.nixosModules.home-manager
           ]
           ++ (
             map (user:
               mkNixosHomeModule {
-                inherit host user homeModules selectedPkgSrc extraSpecialArgs;
+                inherit host user homeModules extraSpecialArgs;
               })
             regularUsers
           )
@@ -262,8 +195,7 @@
       machines = {
         aetherforge = {
           regularUsers = defaultRegularUsers;
-          selectedPkgSrc = pkgSrc.stable;
-          osModules = with pkgSrc.stable; [disko.nixosModules.disko];
+          osModules = [inputs.disko.nixosModules.disko];
           homeModules = [];
           specialArgs = {
             installDrive = "/dev/nvme0n1";
@@ -273,13 +205,11 @@
 
         CYT-HTSAI-LINUX = {
           regularUsers = defaultRegularUsers;
-          selectedPkgSrc = pkgSrc.stable;
           homeModules = [];
         };
 
         maplebright = {
           regularUsers = defaultRegularUsers;
-          selectedPkgSrc = pkgSrc.stable;
           homeModules = [];
         };
       };
@@ -291,7 +221,6 @@
     homeConfigurations = let
       homes.deck = {
         host = "steamdeck";
-        selectedPkgSrc = pkgSrc.stable;
       };
     in
       homes

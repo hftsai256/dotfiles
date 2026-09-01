@@ -1,10 +1,10 @@
-{ lib, ... }:
+{ config, lib, ... }:
 {
   options = {
     hydra.enable = lib.options.mkEnableOption "local build/cache server";
   };
 
-  config.nix = {
+  config.nix = lib.mkIf config.hydra.enable {
     buildMachines = [ {
       hostName = "hydra.trusted.internal";
       sshUser = "remotebuild";

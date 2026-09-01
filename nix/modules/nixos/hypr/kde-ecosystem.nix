@@ -42,7 +42,6 @@ in
 
     xdg.portal = {
       extraPortals = with pkgs; [
-        xdg-desktop-portal-hyprland
         kdePackages.xdg-desktop-portal-kde
         xdg-desktop-portal-gtk
       ];

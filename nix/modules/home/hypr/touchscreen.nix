@@ -6,6 +6,7 @@
   ...
 }: let
   hasRoland = lib.hasAttrByPath ["services" "roland"] options;
+
 in {
   config = lib.mkIf config.hypr.enable (
     lib.optionalAttrs hasRoland {

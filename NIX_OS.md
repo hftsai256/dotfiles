@@ -147,7 +147,7 @@ Everything (including Home Manager profiles) activates on rebuild.
 - **/persist** – must have `neededForBoot = true;` (already in your `disk-configuration.nix`).
 - **Secure Boot / lanzaboote** – disable temporarily for first install if you hit issues (`secureBoot.enable = false;` in your host config).
 - **Impermanence** – everything outside `/persist` and `/nix` is ephemeral.
-- **flake structure** – all hosts live under `nix/hosts/<hostname>/`. `aetherforge` already uses unstable + disko.
+- **flake structure** – all hosts live under `nix/hosts/<hostname>/`. `aetherforge` uses stable (nixos-26.05) + disko, with Steam and Hyprland pinned from nixos-unstable.
 - **Re-provisioning** – just PXE boot again and re-run nixos-anywhere. Disko will wipe and re-create everything.
 
 ## References

@@ -31,7 +31,7 @@ Apply user-level configurations from this repository on hosts where Nix is used 
    Run the provided script:
 
    ```bash
-   ~/.dotfiles/nix/scripts/nixhm-apply
+   ~/.dotfiles/scripts/nixhm-apply
    ```
 
    - If Nix is not installed, the script automatically installs it via the Determinate Systems installer.

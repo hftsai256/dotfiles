@@ -67,10 +67,12 @@ in
   };
 
   config = let
+    enable32Bit = lib.mkOverride 150 config.gaming.enable;
+
     graphics = {
       amd = {
         enable = true;
-        enable32Bit = lib.mkOverride 150 config.gaming.enable;
+        inherit enable32Bit;
         extraPackages = with pkgs; [
           amdenc
         ];
@@ -78,10 +80,20 @@ in
 
       intel = {
         enable = true;
-        enable32Bit = lib.mkOverride 150 config.gaming.enable;
+        inherit enable32Bit;
         extraPackages = with pkgs; [
           vpl-gpu-rt
         ];
+      };
+
+      nvidia = {
+        enable = true;
+        inherit enable32Bit;
+      };
+
+      virgl = {
+        enable = true;
+        inherit enable32Bit;
       };
     };
 
@@ -92,7 +104,7 @@ in
     '';
 
   in {
-    hardware.graphics = graphics.${gpu.type};
+    hardware.graphics = lib.mkIf (gpu.type != "headless") graphics.${gpu.type};
     hardware.xone.enable = cfg.enable;
 
     environment.systemPackages = lib.optionals (gpu.type != "headless") [

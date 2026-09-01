@@ -1,7 +1,7 @@
 { config, lib, ... }:
 {
   options = {
-    shikane.enable = lib.mkEnableOption "Kanshi dynamic display management";
+    shikane.enable = lib.mkEnableOption "Shikane dynamic display management";
     shikane.settings = lib.mkOption {
       default = [];
       description = "Shikane settings.";

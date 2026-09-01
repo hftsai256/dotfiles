@@ -44,7 +44,6 @@
 in {
   options = {
     qs.enable = lib.mkEnableOption "Quickshell/Noctalia module";
-    touchscreen.enable = lib.mkEnableOption "Enable touchscreen with roland backend";
 
     themes.enable = lib.mkOption {
       type = lib.types.bool;

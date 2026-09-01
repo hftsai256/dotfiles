@@ -29,7 +29,7 @@ See [HOME_MANAGER.md](./HOME_MANAGER.md). In short:
 
 ```bash
 git clone https://git.htwillows.net/hftsai256/dotfiles.git ~/.dotfiles
-~/.dotfiles/nix/scripts/nixhm-apply
+~/.dotfiles/scripts/nixhm-apply
 ```
 
 The script installs Nix if needed, then presents a profile menu.

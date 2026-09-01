@@ -8,9 +8,6 @@
     kde.enable = lib.options.mkEnableOption "KDE Plasma desktop";
     gnome.enable = lib.options.mkEnableOption "Gnome desktop";
     opengl.enable = lib.options.mkEnableOption "GPU acceleration";
-    nixpkgs.unstable.enable =
-      lib.options.mkEnableOption
-      "use unstable branch of nixpkgs on system-level";
 
     hostname = lib.options.mkOption {
       type = lib.types.nonEmptyStr;
