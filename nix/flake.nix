@@ -26,6 +26,11 @@
     # https://docs.noctalia.dev/noctalia/getting-started/nixos/
     noctalia.url = "github:noctalia-dev/noctalia/v5.0.0-beta.10";
 
+    noctalia-greeter = {
+      url = "github:noctalia-dev/noctalia-greeter";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     niri = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -176,6 +181,7 @@
             ./hosts/${host}/configuration.nix
 
             inputs.home-manager.nixosModules.home-manager
+            inputs.noctalia-greeter.nixosModules.default
           ]
           ++ (
             map (user:

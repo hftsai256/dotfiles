@@ -21,6 +21,7 @@
         "/var/lib/systemd/coredump"
         "/var/lib/sbctl"
         "/var/lib/flatpak"
+        "/var/lib/noctalia-greeter"
         "/etc/NetworkManager/system-connections"
         "/etc/nixos"
         "/etc/ssh"
