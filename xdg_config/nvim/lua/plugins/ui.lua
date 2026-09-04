@@ -1,5 +1,20 @@
+require("kanagawa").setup({
+  transparent = true,
+  colors = {
+    theme = {
+      all = {
+        ui = {
+          bg_gutter = "none",
+        },
+      },
+    },
+  },
+})
+
 vim.cmd.colorscheme("kanagawa")
 
+-- Kitty already applies term.opacity (0.9). Clearing nvim's background
+-- lets that terminal alpha show through instead of painting an opaque canvas.
 vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
 vim.api.nvim_set_hl(0, "FloatBorder", { link = "Normal" })
 

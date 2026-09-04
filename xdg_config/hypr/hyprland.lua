@@ -122,8 +122,27 @@ hl.animation({ leaf = "fade", enabled = true, speed = 6, bezier = "default" })
 hl.animation({ leaf = "workspaces", enabled = true, speed = 8, bezier = "default", style = "slidevert" })
 
 -- ============== SCROLLING LAYOUT ==============
+-- Horizontal scale: 1.0 of the layout is 90% of the monitor so the next
+-- column peeks. All column widths (default, presets, maximize) use this.
+local SCROLL_SCALE = 0.98
+local function scrollWidth(frac)
+  if frac == 1.0 then
+    return frac
+  end
+
+  return frac * SCROLL_SCALE
+end
 hl.config({
-  scrolling = { fullscreen_on_one_column = false }
+  scrolling = {
+    fullscreen_on_one_column = false,
+    column_width = scrollWidth(0.5),
+    explicit_column_widths = table.concat({
+      scrollWidth(1 / 3),
+      scrollWidth(0.5),
+      scrollWidth(2 / 3),
+      scrollWidth(1.0),
+    }, ", "),
+  }
 })
 
 -- ============== XWAYLAND ==============
@@ -146,6 +165,44 @@ if hyprgrass then
   }
 end
 
+-- Per-workspace layout. general.layout is only the fallback for workspaces
+-- with no rule. Border color is a window rule on that workspace, not global.
+-- See https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
+local BORDER_DWINDLE   = "rgba(ffe3aaff)"
+local BORDER_SCROLLING = "rgba(aaffb2ff)"
+local BORDER_INACTIVE  = "rgba(6d6483ff)"
+
+local function activeWorkspace()
+  return hl.get_active_special_workspace() or hl.get_active_workspace()
+end
+
+local function workspaceLayout()
+  local workspace = activeWorkspace()
+  return workspace and workspace.tiled_layout or "dwindle"
+end
+
+local function workspaceKey(workspace)
+  if workspace.special then
+    return tostring(workspace.name)
+  end
+  return tostring(workspace.id)
+end
+
+local function setWorkspaceLayout(name)
+  local workspace = activeWorkspace()
+  if not workspace then
+    return
+  end
+  local key = workspaceKey(workspace)
+  local active = name == "scrolling" and BORDER_SCROLLING or BORDER_DWINDLE
+  hl.workspace_rule({ workspace = key, layout = name })
+  hl.window_rule({
+    name = "layout-border-" .. key,
+    match = { workspace = key },
+    border_color = active .. " " .. BORDER_INACTIVE,
+  })
+end
+
 -- ============== GESTURES (trackpad) ==============
 -- 3-finger vertical swipe → switch workspace
 hl.gesture({ fingers = 3, direction = "vertical", action = "workspace" })
@@ -155,7 +212,7 @@ hl.gesture({
   fingers = 3,
   direction = "left",
   action = function()
-    if currentLayout == "scrolling" then
+    if workspaceLayout() == "scrolling" then
       hl.dispatch(hl.dsp.layout("move +col"))
     end
   end
@@ -164,7 +221,7 @@ hl.gesture({
   fingers = 3,
   direction = "right",
   action = function()
-    if currentLayout == "scrolling" then
+    if workspaceLayout() == "scrolling" then
       hl.dispatch(hl.dsp.layout("move -col"))
     end
   end
@@ -173,24 +230,6 @@ hl.gesture({
 -- ============== KEYBINDS ==============
 local mainMod          = "SUPER"
 local noctalia         = "noctalia msg"
-
--- Layout state
-local BORDER_DWINDLE   = "rgba(ffe3aaff)"
-local BORDER_SCROLLING = "rgba(aaffb2ff)"
-local currentLayout    = "dwindle"
-
-local function setLayout(name)
-  currentLayout = name
-  hl.config({
-    general = {
-      layout = name,
-      col = {
-        active_border   = name == "scrolling" and BORDER_SCROLLING or BORDER_DWINDLE,
-        inactive_border = "rgba(6d6483ff)",
-      },
-    }
-  })
-end
 
 -- Applications
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("kitty"))
@@ -221,13 +260,13 @@ hl.bind(mainMod .. " + L", hl.dsp.focus({ direction = "r" }))
 hl.bind(mainMod .. " + K", hl.dsp.focus({ direction = "u" }))
 hl.bind(mainMod .. " + J", hl.dsp.focus({ direction = "d" }))
 
--- Layout toggle (dwindle ↔ scrolling)
+-- Layout toggle for the current workspace only (dwindle ↔ scrolling)
 hl.bind(mainMod .. " + SHIFT + semicolon", function()
-  setLayout(currentLayout == "dwindle" and "scrolling" or "dwindle")
+  setWorkspaceLayout(workspaceLayout() == "dwindle" and "scrolling" or "dwindle")
 end)
 
 -- Layout controls (scrolling layout only)
--- Tap: colresize 1.0; Hold: fullscreen (fullscreen works in both layouts)
+-- Tap: colresize to "full" (90%, next column peeks); Hold: compositor fullscreen
 local fHoldFired = false
 local fHoldTimer = nil
 hl.bind(mainMod .. " + F", function()
@@ -242,33 +281,33 @@ hl.bind(mainMod .. " + F", function()
     fHoldTimer:set_enabled(false)
     fHoldTimer = nil
   end
-  if not fHoldFired and currentLayout == "scrolling" then
-    hl.dispatch(hl.dsp.layout("colresize 1.0"))
+  if not fHoldFired and workspaceLayout() == "scrolling" then
+    hl.dispatch(hl.dsp.layout("colresize " .. tostring(scrollWidth(1.0))))
   end
 end, { release = true })
 
 hl.bind(mainMod .. " + R", function()
-  if currentLayout == "scrolling" then
+  if workspaceLayout() == "scrolling" then
     hl.dispatch(hl.dsp.layout("colresize +conf"))
   end
 end)
 hl.bind(mainMod .. " + SHIFT + R", function()
-  if currentLayout == "scrolling" then
+  if workspaceLayout() == "scrolling" then
     hl.dispatch(hl.dsp.layout("colresize -conf"))
   end
 end)
 hl.bind(mainMod .. " + bracketleft", function()
-  if currentLayout == "scrolling" then
+  if workspaceLayout() == "scrolling" then
     hl.dispatch(hl.dsp.layout("swapcol l"))
   end
 end)
 hl.bind(mainMod .. " + bracketright", function()
-  if currentLayout == "scrolling" then
+  if workspaceLayout() == "scrolling" then
     hl.dispatch(hl.dsp.layout("swapcol r"))
   end
 end)
 hl.bind(mainMod .. " + backslash", function()
-  if currentLayout == "scrolling" then
+  if workspaceLayout() == "scrolling" then
     hl.dispatch(hl.dsp.layout("promote"))
   end
 end)
