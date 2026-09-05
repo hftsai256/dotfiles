@@ -40,11 +40,25 @@
     ./zsh
     ./term.nix
     ./rime.nix
+    ./pi-coding-agent.nix
   ];
 
   config = {
     programs = {
       home-manager.enable = true;
+
+      pi-coding-agent = {
+        enable = true;
+        settings.packages = [
+          "npm:pi-markdown-preview"
+          "npm:@dietrichgebert/ponytail"
+          "npm:pi-hermes-memory"
+        ];
+        extraPackages = with pkgs; [
+          pandoc
+          chromium
+        ];
+      };
 
       git = {
         enable = true;

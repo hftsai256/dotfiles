@@ -68,13 +68,16 @@
       (final: prev: let
         upkgs = unstablePkgs prev.stdenv.hostPlatform.system;
       in {
-        inherit (upkgs)
+        inherit
+          (upkgs)
           steam
           steam-run
           steamPackages
           hyprland
           xdg-desktop-portal-hyprland
-          hyprlandPlugins;
+          hyprlandPlugins
+          pi-coding-agent
+          ;
       })
 
       (import ./packages/overlay.nix)
