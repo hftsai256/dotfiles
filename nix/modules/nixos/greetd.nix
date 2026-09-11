@@ -33,7 +33,7 @@ in
       enable = true;
       settings = {
         initial_session = lib.mkIf config.gaming.console.enable {
-          command = "${pkgs.gamescope}/bin/gamescope --steam -- steam -tenfoot -steamos3 -pipewire-dmabuf";
+          command = "${pkgs.gamescope}/bin/gamescope --steam --xwayland-count 2 -- steam -gamepadui -steamos3 -pipewire-dmabuf";
           user = config.user;
         };
 

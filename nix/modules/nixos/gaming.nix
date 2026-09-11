@@ -131,7 +131,9 @@ in
 
       gamescopeSession = {
         enable = lib.mkDefault cfg.gamescope.enable;
-        steamArgs = [ "-tenfoot" "-pipewire-dmabuf" "-steamos3" ];
+        # Steam UI and the game on separate XWaylands so QAM cannot steal game focus
+        args = [ "--xwayland-count" "2" ];
+        steamArgs = [ "-gamepadui" "-steamos3" "-pipewire-dmabuf" ];
       };
 
       protontricks.enable = true;
