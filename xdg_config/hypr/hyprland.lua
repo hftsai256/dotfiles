@@ -36,7 +36,9 @@ hl.on("hyprland.start", function()
     hl.dispatch(hl.dsp.exec_cmd("sh -c 'pgrep -x " .. bin .. " && pkill -x " .. bin .. "; " .. cmd .. "; true'"))
   end
 
-  hl.dispatch(hl.dsp.exec_cmd("systemctl --user import-environment && systemctl --user start hyprland-session.target"))
+  hl.dispatch(hl.dsp.exec_cmd(
+    "dbus-update-activation-environment --systemd --all && systemctl --user stop hyprland-session.target && systemctl --user start hyprland-session.target"
+  ))
   restart("noctalia")
   restart("iio-hyprland")
   restart("wvkbd-mobintl --hidden -L 240")

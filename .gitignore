@@ -9,6 +9,10 @@ xdg_config/nvim/plugin
 xdg_config/nvim/undodir
 xdg_config/nvim/nvim-pack-lock.json
 
+# Managed by Noctalia
+# xdg_config/foot/themes
+# xdg_config/tmux/themes
+
 # Other repository
 rime-liur-lua/
 

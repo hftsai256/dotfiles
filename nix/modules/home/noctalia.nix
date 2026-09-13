@@ -60,8 +60,11 @@ in {
 
       home.packages = lib.mkIf cfg.enable [pkgs.satty];
 
-      xdg.configFile."noctalia/config.toml" = lib.mkIf cfg.enable {
-        source = mkOutOfStoreSymlink "${xdgRepoPath}/noctalia/config.toml";
+      xdg.configFile = lib.mkIf cfg.enable {
+        "noctalia/config.toml".source =
+          mkOutOfStoreSymlink "${xdgRepoPath}/noctalia/config.toml";
+        "noctalia/palettes".source =
+          mkOutOfStoreSymlink "${xdgRepoPath}/noctalia/palettes";
       };
     })
 

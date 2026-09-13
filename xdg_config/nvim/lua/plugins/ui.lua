@@ -1,17 +1,5 @@
-require("kanagawa").setup({
-  transparent = true,
-  colors = {
-    theme = {
-      all = {
-        ui = {
-          bg_gutter = "none",
-        },
-      },
-    },
-  },
-})
-
-vim.cmd.colorscheme("kanagawa")
+require("hybrid").setup({ transparent = true })
+vim.cmd.colorscheme("hybrid")
 
 -- foot already applies background alpha. Clearing nvim's background
 -- lets that terminal alpha show through instead of painting an opaque canvas.

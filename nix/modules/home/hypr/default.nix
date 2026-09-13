@@ -31,10 +31,19 @@ in {
   config = lib.mkIf config.hypr.enable {
     wayland.windowManager.hyprland = {
       enable = true;
-      systemd.enable = true;
-      systemd.variables = [ "--all" ];
+      systemd.enable = false;
       package = null;
       portalPackage = null;
+    };
+
+    systemd.user.targets.hyprland-session = {
+      Unit = {
+        Description = "Hyprland compositor session";
+        Documentation = [ "man:systemd.special(7)" ];
+        BindsTo = [ "graphical-session.target" ];
+        Wants = [ "graphical-session-pre.target" ];
+        After = [ "graphical-session-pre.target" ];
+      };
     };
 
     xdg.configFile = {

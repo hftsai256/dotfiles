@@ -4,7 +4,7 @@ end
 
 vim.pack.add({
   gh("folke/snacks.nvim"),
-  gh("rebelot/kanagawa.nvim"),
+  gh("HoNamDuong/hybrid.nvim"),
   gh("neovim/nvim-lspconfig"),
   gh("lewis6991/gitsigns.nvim"),
   gh("lervag/vimtex"),

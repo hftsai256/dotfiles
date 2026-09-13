@@ -24,8 +24,8 @@ sort_by_usage = true
 
 [theme]
 mode = "dark"
-source = "builtin"
-builtin = "Kanagawa"
+source = "custom"
+custom_palette = "Hybrid"
 
 [wallpaper]
 enabled = true
