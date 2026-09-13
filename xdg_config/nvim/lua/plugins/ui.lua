@@ -6,7 +6,11 @@ vim.cmd.colorscheme("hybrid")
 vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
 vim.api.nvim_set_hl(0, "FloatBorder", { link = "Normal" })
 
-require("lualine").setup()
+require("lualine").setup({
+  tabline = {
+    lualine_a = { { "tabs", mode = 2 } },
+  },
+})
 require("nvim-web-devicons").setup()
 
 vim.diagnostic.config({
