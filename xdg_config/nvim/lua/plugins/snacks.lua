@@ -7,8 +7,8 @@ require("snacks").setup({
     notify = true,
   },
 
-  -- Inline image rendering for terminals that support a graphics
-  -- protocol (kitty graphics protocol - the default per term.nix).
+  -- Inline image rendering when the terminal speaks kitty or iTerm2
+  -- graphics. foot does not; snacks then falls back to text.
   image = {
     enabled = true,
     doc = {

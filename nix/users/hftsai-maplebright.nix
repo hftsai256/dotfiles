@@ -4,7 +4,7 @@
   email = "hftsai256@gmail.com";
   gfx = "native";
 
-  term.app = "kitty";
+  term.app = "foot";
   rime.enable = true;
   guiApps.enable = true;
   noctalia.enable = true;

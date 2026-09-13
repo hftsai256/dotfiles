@@ -22,8 +22,6 @@ in {
 
   kitty-nixgl = patchGlDesktopEntry prev.kitty;
 
-  alacritty-nixgl = patchGlDesktopEntry prev.alacritty;
-
   foot-nixgl = patchGlDesktopEntry prev.foot;
 
   null = prev.runCommand "null" {} ''

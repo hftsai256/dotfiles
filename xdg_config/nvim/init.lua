@@ -17,6 +17,7 @@ vim.pack.add({
   gh("kylechui/nvim-surround"),
   gh("windwp/nvim-autopairs"),
   gh("folke/which-key.nvim"),
+  gh("alexghergh/nvim-tmux-navigation"),
 }, { confirm = false, load = true })
 
 require("config")

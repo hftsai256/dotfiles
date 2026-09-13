@@ -232,7 +232,7 @@ local mainMod          = "SUPER"
 local noctalia         = "noctalia msg"
 
 -- Applications
-hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("kitty"))
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("foot"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("dolphin " .. (os.getenv("HOME") or "~")))
 hl.bind(mainMod .. " + B",
   hl.dsp.exec_cmd("flatpak run com.brave.Browser --password-store=detect --disable-features=WaylandWpColorManagerV1"))

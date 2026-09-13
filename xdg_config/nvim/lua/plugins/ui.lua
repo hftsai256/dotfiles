@@ -13,7 +13,7 @@ require("kanagawa").setup({
 
 vim.cmd.colorscheme("kanagawa")
 
--- Kitty already applies term.opacity (0.9). Clearing nvim's background
+-- foot already applies background alpha. Clearing nvim's background
 -- lets that terminal alpha show through instead of painting an opaque canvas.
 vim.api.nvim_set_hl(0, "NormalFloat", { link = "Normal" })
 vim.api.nvim_set_hl(0, "FloatBorder", { link = "Normal" })

@@ -135,3 +135,14 @@ end, { desc = "LazyGit (root dir)" })
 map({ "n", "t" }, "<A-t>", function()
   Snacks.terminal.toggle()
 end, { desc = "Toggle floating terminal" })
+
+require("nvim-tmux-navigation").setup({
+  disable_when_zoomed = true,
+  keybindings = {
+    left = "<C-h>",
+    down = "<C-j>",
+    up = "<C-k>",
+    right = "<C-l>",
+    last_active = "<C-\\>",
+  },
+})

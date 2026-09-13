@@ -6,7 +6,7 @@
   email = "htsai@cytonome.com";
   gfx = "native";
 
-  term.app = "kitty";
+  term.app = "foot";
   rime.enable = true;
   guiApps.enable = true;
   guiApps.eeLab.enable = false;
