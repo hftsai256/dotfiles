@@ -31,8 +31,25 @@ in {
     home.packages = [
       pkgs.xdg-terminal-exec
       pkgs.tmux
+      pkgs.wofi
     ] ++ lib.optional (config.term.app == "foot") foot-pkg."${config.gfx}"
       ++ lib.optional (config.term.app == "kitty") kitty-pkg."${config.gfx}";
+
+    home.file = {
+      ".tmux/plugins/cpu".source =
+        "${pkgs.tmuxPlugins.cpu}/share/tmux-plugins/cpu";
+      ".tmux/plugins/resurrect".source =
+        "${pkgs.tmuxPlugins.resurrect}/share/tmux-plugins/resurrect";
+      ".tmux/plugins/continuum".source =
+        "${pkgs.tmuxPlugins.continuum}/share/tmux-plugins/continuum";
+    };
+
+    xdg.desktopEntries.tmux-pick = {
+      name = "tmux sessions";
+      exec = "${homeDirectory}/.local/bin/tmux-pick gui";
+      terminal = false;
+      categories = ["System" "Utility"];
+    };
 
     xdg.configFile."tmux".source =
       mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/xdg_config/tmux";
@@ -40,6 +57,8 @@ in {
       mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/xdg_config/foot";
     xdg.configFile."kitty".source =
       mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/xdg_config/kitty";
+    xdg.configFile."wofi".source =
+      mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/xdg_config/wofi";
 
   };
 }

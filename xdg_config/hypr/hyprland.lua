@@ -235,6 +235,7 @@ local noctalia         = "noctalia msg"
 
 -- Applications
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("foot"))
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd((os.getenv("HOME") or "") .. "/.local/bin/tmux-pick gui"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("dolphin " .. (os.getenv("HOME") or "~")))
 hl.bind(mainMod .. " + B",
   hl.dsp.exec_cmd("flatpak run com.brave.Browser --password-store=detect --disable-features=WaylandWpColorManagerV1"))

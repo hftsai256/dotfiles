@@ -1,0 +1,49 @@
+window {
+  background-color: transparent;
+}
+
+#outer-box {
+  background-color: #1d1f21;
+  border: 1px solid #656a70;
+  border-radius: 8px;
+  margin: 0;
+  padding: 12px;
+}
+
+#input {
+  background-color: #1d1f21;
+  color: #c5c8c6;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+}
+
+#input:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+#inner-box,
+#scroll {
+  background-color: transparent;
+}
+
+#entry {
+  background-color: transparent;
+  color: #c5c8c6;
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+#entry:selected {
+  background-color: #7aa6da;
+  color: #1d1f21;
+}
+
+#text {
+  color: inherit;
+}

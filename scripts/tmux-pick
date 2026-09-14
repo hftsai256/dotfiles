@@ -1,0 +1,265 @@
+#!/usr/bin/env bash
+# tmux-pick: list, attach, create, or kill tmux sessions.
+# Default picker is tmux choose-tree. No dmenu/rofi/wofi/fzf.
+set -euo pipefail
+export PATH="$HOME/.local/bin:$HOME/.nix-profile/bin:/etc/profiles/per-user/$(id -un)/bin:$PATH"
+
+usage() {
+  cat <<'EOF'
+Usage: tmux-pick [command]
+
+  (no args)     tmux choose-tree (sessions only)
+  list          print sessions for Noctalia (name<TAB>detail)
+  select LINE   attach/switch to the session named in LINE
+  new [NAME]    create NAME (prompt if omitted) and attach
+  kill LINE     kill the session named in LINE
+  launch        open the picker in $TERMINAL (for keybinds)
+  gui           wofi dmenu (fuzzel/rofi if wofi missing)
+
+Environment:
+  TERMINAL        emulator used by launch / GUI attach
+  TMUX_PICK_SOCK  optional tmux -L socket name
+  TMUX_PICK_UI    tree (default) | menu  (numbered fallback)
+EOF
+}
+
+tmux_bin() {
+  if [[ -n "${TMUX_PICK_SOCK:-}" ]]; then
+    printf '%s\n' tmux -L "$TMUX_PICK_SOCK"
+  else
+    printf '%s\n' tmux
+  fi
+}
+
+tmux_cmd() {
+  # shellcheck disable=SC2046
+  command $(tmux_bin) "$@"
+}
+
+session_exists() {
+  tmux_cmd has-session -t "=$1" 2>/dev/null
+}
+
+list_sessions() {
+  tmux_cmd list-sessions -F "#{session_name}	#{session_windows} win#{?session_attached,  attached,}  #{session_path}" 2>/dev/null || true
+}
+
+name_from_line() {
+  local line="${1-}"
+  line="${line#"${line%%[![:space:]]*}"}"
+  line="${line%"${line##*[![:space:]]}"}"
+  printf '%s\n' "${line%%	*}"
+}
+
+pick_term() {
+  local c
+  if [[ -n "${TERMINAL:-}" ]]; then
+    printf '%s\n' "$TERMINAL"
+    return
+  fi
+  if command -v xdg-terminal-exec >/dev/null 2>&1; then
+    printf '%s\n' "xdg-terminal-exec"
+    return
+  fi
+  for c in ghostty kitty foot alacritty wezterm gnome-terminal kgx konsole xterm; do
+    if command -v "$c" >/dev/null 2>&1; then
+      printf '%s\n' "$c"
+      return
+    fi
+  done
+  return 1
+}
+
+term_run() {
+  local term
+  term="$(pick_term)" || {
+    printf 'tmux-pick: no terminal emulator found. Set TERMINAL.\n' >&2
+    return 1
+  }
+  case "$term" in
+    xdg-terminal-exec) xdg-terminal-exec "$@" ;;
+    gnome-terminal|kgx) "$term" -- "$@" ;;
+    ghostty) ghostty -e "$@" ;;
+    kitty) kitty "$@" ;;
+    foot) foot "$@" ;;
+    alacritty) alacritty -e "$@" ;;
+    wezterm) wezterm start -- "$@" ;;
+    konsole) konsole -e "$@" ;;
+    *) "$term" -e "$@" ;;
+  esac
+}
+
+# Attach in this tty, switch if already in tmux, or spawn a terminal.
+enter_session() {
+  local name="$1"
+  if [[ -n "${TMUX:-}" ]]; then
+    tmux_cmd switch-client -t "=$name"
+    return
+  fi
+  if [[ -t 0 && -t 1 ]]; then
+    tmux_cmd attach-session -t "=$name"
+    return
+  fi
+  # shellcheck disable=SC2046
+  term_run $(tmux_bin) attach-session -t "=$name"
+}
+
+create_and_enter() {
+  local name="${1-}"
+  if [[ -z "$name" ]]; then
+    if [[ -t 0 ]]; then
+      printf 'session name: '
+      IFS= read -r name
+    else
+      printf 'tmux-pick: new requires a name when not on a tty\n' >&2
+      return 1
+    fi
+  fi
+  [[ -n "$name" ]] || return 1
+  if session_exists "$name"; then
+    enter_session "$name"
+    return
+  fi
+  if [[ -n "${TMUX:-}" ]]; then
+    tmux_cmd new-session -d -s "$name"
+    tmux_cmd switch-client -t "=$name"
+    return
+  fi
+  if [[ -t 0 && -t 1 ]]; then
+    tmux_cmd new-session -s "$name"
+    return
+  fi
+  # shellcheck disable=SC2046
+  term_run $(tmux_bin) new-session -s "$name"
+}
+
+# tmux's own session tree. Enter selects, x kill, n new window, s new session
+# via the tmux command prompt if you type `:new -s name`.
+choose_tree() {
+  if ! tmux_cmd list-sessions >/dev/null 2>&1; then
+    create_and_enter
+    return
+  fi
+  if [[ -n "${TMUX:-}" ]]; then
+    tmux_cmd choose-tree -Zs
+    return
+  fi
+  if [[ -t 0 && -t 1 ]]; then
+    tmux_cmd attach-session \; choose-tree -Zs
+    return
+  fi
+  # shellcheck disable=SC2046
+  term_run $(tmux_bin) attach-session \; choose-tree -Zs
+}
+
+interactive() {
+  case "${TMUX_PICK_UI:-tree}" in
+    menu) numbered_menu ;;
+    *) choose_tree ;;
+  esac
+}
+
+default_session_name() {
+  hostname -s 2>/dev/null || printf '%s\n' main
+}
+
+dmenu_read() {
+  local prompt="$1"
+  if command -v wofi >/dev/null 2>&1; then
+    wofi --dmenu --insensitive --width 240 -p "$prompt"
+  elif command -v fuzzel >/dev/null 2>&1; then
+    fuzzel --dmenu -p "$prompt "
+  elif command -v rofi >/dev/null 2>&1; then
+    rofi -dmenu -i -p "$prompt"
+  else
+    return 1
+  fi
+}
+
+gui_menu() {
+  local names choice name
+  mapfile -t names < <(tmux_cmd list-sessions -F '#{session_name}' 2>/dev/null || true)
+  if [[ ${#names[@]} -gt 0 ]]; then
+    choice=$(printf '%s\n' "${names[@]}" "New session" | dmenu_read tmux) || return 0
+    [[ -n "$choice" ]] || return 0
+    if [[ "$choice" != "New session" ]]; then
+      enter_session "$choice"
+      return
+    fi
+  fi
+  name=$(printf '%s\n' "$(default_session_name)" | dmenu_read "session name") || return 0
+  create_and_enter "${name:-$(default_session_name)}"
+}
+
+numbered_menu() {
+  local sessions i name
+  mapfile -t sessions < <(tmux_cmd list-sessions -F '#{session_name}' 2>/dev/null || true)
+  if [[ ${#sessions[@]} -eq 0 ]]; then
+    printf 'no sessions. create one? [y/N] '
+    IFS= read -r ans
+    [[ "$ans" == [yY] ]] || return 0
+    create_and_enter
+    return
+  fi
+  i=1
+  for name in "${sessions[@]}"; do
+    printf '%2d  %s\n' "$i" "$name"
+    i=$((i + 1))
+  done
+  printf ' 0  new session\n q  quit\n> '
+  IFS= read -r choice
+  case "$choice" in
+    q|Q|'') return 0 ;;
+    0) create_and_enter ;;
+    *)
+      if [[ "$choice" =~ ^[0-9]+$ ]] && (( choice >= 1 && choice <= ${#sessions[@]} )); then
+        enter_session "${sessions[choice-1]}"
+      else
+        printf 'tmux-pick: invalid choice\n' >&2
+        return 1
+      fi
+      ;;
+  esac
+}
+
+cmd="${1:-}"
+case "$cmd" in
+  -h|--help|help) usage ;;
+  list) list_sessions ;;
+  select)
+    shift
+    name="$(name_from_line "${1-}")"
+    if [[ -z "$name" && -n "${2-}" ]]; then
+      name="$(name_from_line "$2")"
+    fi
+    [[ -n "$name" ]] || exit 1
+    if session_exists "$name"; then
+      enter_session "$name"
+    else
+      create_and_enter "$name"
+    fi
+    ;;
+  new)
+    shift
+    create_and_enter "${1-}"
+    ;;
+  kill)
+    shift
+    name="$(name_from_line "$*")"
+    [[ -n "$name" ]] || exit 1
+    tmux_cmd kill-session -t "=$name"
+    ;;
+  launch)
+    term_run "$0"
+    ;;
+  gui) gui_menu ;;
+  '') interactive ;;
+  *)
+    # Bare name: attach or create.
+    if session_exists "$cmd"; then
+      enter_session "$cmd"
+    else
+      create_and_enter "$cmd"
+    fi
+    ;;
+esac
