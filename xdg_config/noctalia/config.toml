@@ -27,6 +27,14 @@ mode = "dark"
 source = "custom"
 custom_palette = "Hybrid"
 
+[theme.templates.user.fuzzel]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/fuzzel.ini"
+output_path = "$XDG_CONFIG_HOME/fuzzel/fuzzel.ini"
+
+[theme.templates.user.wofi]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/wofi.css"
+output_path = "$XDG_CONFIG_HOME/wofi/style.css"
+
 [wallpaper]
 enabled = true
 fill_mode = "crop"

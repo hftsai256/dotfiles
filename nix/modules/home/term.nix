@@ -31,6 +31,7 @@ in {
     home.packages = [
       pkgs.xdg-terminal-exec
       pkgs.tmux
+      pkgs.fuzzel
       pkgs.wofi
     ] ++ lib.optional (config.term.app == "foot") foot-pkg."${config.gfx}"
       ++ lib.optional (config.term.app == "kitty") kitty-pkg."${config.gfx}";
@@ -57,6 +58,8 @@ in {
       mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/xdg_config/foot";
     xdg.configFile."kitty".source =
       mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/xdg_config/kitty";
+    xdg.configFile."fuzzel".source =
+      mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/xdg_config/fuzzel";
     xdg.configFile."wofi".source =
       mkOutOfStoreSymlink "${homeDirectory}/.dotfiles/xdg_config/wofi";
 

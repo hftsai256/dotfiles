@@ -14,7 +14,7 @@ Usage: tmux-pick [command]
   new [NAME]    create NAME (prompt if omitted) and attach
   kill LINE     kill the session named in LINE
   launch        open the picker in $TERMINAL (for keybinds)
-  gui           wofi dmenu (fuzzel/rofi if wofi missing)
+  gui           fuzzel dmenu (wofi/rofi if fuzzel missing)
 
 Environment:
   TERMINAL        emulator used by launch / GUI attach
@@ -165,10 +165,10 @@ default_session_name() {
 
 dmenu_read() {
   local prompt="$1"
-  if command -v wofi >/dev/null 2>&1; then
-    wofi --dmenu --insensitive --width 240 -p "$prompt"
-  elif command -v fuzzel >/dev/null 2>&1; then
+  if command -v fuzzel >/dev/null 2>&1; then
     fuzzel --dmenu -p "$prompt "
+  elif command -v wofi >/dev/null 2>&1; then
+    wofi --dmenu --insensitive --width 240 -p "$prompt"
   elif command -v rofi >/dev/null 2>&1; then
     rofi -dmenu -i -p "$prompt"
   else

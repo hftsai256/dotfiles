@@ -65,6 +65,8 @@ in {
           mkOutOfStoreSymlink "${xdgRepoPath}/noctalia/config.toml";
         "noctalia/palettes".source =
           mkOutOfStoreSymlink "${xdgRepoPath}/noctalia/palettes";
+        "noctalia/templates".source =
+          mkOutOfStoreSymlink "${xdgRepoPath}/noctalia/templates";
       };
     })
 
