@@ -24,7 +24,7 @@
 
     # Do not follows nixpkgs: that changes the drv hash and misses noctalia.cachix.org.
     # https://docs.noctalia.dev/noctalia/getting-started/nixos/
-    noctalia.url = "github:noctalia-dev/noctalia/v5.0.0-beta.10";
+    noctalia.url = "github:noctalia-dev/noctalia/v5.1.0";
 
     noctalia-greeter = {
       url = "github:noctalia-dev/noctalia-greeter";

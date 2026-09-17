@@ -33,6 +33,17 @@ in {
       pkgs.tmux
       pkgs.fuzzel
       pkgs.wofi
+      # KIO reads TerminalApplication from kdeglobals (konsole fallback).
+      # Live in profile etc/xdg so noctalia can keep mutating ~/.config/kdeglobals.
+      (pkgs.writeTextFile {
+        name = "kdeglobals-terminal";
+        destination = "/etc/xdg/kdeglobals";
+        text = ''
+          [General]
+          TerminalApplication=${config.term.app}
+          TerminalService=${config.term.app}.desktop
+        '';
+      })
     ] ++ lib.optional (config.term.app == "foot") foot-pkg."${config.gfx}"
       ++ lib.optional (config.term.app == "kitty") kitty-pkg."${config.gfx}";
 

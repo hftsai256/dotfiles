@@ -58,6 +58,7 @@ vim.api.nvim_create_autocmd("FileType", {
 require("nvim-ts-autotag").setup()
 require("nvim-surround").setup()
 require("nvim-autopairs").setup()
+require("textcase").setup()
 require("which-key").setup({
   win = { border = "single" },
 })
