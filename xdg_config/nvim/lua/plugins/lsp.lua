@@ -55,6 +55,37 @@ vim.lsp.config("pylsp", {
       },
     },
   },
+  -- pylsp and mypy on PATH are nixpkgs CPython. Third-party imports (numpy, scipy, ...)
+  -- live in the project's uv venv: {root}/.venv, where root is the nearest pyproject.toml.
+  -- Pass that interpreter as an absolute path. mypy --python-executable resolves site-packages
+  -- from that binary; a relative [tool.mypy] python_executable in pyproject.toml is resolved
+  -- from cwd (often the git root), so it misses a nested scripts/.venv.
+  --
+  -- Neovim 0.12: Client.create does `settings = config.settings` (same table), then before_init,
+  -- then workspace/didChangeConfiguration sends client.settings. Assign nested fields on that
+  -- table. `config.settings = vim.tbl_deep_extend(...)` allocates a new table and leaves the
+  -- client alias on the old one, so pylsp never sees the venv.
+  --
+  -- pylsp-mypy overrides: `true` is the placeholder for default args (buffer path, --incremental).
+  -- Omit it and apply_overrides replaces the whole argv with only these flags.
+  before_init = function(_, config)
+    local root = config.root_dir
+    if type(root) ~= "string" then
+      return
+    end
+    local py = root .. "/.venv/bin/python"
+    if not vim.uv.fs_stat(py) then
+      return
+    end
+    local plugins = vim.tbl_get(config.settings, "pylsp", "plugins")
+    if not plugins then
+      return
+    end
+    plugins.jedi = vim.tbl_extend("force", plugins.jedi or {}, { environment = py })
+    plugins.pylsp_mypy = vim.tbl_extend("force", plugins.pylsp_mypy or {}, {
+      overrides = { true, "--python-executable", py },
+    })
+  end,
 })
 
 vim.lsp.config("rust_analyzer", {
