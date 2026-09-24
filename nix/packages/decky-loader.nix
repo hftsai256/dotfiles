@@ -11,13 +11,13 @@
 }:
 python3.pkgs.buildPythonPackage rec {
   pname = "decky-loader";
-  version = "3.2.6";
+  version = "3.2.9";
 
   src = fetchFromGitHub {
     owner = "SteamDeckHomebrew";
     repo = "decky-loader";
     rev = "v${version}";
-    hash = "sha256-p1bkLsZedTZ29POqdaXvVpPXzg9kBTKgUxkkEAyAkT0=";
+    hash = "sha256-XhW+bbsEhWnD/1c3QVHAQz6AAo824b/hbZ1t/VZE1po=";
   };
 
   pnpmDeps = fetchPnpmDeps {
@@ -25,7 +25,7 @@ python3.pkgs.buildPythonPackage rec {
     sourceRoot = "${src.name}/frontend";
     pnpm = pnpm_9;
     fetcherVersion = 3;
-    hash = "sha256-WgKycKbaZv9lovoo0IaCuV41qS4zUqm4vZxsMQBUdNk=";
+    hash = "sha256-toP2u9vGqjLmk8yZD2oujrQx3ZECB11sMltOvuMPyYY=";
     # v3.2.6 added frontend/pnpm-workspace.yaml solely to set
     # `minimumReleaseAgeExclude`; it has no `packages` field, which makes
     # pnpm treat the dir as a malformed workspace root and fail install
