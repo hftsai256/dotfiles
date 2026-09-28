@@ -49,7 +49,7 @@
       pkgs.scream
     ];
 
-    users.users.${config.user}.extraGroups = [ "libvirtd" ];
+    users.users.${config.user}.extraGroups = [ "libvirtd" "kvm" ];
 
     networking.firewall.trustedInterfaces = [ "virbr0" ];
 
@@ -73,13 +73,21 @@
     boot.kernelModules = kernelModules.${cfg.cpuType} ++
       lib.optionals cfg.vfio.enable [ "vfio-pci" ];
 
-    boot.initrd.preDeviceCommands = lib.mkIf (cfg.vfio.enable && cfg.vfio.devs != []) ''
-      DEVS=${concatStringsSep " " cfg.vfio.devs}
-      for DEV in $DEVS; do
-        echo "vfio-pci" > /sys/bus/pci/devices/$DEV/driver_override
-      done
-      modprobe -i vfio-pci
-    '';
+    boot.initrd.kernelModules = lib.optionals cfg.vfio.enable [ "vfio-pci" "vfio_iommu_type1" ];
+
+    boot.initrd.systemd.services.vfio-bind = lib.mkIf (cfg.vfio.enable && cfg.vfio.devs != []) {
+      description = "Bind VFIO PCI devices before amdgpu";
+      wantedBy = [ "initrd.target" ];
+      after = [ "systemd-modules-load.service" ];
+      before = [ "systemd-udevd.service" ];
+      unitConfig.DefaultDependencies = false;
+      serviceConfig.Type = "oneshot";
+      script = ''
+        for DEV in ${concatStringsSep " " cfg.vfio.devs}; do
+          echo vfio-pci > /sys/bus/pci/devices/$DEV/driver_override
+        done
+      '';
+    };
 
     # setting up shared memory for Looking Glass framebuffer
     # include the following configuration to the virtual machine:
