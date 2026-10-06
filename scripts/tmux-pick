@@ -23,25 +23,12 @@ Environment:
 EOF
 }
 
-tmux_bin() {
-  if [[ -n "${TMUX_PICK_SOCK:-}" ]]; then
-    printf '%s\n' tmux -L "$TMUX_PICK_SOCK"
-  else
-    printf '%s\n' tmux
-  fi
-}
-
-tmux_cmd() {
-  # shellcheck disable=SC2046
-  command $(tmux_bin) "$@"
-}
-
 session_exists() {
-  tmux_cmd has-session -t "=$1" 2>/dev/null
+  tmux has-session -t "=$1" 2>/dev/null
 }
 
 list_sessions() {
-  tmux_cmd list-sessions -F "#{session_name}	#{session_windows} win#{?session_attached,  attached,}  #{session_path}" 2>/dev/null || true
+  tmux list-sessions -F "#{session_name}	#{session_windows} win#{?session_attached,  attached,}  #{session_path}" 2>/dev/null || true
 }
 
 name_from_line() {
@@ -93,15 +80,14 @@ term_run() {
 enter_session() {
   local name="$1"
   if [[ -n "${TMUX:-}" ]]; then
-    tmux_cmd switch-client -t "=$name"
+    tmux switch-client -t "=$name"
     return
   fi
   if [[ -t 0 && -t 1 ]]; then
-    tmux_cmd attach-session -t "=$name"
+    tmux attach-session -t "=$name"
     return
   fi
-  # shellcheck disable=SC2046
-  term_run $(tmux_bin) attach-session -t "=$name"
+  term_run tmux attach-session -t "=$name"
 }
 
 create_and_enter() {
@@ -121,35 +107,29 @@ create_and_enter() {
     return
   fi
   if [[ -n "${TMUX:-}" ]]; then
-    tmux_cmd new-session -d -s "$name"
-    tmux_cmd switch-client -t "=$name"
+    tmux new-session -d -s "$name"
+    tmux switch-client -t "=$name"
     return
   fi
   if [[ -t 0 && -t 1 ]]; then
-    tmux_cmd new-session -s "$name"
+    tmux new-session -s "$name"
     return
   fi
-  # shellcheck disable=SC2046
-  term_run $(tmux_bin) new-session -s "$name"
+  term_run tmux new-session -s "$name"
 }
 
 # tmux's own session tree. Enter selects, x kill, n new window, s new session
 # via the tmux command prompt if you type `:new -s name`.
 choose_tree() {
-  if ! tmux_cmd list-sessions >/dev/null 2>&1; then
-    create_and_enter
-    return
-  fi
   if [[ -n "${TMUX:-}" ]]; then
-    tmux_cmd choose-tree -Zs
+    tmux choose-tree -Zs
     return
   fi
   if [[ -t 0 && -t 1 ]]; then
-    tmux_cmd attach-session \; choose-tree -Zs
+    tmux attach-session \; choose-tree -Zs
     return
   fi
-  # shellcheck disable=SC2046
-  term_run $(tmux_bin) attach-session \; choose-tree -Zs
+  term_run tmux attach-session \; choose-tree -Zs
 }
 
 interactive() {
@@ -178,7 +158,7 @@ dmenu_read() {
 
 gui_menu() {
   local names choice name
-  mapfile -t names < <(tmux_cmd list-sessions -F '#{session_name}' 2>/dev/null || true)
+  mapfile -t names < <(tmux list-sessions -F '#{session_name}' 2>/dev/null || true)
   if [[ ${#names[@]} -gt 0 ]]; then
     choice=$(printf '%s\n' "${names[@]}" "New session" | dmenu_read tmux) || return 0
     [[ -n "$choice" ]] || return 0
@@ -193,7 +173,7 @@ gui_menu() {
 
 numbered_menu() {
   local sessions i name
-  mapfile -t sessions < <(tmux_cmd list-sessions -F '#{session_name}' 2>/dev/null || true)
+  mapfile -t sessions < <(tmux list-sessions -F '#{session_name}' 2>/dev/null || true)
   if [[ ${#sessions[@]} -eq 0 ]]; then
     printf 'no sessions. create one? [y/N] '
     IFS= read -r ans
@@ -222,10 +202,13 @@ numbered_menu() {
   esac
 }
 
+tmux start-server
 cmd="${1:-}"
 case "$cmd" in
   -h|--help|help) usage ;;
-  list) list_sessions ;;
+  list)
+    list_sessions
+    ;;
   select)
     shift
     name="$(name_from_line "${1-}")"
@@ -247,7 +230,7 @@ case "$cmd" in
     shift
     name="$(name_from_line "$*")"
     [[ -n "$name" ]] || exit 1
-    tmux_cmd kill-session -t "=$name"
+    tmux kill-session -t "=$name"
     ;;
   launch)
     term_run "$0"
