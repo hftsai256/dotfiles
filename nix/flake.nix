@@ -22,9 +22,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Do not follows nixpkgs: that changes the drv hash and misses noctalia.cachix.org.
-    # https://docs.noctalia.dev/noctalia/getting-started/nixos/
-    noctalia.url = "github:noctalia-dev/noctalia/v5.1.0";
+    noctalia.url = "github:noctalia-dev/noctalia/v5.2.1";
 
     noctalia-greeter = {
       url = "github:noctalia-dev/noctalia-greeter";
